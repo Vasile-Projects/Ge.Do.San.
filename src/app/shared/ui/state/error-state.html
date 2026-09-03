@@ -1,0 +1,5 @@
+<app-icon name="alert" [size]="22" class="error-state__icon" />
+<p class="error-state__msg">{{ message() }}</p>
+@if (retryable()) {
+  <app-button label="Riprova" variant="secondary" (click)="retry.emit()" />
+}

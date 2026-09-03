@@ -1,0 +1,23 @@
+<div class="slot-picker" role="radiogroup" aria-label="Orario disponibile">
+  @for (slot of slots(); track slot.idSlot; let i = $index) {
+    <button
+      #cella
+      type="button"
+      role="radio"
+      class="slot-picker__opt"
+      [class.slot-picker__opt--sel]="slot.idSlot === selezionatoId()"
+      [class.slot-picker__opt--pieno]="!slot.disponibile"
+      [attr.aria-checked]="slot.idSlot === selezionatoId()"
+      [attr.aria-disabled]="!slot.disponibile"
+      [disabled]="!slot.disponibile"
+      [tabindex]="i === indiceAttivo() ? 0 : -1"
+      (click)="seleziona.emit(slot.idSlot)"
+      (keydown)="onKeydown($event, i)"
+    >
+      <span class="slot-picker__ora">{{ ora(slot.orario) }}</span>
+      @if (!slot.disponibile) {
+        <span class="slot-picker__stato">esaurito</span>
+      }
+    </button>
+  }
+</div>

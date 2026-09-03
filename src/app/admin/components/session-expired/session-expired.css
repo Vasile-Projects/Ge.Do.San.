@@ -1,0 +1,54 @@
+:host {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+}
+
+.session-expired__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgb(35 49 58 / 0.7);
+}
+
+.session-expired__panel {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-left: 5px solid var(--c-red);
+  border-radius: var(--radius-card-lg);
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.session-expired__icon {
+  color: var(--c-red);
+}
+
+.session-expired__title {
+  font-size: var(--fs-h3);
+}
+
+.session-expired__msg {
+  color: var(--c-text-muted);
+  font-size: 0.9375rem;
+}
+
+.session-expired__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.session-expired__cta {
+  display: contents;
+}

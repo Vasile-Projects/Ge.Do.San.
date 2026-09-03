@@ -1,0 +1,48 @@
+:host {
+  display: block;
+}
+
+.date-input {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.date-input .date-input__giorno,
+.date-input .date-input__anno {
+  flex: 0 0 auto;
+  width: 5rem;
+}
+.date-input .date-input__mese {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 12rem;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: var(--space-8);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234b5b64' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-3) center;
+  background-size: 16px;
+}
+.date-input .date-input__mese:disabled {
+  opacity: 0.6;
+}
+.date-input .date-input__mese--placeholder {
+  font-size: var(--fs-small);
+  font-style: italic;
+  color: var(--c-text-muted);
+}
+.date-input .date-input__mese:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 var(--c-text);
+}
+
+@media (min-width: 400px) {
+  .date-input .date-input__giorno,
+  .date-input .date-input__anno {
+    width: 5.75rem;
+  }
+}

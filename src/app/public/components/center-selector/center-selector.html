@@ -1,0 +1,22 @@
+<div class="center-selector" role="radiogroup" aria-label="Centro trasfusionale">
+  @for (centro of centri(); track centro.id; let i = $index) {
+    <button
+      #opzione
+      type="button"
+      role="radio"
+      class="center-selector__opt"
+      [class.center-selector__opt--sel]="centro.id === selezionatoId()"
+      [attr.aria-checked]="centro.id === selezionatoId()"
+      [tabindex]="i === indiceAttivo() ? 0 : -1"
+      (click)="seleziona.emit(centro.id)"
+      (keydown)="onKeydown($event, i)"
+    >
+      <span class="center-selector__bar" aria-hidden="true"></span>
+      <app-icon name="map-pin" [size]="18" class="center-selector__icon" />
+      <span class="center-selector__text">
+        <span class="center-selector__name">{{ centro.nome }}</span>
+        <span class="center-selector__addr">{{ indirizzo(centro) }}</span>
+      </span>
+    </button>
+  }
+</div>

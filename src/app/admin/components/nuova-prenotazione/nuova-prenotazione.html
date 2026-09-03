@@ -1,0 +1,65 @@
+<section class="nuova" role="dialog" aria-modal="true" aria-labelledby="nuova-title">
+  <div class="nuova__head">
+    <h3 id="nuova-title">Nuova prenotazione manuale</h3>
+    <button type="button" class="nuova__close" (click)="annulla.emit()" aria-label="Chiudi">
+      <app-icon name="close" [size]="18" />
+    </button>
+  </div>
+
+  <p class="nuova__centro">
+    Centro: <strong>{{ centro().nome }}</strong>
+  </p>
+
+  @if (erroreGenerale(); as msg) {
+    <p class="nuova__banner" role="alert" tabindex="-1">{{ msg }}</p>
+  }
+
+  <app-slot-scelta
+    [mese]="sel.mese()"
+    [dataIso]="sel.dataIso()"
+    [giorniNonDisponibili]="sel.giorniNonDisponibili()"
+    [giorniInCaricamento]="sel.giorniInCaricamento()"
+    [giorniErrore]="sel.giorniErrore()?.message ?? null"
+    [minIso]="minIso"
+    [maxIso]="maxIso"
+    [slotStatus]="sel.slotStatus()"
+    [slots]="sel.slots()"
+    [slotErrore]="sel.slotErrore()?.message ?? null"
+    [idSlot]="sel.idSlot()"
+    (cambiaMese)="sel.cambiaMese($event)"
+    (selezionaData)="sel.selezionaData($event)"
+    (selezionaSlot)="sel.selezionaSlot($event)"
+    (ricaricaGiorni)="sel.ricaricaGiorni()"
+    (ricaricaSlot)="sel.ricaricaSlot()"
+  />
+
+  <div class="nuova__form">
+    <h4 class="nuova__label">Dati del donatore</h4>
+    <app-donor-form
+      [dataDonazione]="sel.dataIso()"
+      [inCorso]="inCorso()"
+      [puoInviare]="slotScelto()"
+      [erroriServer]="erroriCampo()"
+      (invia)="onInviaForm($event)"
+    />
+    @if (!slotScelto()) {
+      <p class="nuova__hint">Seleziona un orario per abilitare la conferma.</p>
+    }
+  </div>
+
+  <div class="nuova__actions">
+    <app-button label="Annulla" variant="ghost" (click)="annulla.emit()" />
+  </div>
+</section>
+
+@if (confermaAperta()) {
+  <app-confirm-dialog
+    titolo="Confermi la nuova prenotazione?"
+    messaggio="Verrà creata una prenotazione a nome del donatore indicato. Valgono le stesse regole del flusso pubblico (età, intervallo, capienza)."
+    etichettaConferma="Crea prenotazione"
+    [inCorso]="inCorso()"
+    [errore]="erroreDialog()"
+    (conferma)="conferma()"
+    (annulla)="chiudiConferma()"
+  />
+}

@@ -1,0 +1,71 @@
+.prenotazioni-table__wrap {
+  position: relative;
+  min-width: 0;
+  overflow-x: auto;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-card);
+}
+
+.prenotazioni-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.prenotazioni-table th,
+.prenotazioni-table td {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--c-border);
+}
+
+.prenotazioni-table thead th {
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--c-text-muted);
+  background: var(--c-bg);
+  white-space: nowrap;
+}
+
+.prenotazioni-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.prenotazioni-table__ora {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.prenotazioni-table__nome {
+  display: block;
+  font-weight: 500;
+}
+.prenotazioni-table__id {
+  font-size: var(--fs-small);
+  color: var(--c-text-muted);
+}
+
+.prenotazioni-table__contatti {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.prenotazioni-table__creata {
+  white-space: nowrap;
+  color: var(--c-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.prenotazioni-table thead th:last-child,
+.prenotazioni-table__azioni {
+  width: 1%;
+  white-space: nowrap;
+  text-align: right;
+}
+.prenotazioni-table__azioni-inner {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  gap: var(--space-1);
+}

@@ -1,0 +1,205 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap">
+  <style>
+    body { margin: 0; background: #FAF6F4; color: #23313A;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    h1,h2,h3,h4 { font-family: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif; margin: 0; }
+    a { color: #C8102E; } a:hover { color: #A30E26; }
+    .mono { font-family: 'Space Grotesk', ui-monospace, monospace; }
+    .sec-label { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600;
+      color:#4B5B64; letter-spacing:.04em; }
+  </style>
+</helmet>
+
+<div style="max-width:1120px; padding:56px 60px 72px;">
+  <div style="display:flex; align-items:baseline; gap:16px; flex-wrap:wrap;">
+    <h1 style="font-size:40px; font-weight:700; letter-spacing:-0.02em;">Gedosan — Design system</h1>
+    <span style="color:#4B5B64; font-size:14px;">v0.1 · proposta da validare</span>
+  </div>
+  <p style="max-width:640px; color:#4B5B64; font-size:15px; line-height:1.6; margin:12px 0 44px;">
+    Fondamenta visive derivate da <span class="mono">grafica.md</span>. Tutti i valori diventano
+    CSS custom properties in <span class="mono">src/styles.css</span> prima di scrivere i componenti.
+  </p>
+
+  <!-- COLOR -->
+  <div class="sec-label" style="margin-bottom:14px;">01 · Colore</div>
+  <div style="display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:14px; margin-bottom:52px;">
+    <div style="border:1px solid #E7DEDC; border-radius:3px 14px 3px 14px; overflow:hidden; background:#fff;">
+      <div style="height:88px; background:#C8102E;"></div>
+      <div style="padding:12px 14px;"><div style="font-weight:600; font-size:14px;">Rosso primario</div>
+        <div class="mono" style="font-size:12px; color:#4B5B64;">--c-red · #C8102E</div>
+        <div style="font-size:12px; color:#4B5B64; margin-top:6px;">brand, CTA, barra card</div></div>
+    </div>
+    <div style="border:1px solid #E7DEDC; border-radius:3px 14px 3px 14px; overflow:hidden; background:#fff;">
+      <div style="height:88px; background:#A30E26;"></div>
+      <div style="padding:12px 14px;"><div style="font-weight:600; font-size:14px;">Rosso scuro</div>
+        <div class="mono" style="font-size:12px; color:#4B5B64;">--c-red-dark · #A30E26</div>
+        <div style="font-size:12px; color:#4B5B64; margin-top:6px;">hover / active</div></div>
+    </div>
+    <div style="border:1px solid #E7DEDC; border-radius:3px 14px 3px 14px; overflow:hidden; background:#fff;">
+      <div style="height:88px; background:#23313A;"></div>
+      <div style="padding:12px 14px;"><div style="font-weight:600; font-size:14px;">Slate</div>
+        <div class="mono" style="font-size:12px; color:#4B5B64;">--c-slate · #23313A</div>
+        <div style="font-size:12px; color:#4B5B64; margin-top:6px;">testo, fondali scuri</div></div>
+    </div>
+    <div style="border:1px solid #E7DEDC; border-radius:3px 14px 3px 14px; overflow:hidden; background:#fff;">
+      <div style="height:88px; background:#4B5B64;"></div>
+      <div style="padding:12px 14px;"><div style="font-weight:600; font-size:14px;">Slate soft</div>
+        <div class="mono" style="font-size:12px; color:#4B5B64;">--c-slate-soft · #4B5B64</div>
+        <div style="font-size:12px; color:#4B5B64; margin-top:6px;">testo secondario</div></div>
+    </div>
+    <div style="border:1px solid #E7DEDC; border-radius:3px 14px 3px 14px; overflow:hidden; background:#fff;">
+      <div style="height:88px; background:#FAF6F4; border-bottom:1px solid #E7DEDC;"></div>
+      <div style="padding:12px 14px;"><div style="font-weight:600; font-size:14px;">Neutro caldo</div>
+        <div class="mono" style="font-size:12px; color:#4B5B64;">--c-bg · #FAF6F4</div>
+        <div style="font-size:12px; color:#4B5B64; margin-top:6px;">sfondo pagina</div></div>
+    </div>
+    <div style="border:1px solid #E7DEDC; border-radius:3px 14px 3px 14px; overflow:hidden; background:#fff;">
+      <div style="height:88px; background:#F3DEDE;"></div>
+      <div style="padding:12px 14px;"><div style="font-weight:600; font-size:14px;">Blush</div>
+        <div class="mono" style="font-size:12px; color:#4B5B64;">--c-blush · #F3DEDE</div>
+        <div style="font-size:12px; color:#4B5B64; margin-top:6px;">fondo card infografiche</div></div>
+    </div>
+    <div style="border:1px solid #E7DEDC; border-radius:3px 14px 3px 14px; overflow:hidden; background:#fff;">
+      <div style="height:88px; background:#C99A3E;"></div>
+      <div style="padding:12px 14px;"><div style="font-weight:600; font-size:14px;">Oro tenue</div>
+        <div class="mono" style="font-size:12px; color:#4B5B64;">--c-gold · #C99A3E</div>
+        <div style="font-size:12px; color:#4B5B64; margin-top:6px;">accento singolo · stati attivi</div></div>
+    </div>
+    <div style="border:1px solid #E7DEDC; border-radius:3px 14px 3px 14px; overflow:hidden; background:#fff;">
+      <div style="height:88px; background:#E7DEDC;"></div>
+      <div style="padding:12px 14px;"><div style="font-weight:600; font-size:14px;">Bordo</div>
+        <div class="mono" style="font-size:12px; color:#4B5B64;">--c-border · #E7DEDC</div>
+        <div style="font-size:12px; color:#4B5B64; margin-top:6px;">divisori, contorni card</div></div>
+    </div>
+  </div>
+  <p style="margin:-32px 0 52px; font-size:13px; color:#4B5B64;">
+    Regola: la forza espressiva sta su <strong>rosso + slate</strong>. L'oro è un singolo accento,
+    mai un terzo colore in competizione. Contrasto testo/sfondo verificato per WCAG AA.
+  </p>
+
+  <!-- TYPE -->
+  <div class="sec-label" style="margin-bottom:14px;">02 · Tipografia</div>
+  <div style="border:1px solid #E7DEDC; background:#fff; border-radius:3px 14px 3px 14px; padding:28px 30px; margin-bottom:14px;">
+    <div style="display:flex; gap:40px; flex-wrap:wrap; margin-bottom:22px;">
+      <div><div class="sec-label">Display</div><div style="font-size:13px; color:#4B5B64;">Space Grotesk 700 · fallback Segoe UI / system-ui</div></div>
+      <div><div class="sec-label">Corpo</div><div style="font-size:13px; color:#4B5B64;">Inter 400/500 · fallback system-ui</div></div>
+      <div><div class="sec-label">Divieti</div><div style="font-size:13px; color:#4B5B64;">niente serif · niente maiuscolo · niente eyebrow spaziati</div></div>
+    </div>
+    <div style="border-top:1px solid #E7DEDC; padding-top:20px; display:flex; flex-direction:column; gap:16px;">
+      <div><span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:60px; letter-spacing:-0.02em; line-height:1.02;">Dona il tuo sangue</span>
+        <div class="mono" style="font-size:12px; color:#4B5B64;">h1 / hero — clamp(44px, 6vw, 68px) · lh 1.03 · ls -0.02em</div></div>
+      <div><span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:34px; letter-spacing:-0.01em;">Titolo di sezione</span>
+        <div class="mono" style="font-size:12px; color:#4B5B64;">h2 — clamp(26px, 3.4vw, 36px) · lh 1.15</div></div>
+      <div><span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:21px;">Titolo card</span>
+        <div class="mono" style="font-size:12px; color:#4B5B64;">h3 — 20–22px · lh 1.25</div></div>
+      <div><span style="font-family:'Inter',sans-serif; font-size:17px; line-height:1.6;">Testo corrente. Lunghezza riga max ~68 caratteri. Interlinea 1.6 per la leggibilità.</span>
+        <div class="mono" style="font-size:12px; color:#4B5B64;">body — 16–18px · lh 1.6 · max 68ch</div></div>
+      <div><span style="font-family:'Inter',sans-serif; font-size:13px; font-weight:500; color:#4B5B64;">Meta / etichette · 13–14px · Inter 500</span></div>
+      <div><span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:48px;">18</span>
+        <div class="mono" style="font-size:12px; color:#4B5B64;">numeri statistica — Space Grotesk 700 · 40–56px</div></div>
+    </div>
+  </div>
+  <p style="margin:0 0 52px; font-size:13px; color:#4B5B64;">Scala modulare ~1.25. Caricamento via Google Fonts con <span class="mono">display=swap</span>; l'export PDF usa i fallback.</p>
+
+  <!-- SPACING + RADIUS -->
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-bottom:52px;">
+    <div>
+      <div class="sec-label" style="margin-bottom:14px;">03 · Spaziatura (base 4px)</div>
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; align-items:center; gap:12px;"><span class="mono" style="width:112px; font-size:12px; color:#4B5B64;">--space-1 · 4</span><span style="height:14px; width:4px; background:#C8102E;"></span></div>
+        <div style="display:flex; align-items:center; gap:12px;"><span class="mono" style="width:112px; font-size:12px; color:#4B5B64;">--space-2 · 8</span><span style="height:14px; width:8px; background:#C8102E;"></span></div>
+        <div style="display:flex; align-items:center; gap:12px;"><span class="mono" style="width:112px; font-size:12px; color:#4B5B64;">--space-3 · 12</span><span style="height:14px; width:12px; background:#C8102E;"></span></div>
+        <div style="display:flex; align-items:center; gap:12px;"><span class="mono" style="width:112px; font-size:12px; color:#4B5B64;">--space-4 · 16</span><span style="height:14px; width:16px; background:#C8102E;"></span></div>
+        <div style="display:flex; align-items:center; gap:12px;"><span class="mono" style="width:112px; font-size:12px; color:#4B5B64;">--space-6 · 24</span><span style="height:14px; width:24px; background:#C8102E;"></span></div>
+        <div style="display:flex; align-items:center; gap:12px;"><span class="mono" style="width:112px; font-size:12px; color:#4B5B64;">--space-8 · 32</span><span style="height:14px; width:32px; background:#C8102E;"></span></div>
+        <div style="display:flex; align-items:center; gap:12px;"><span class="mono" style="width:112px; font-size:12px; color:#4B5B64;">--space-12 · 48</span><span style="height:14px; width:48px; background:#C8102E;"></span></div>
+        <div style="display:flex; align-items:center; gap:12px;"><span class="mono" style="width:112px; font-size:12px; color:#4B5B64;">--space-16 · 64</span><span style="height:14px; width:64px; background:#C8102E;"></span></div>
+        <div style="display:flex; align-items:center; gap:12px;"><span class="mono" style="width:112px; font-size:12px; color:#4B5B64;">--space-24 · 96</span><span style="height:14px; width:96px; background:#C8102E;"></span></div>
+      </div>
+      <p style="font-size:12px; color:#4B5B64; margin-top:14px;">Ritmo verticale sezioni: 96px desktop / 64px mobile. Gutter: 40px desktop / 20px mobile. Contenuto max 1200px.</p>
+    </div>
+    <div>
+      <div class="sec-label" style="margin-bottom:14px;">04 · Raggi — la firma asimmetrica</div>
+      <div style="display:flex; gap:16px; flex-wrap:wrap;">
+        <div style="width:120px; height:80px; background:#fff; border:1px solid #E7DEDC; border-radius:3px 14px 3px 14px; display:flex; align-items:center; justify-content:center; font-size:11px; color:#4B5B64; text-align:center;">card<br>3 14 3 14</div>
+        <div style="width:120px; height:80px; background:#fff; border:1px solid #E7DEDC; border-radius:2px 10px 2px 10px; display:flex; align-items:center; justify-content:center; font-size:11px; color:#4B5B64; text-align:center;">input<br>2 10 2 10</div>
+        <div style="width:120px; height:44px; background:#C8102E; color:#fff; border-radius:2px 12px 2px 12px; display:flex; align-items:center; justify-content:center; font-size:11px;">bottone<br>2 12 2 12</div>
+      </div>
+      <p style="font-size:12px; color:#4B5B64; margin-top:14px;">
+        L'asimmetria (angolo alto-dx / basso-sx più morbidi) è un dettaglio applicato a card,
+        campi e bottoni chiave — <strong>non</strong> a ogni elemento. Chip / pill: 999px pieno.
+        Nessuna ombra diffusa: profondità = barra colore + bordo.
+      </p>
+    </div>
+  </div>
+
+  <!-- COMPONENTS -->
+  <div class="sec-label" style="margin-bottom:14px;">05 · Componenti base</div>
+  <div style="display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:18px; margin-bottom:16px;">
+    <!-- buttons -->
+    <div style="border:1px solid #E7DEDC; background:#fff; border-radius:3px 14px 3px 14px; padding:22px;">
+      <div style="font-weight:600; font-size:14px; margin-bottom:14px;">Bottoni</div>
+      <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-start;">
+        <span style="background:#C8102E; color:#fff; font-weight:600; font-size:14px; padding:11px 20px; border-radius:2px 12px 2px 12px;">Prenota ora</span>
+        <span style="background:transparent; color:#23313A; font-weight:600; font-size:14px; padding:10px 19px; border:1px solid #23313A; border-radius:2px 12px 2px 12px;">Scopri i centri</span>
+        <span style="color:#C8102E; font-weight:600; font-size:14px; display:inline-flex; align-items:center; gap:6px;">Vai
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8102E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+        </span>
+      </div>
+      <div style="font-size:12px; color:#4B5B64; margin-top:12px;">min-height 44px · focus ring 2px oro</div>
+    </div>
+    <!-- card anatomy -->
+    <div style="border:1px solid #E7DEDC; background:#fff; border-radius:3px 14px 3px 14px; padding:22px;">
+      <div style="font-weight:600; font-size:14px; margin-bottom:14px;">Card — anatomia</div>
+      <div style="display:flex; background:#fff; border:1px solid #E7DEDC; border-radius:3px 14px 3px 14px; overflow:hidden;">
+        <div style="width:4px; background:#C8102E;"></div>
+        <div style="padding:14px 16px;">
+          <h3 style="font-size:16px; font-weight:600;">Titolo</h3>
+          <p style="font-size:13px; color:#4B5B64; margin:6px 0 0; line-height:1.5;">Barra colore a sinistra (rossa; oro se attiva/selezionata). Nessuna ombra.</p>
+        </div>
+      </div>
+      <div style="font-size:12px; color:#4B5B64; margin-top:12px;">stato attivo → barra <span style="color:#C99A3E;">oro</span> + bordo oro</div>
+    </div>
+    <!-- form field -->
+    <div style="border:1px solid #E7DEDC; background:#fff; border-radius:3px 14px 3px 14px; padding:22px;">
+      <div style="font-weight:600; font-size:14px; margin-bottom:14px;">Campo form</div>
+      <label style="font-size:13px; font-weight:500; color:#23313A; display:block; margin-bottom:6px;">Email</label>
+      <div style="border:1px solid #E7DEDC; border-radius:2px 10px 2px 10px; padding:10px 12px; font-size:14px; color:#4B5B64;">mario.rossi@example.com</div>
+      <div style="font-size:12px; color:#C8102E; margin-top:6px;">Messaggio d'errore — specchio 1:1 del backend</div>
+      <div style="font-size:12px; color:#4B5B64; margin-top:10px;">label sempre visibile · errore sotto il campo · aria-describedby</div>
+    </div>
+  </div>
+
+  <!-- STATES + BREAKPOINTS -->
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-top:36px;">
+    <div>
+      <div class="sec-label" style="margin-bottom:14px;">06 · Stati di fetch (obbligatori ovunque)</div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <span style="font-size:13px; padding:6px 12px; border-radius:999px; background:#F3DEDE; color:#23313A;">loading</span>
+        <span style="font-size:13px; padding:6px 12px; border-radius:999px; background:#F3DEDE; color:#23313A;">error</span>
+        <span style="font-size:13px; padding:6px 12px; border-radius:999px; background:#F3DEDE; color:#23313A;">empty</span>
+        <span style="font-size:13px; padding:6px 12px; border-radius:999px; background:#F3DEDE; color:#23313A;">success</span>
+      </div>
+      <p style="font-size:12px; color:#4B5B64; margin-top:12px;">Nessuno schermo bianco, nessuno spinner infinito. Su 409 slot: errore inline + refresh slot, campi form preservati.</p>
+    </div>
+    <div>
+      <div class="sec-label" style="margin-bottom:14px;">07 · Breakpoint (mobile-first)</div>
+      <div style="font-size:13px; color:#23313A; line-height:1.9;" class="mono">
+        base &lt; 640 · sm 640 · md 768 · lg 1024 · xl 1280<br>
+        <span style="color:#4B5B64;">container 1200 · gutter 20→40 · grid 4→12 col</span>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

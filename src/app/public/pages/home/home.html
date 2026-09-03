@@ -1,0 +1,80 @@
+<main id="contenuto">
+  <section class="hero">
+    <div class="hero__inner container">
+      <h1 class="hero__title">
+        Dona sangue. Salva vite.
+        <span class="hero__title-accent">Prenota adesso.</span>
+      </h1>
+      <p class="hero__lead">
+        Il portale di prenotazione dei centri trasfusionali Pertini e S.&nbsp;Eugenio. Donare è un
+        gesto semplice, sicuro e gratuito, e ogni donazione può fare la differenza per chi ne ha
+        bisogno.
+      </p>
+
+      <div class="hero__actions">
+        <app-button label="Prenota ora" variant="primary" link="/prenota" />
+        <app-button label="Scopri i centri" variant="outline-light" (click)="scrollToCentri()" />
+      </div>
+
+      <div class="hero__stats">
+        <app-stat value="1.800" label="sacche di sangue servono ogni giorno in Italia" />
+        <app-stat value="40" label="trasfusioni l'anno per un solo paziente talassemico" />
+        <app-stat value="450" label="pazienti cronici in cura ogni giorno nei nostri ospedali" />
+        <app-stat value="3" label="vite salvate con una singola donazione" />
+      </div>
+    </div>
+  </section>
+
+  <section class="intro container section">
+    <h2 class="intro__title">Perché la tua donazione conta:</h2>
+    <p class="intro__body">
+      Ogni giorno molte persone hanno bisogno di sangue: chi affronta un intervento, una terapia
+      oncologica, un parto difficile o una malattia cronica. Il sangue non si produce in laboratorio
+      e ha una durata breve, perciò l'unica scorta possibile sono i donatori che tornano con
+      regolarità. Prendersi cura degli altri, in questo caso, significa anche prendersi cura di sé:
+      prima di ogni donazione un medico ti visita e ricevi controlli periodici gratuiti sul tuo
+      stato di salute.
+    </p>
+  </section>
+
+  <section id="centri" class="centri container section">
+    <h2 class="centri__title">Dove donare:</h2>
+
+    @if (centriStatus() === 'loading') {
+      <app-loading label="Caricamento dei centri trasfusionali…" />
+    } @else if (centriError(); as err) {
+      <app-error-state [message]="err.message" (retry)="ricaricaCentri()" />
+    } @else if (centriData().length === 0) {
+      <app-empty-state message="Nessun centro trasfusionale disponibile al momento." />
+    } @else {
+      <div class="centri__grid">
+        @for (centro of centriData(); track centro.id) {
+          <app-center-card [centro]="centro" />
+        }
+      </div>
+    }
+  </section>
+
+  <section class="eligibility-section">
+    <div class="container section">
+      <h2 class="eligibility-section__title">Posso donare?</h2>
+      <p class="eligibility-section__intro">
+        L'idoneità viene stabilita dal medico durante il colloquio e la visita che precedono ogni
+        donazione, sulla base di un questionario sullo stato di salute e sullo stile di vita. In
+        caso di dubbi puoi comunque prenotare e parlarne con il personale del centro trasfusionale.
+        Ecco i criteri di selezione più comuni:
+      </p>
+      <app-eligibility />
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container cta-band__inner">
+      <div>
+        <h2 class="cta-band__title">Pronto a donare?</h2>
+        <p class="cta-band__text">Basta un minuto del tuo tempo.</p>
+      </div>
+      <app-button label="Prenota ora" variant="invert" link="/prenota" />
+    </div>
+  </section>
+</main>

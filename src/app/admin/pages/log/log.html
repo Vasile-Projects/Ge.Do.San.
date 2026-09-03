@@ -1,0 +1,59 @@
+<section class="log">
+  <p class="log__lead">Storico di riprogrammazioni e cancellazioni. Sola lettura.</p>
+
+  @switch (status()) {
+    @case ('loading') {
+      <app-loading label="Caricamento del log…" />
+    }
+    @case ('error') {
+      <app-error-state [message]="errore()?.message ?? ''" (retry)="carica()" />
+    }
+    @case ('success') {
+      @if (voci().length === 0) {
+        <app-empty-state message="Nessuna modifica registrata." />
+      } @else {
+        <div class="log__table-wrap">
+          <table class="log__table">
+            <caption class="visually-hidden">
+              Storico modifiche alle prenotazioni
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Data e ora</th>
+                <th scope="col">Azione</th>
+                <th scope="col">Donatore</th>
+                <th scope="col">Prenotazione</th>
+                <th scope="col">Slot</th>
+                <th scope="col">Operatore</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (v of voci(); track v.id) {
+                <tr>
+                  <td class="log__quando">{{ dataOra(v.timestamp) }}</td>
+                  <td>
+                    <span
+                      class="log__badge"
+                      [class.log__badge--canc]="v.azione === 'CANCELLAZIONE'"
+                    >
+                      {{ v.azione === 'CANCELLAZIONE' ? 'Cancellazione' : 'Riprogrammazione' }}
+                    </span>
+                  </td>
+                  <td>{{ v.nomeDonatore }} {{ v.cognomeDonatore }}</td>
+                  <td>#{{ v.idPrenotazione }}</td>
+                  <td class="log__slot">
+                    #{{ v.idSlotVecchio }}
+                    @if (v.idSlotNuovo !== null) {
+                      → #{{ v.idSlotNuovo }}
+                    }
+                  </td>
+                  <td>{{ v.usernameAdmin }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    }
+  }
+</section>

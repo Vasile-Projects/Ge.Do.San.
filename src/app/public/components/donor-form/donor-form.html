@@ -1,0 +1,147 @@
+<form class="donor-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+  <div class="donor-form__grid">
+    <div class="field">
+      <label for="df-nome">Nome <span class="field__required" aria-hidden="true">*</span></label>
+      <input
+        id="df-nome"
+        type="text"
+        formControlName="nome"
+        autocomplete="given-name"
+        maxlength="60"
+        placeholder="Mario"
+        aria-required="true"
+        [attr.aria-invalid]="messaggio('nome') ? true : null"
+        [attr.aria-describedby]="messaggio('nome') ? 'df-nome-err' : null"
+      />
+      @if (messaggio('nome'); as m) {
+        <p class="field__err" id="df-nome-err">{{ m }}</p>
+      }
+    </div>
+
+    <div class="field">
+      <label for="df-cognome"
+        >Cognome <span class="field__required" aria-hidden="true">*</span></label
+      >
+      <input
+        id="df-cognome"
+        type="text"
+        formControlName="cognome"
+        autocomplete="family-name"
+        maxlength="120"
+        placeholder="Rossi"
+        aria-required="true"
+        [attr.aria-invalid]="messaggio('cognome') ? true : null"
+        [attr.aria-describedby]="messaggio('cognome') ? 'df-cognome-err' : null"
+      />
+      @if (messaggio('cognome'); as m) {
+        <p class="field__err" id="df-cognome-err">{{ m }}</p>
+      }
+    </div>
+
+    <fieldset class="field field--nascita">
+      <legend>Data di nascita <span class="field__required" aria-hidden="true">*</span></legend>
+      <app-date-input
+        formControlName="dataNascita"
+        [invalido]="!!messaggio('dataNascita')"
+        erroreId="df-nascita-err"
+      />
+      @if (messaggio('dataNascita'); as m) {
+        <p class="field__err" id="df-nascita-err">{{ m }}</p>
+      }
+    </fieldset>
+
+    <fieldset class="field field--sesso">
+      <legend>Sesso <span class="field__required" aria-hidden="true">*</span></legend>
+      <div class="donor-form__radios">
+        @for (s of sessi; track s) {
+          <label class="seg">
+            <input
+              type="radio"
+              formControlName="sesso"
+              [value]="s"
+              [attr.aria-label]="s === 'M' ? 'Maschile' : 'Femminile'"
+            />
+            <span aria-hidden="true">{{ s }}</span>
+          </label>
+        }
+      </div>
+      @if (messaggio('sesso'); as m) {
+        <p class="field__err">{{ m }}</p>
+      }
+    </fieldset>
+
+    <div class="field field--full">
+      <label for="df-cf"
+        >Codice fiscale <span class="field__required" aria-hidden="true">*</span></label
+      >
+      <input
+        id="df-cf"
+        type="text"
+        formControlName="codiceFiscale"
+        autocapitalize="characters"
+        autocomplete="off"
+        spellcheck="false"
+        maxlength="16"
+        placeholder="RSSMRA90C15H501X"
+        aria-required="true"
+        (input)="onCodiceFiscaleInput($event)"
+        [attr.aria-invalid]="messaggio('codiceFiscale') ? true : null"
+        [attr.aria-describedby]="messaggio('codiceFiscale') ? 'df-cf-err' : null"
+      />
+      @if (messaggio('codiceFiscale'); as m) {
+        <p class="field__err" id="df-cf-err">{{ m }}</p>
+      }
+    </div>
+
+    <div class="field">
+      <label for="df-email">Email <span class="field__required" aria-hidden="true">*</span></label>
+      <input
+        id="df-email"
+        type="email"
+        formControlName="email"
+        autocomplete="email"
+        maxlength="255"
+        placeholder="mario.rossi@example.com"
+        aria-required="true"
+        [attr.aria-invalid]="messaggio('email') ? true : null"
+        [attr.aria-describedby]="messaggio('email') ? 'df-email-err' : null"
+      />
+      @if (messaggio('email'); as m) {
+        <p class="field__err" id="df-email-err">{{ m }}</p>
+      }
+    </div>
+
+    <div class="field">
+      <label for="df-cell"
+        >Cellulare <span class="field__required" aria-hidden="true">*</span></label
+      >
+      <div class="cellulare" [class.cellulare--invalid]="!!messaggio('cellulare')">
+        <span class="cellulare__prefisso" aria-hidden="true">+39</span>
+        <input
+          id="df-cell"
+          class="cellulare__input"
+          type="tel"
+          inputmode="numeric"
+          formControlName="cellulare"
+          autocomplete="tel-national"
+          maxlength="16"
+          placeholder="3401234567"
+          aria-required="true"
+          [attr.aria-invalid]="messaggio('cellulare') ? true : null"
+          [attr.aria-describedby]="messaggio('cellulare') ? 'df-cell-err' : null"
+          (input)="onCellulareInput($event)"
+        />
+      </div>
+      @if (messaggio('cellulare'); as m) {
+        <p class="field__err" id="df-cell-err">{{ m }}</p>
+      }
+    </div>
+  </div>
+
+  <app-button
+    label="Conferma prenotazione"
+    type="submit"
+    [disabled]="inCorso() || !puoInviare()"
+    [block]="true"
+  />
+</form>

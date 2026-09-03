@@ -1,0 +1,60 @@
+<section class="riprogramma" role="dialog" aria-modal="true" aria-labelledby="riprogramma-title">
+  <div class="riprogramma__head">
+    <h3 id="riprogramma-title">Riprogramma prenotazione</h3>
+    <button type="button" class="riprogramma__close" (click)="annulla.emit()" aria-label="Chiudi">
+      <app-icon name="close" [size]="18" />
+    </button>
+  </div>
+
+  <p class="riprogramma__current">
+    <strong>{{ prenotazione().nomeDonatore }} {{ prenotazione().cognomeDonatore }}</strong> —
+    attuale: {{ estesa(prenotazione().dataPrenotazione) }}, ore
+    {{ ora(prenotazione().orarioPrenotazione) }}
+  </p>
+
+  @if (errorePannello(); as msg) {
+    <p class="riprogramma__banner" role="alert" tabindex="-1">{{ msg }}</p>
+  }
+
+  <app-slot-scelta
+    [mese]="sel.mese()"
+    [dataIso]="sel.dataIso()"
+    [giorniNonDisponibili]="sel.giorniNonDisponibili()"
+    [giorniInCaricamento]="sel.giorniInCaricamento()"
+    [giorniErrore]="sel.giorniErrore()?.message ?? null"
+    [minIso]="minIso"
+    [maxIso]="maxIso"
+    [slotStatus]="sel.slotStatus()"
+    [slots]="sel.slots()"
+    [slotErrore]="sel.slotErrore()?.message ?? null"
+    [idSlot]="sel.idSlot()"
+    (cambiaMese)="sel.cambiaMese($event)"
+    (selezionaData)="sel.selezionaData($event)"
+    (selezionaSlot)="sel.selezionaSlot($event)"
+    (ricaricaGiorni)="sel.ricaricaGiorni()"
+    (ricaricaSlot)="sel.ricaricaSlot()"
+  />
+
+  <div class="riprogramma__actions">
+    <app-button label="Annulla" variant="ghost" (click)="annulla.emit()" />
+    <app-button
+      label="Riprogramma"
+      variant="primary"
+      [disabled]="!puoConfermare()"
+      (click)="apriConferma()"
+    />
+  </div>
+</section>
+
+@if (confermaAperta()) {
+  <app-confirm-dialog
+    titolo="Confermi la riprogrammazione?"
+    [messaggio]="messaggioConferma()"
+    [dettaglio]="dettaglioConferma()"
+    etichettaConferma="Riprogramma"
+    [inCorso]="inCorso()"
+    [errore]="erroreDialog()"
+    (conferma)="conferma()"
+    (annulla)="chiudiConferma()"
+  />
+}

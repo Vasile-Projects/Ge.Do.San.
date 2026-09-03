@@ -1,0 +1,58 @@
+<div class="prenotazioni-table__wrap">
+  <table class="prenotazioni-table">
+    <caption class="visually-hidden">
+      Prenotazioni del giorno selezionato
+    </caption>
+    <thead>
+      <tr>
+        <th scope="col">Donatore</th>
+        <th scope="col">Orario</th>
+        <th scope="col">Cellulare</th>
+        <th scope="col">Inserita il</th>
+        <th scope="col">Azioni</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (p of prenotazioni(); track p.id) {
+        <tr>
+          <td class="prenotazioni-table__ora">{{ ora(p.orarioPrenotazione) }}</td>
+          <td>
+            <span class="prenotazioni-table__nome"
+              >{{ p.nomeDonatore }} {{ p.cognomeDonatore }}</span
+            >
+            <span class="prenotazioni-table__id">#{{ p.id }}</span>
+          </td>
+          <td class="prenotazioni-table__contatti">
+            <a [href]="'tel:' + p.cellulareDonatore">{{ p.cellulareDonatore }}</a>
+          </td>
+          <td class="prenotazioni-table__creata">{{ dataOra(p.createdAt) }}</td>
+          <td class="prenotazioni-table__azioni">
+            <div class="prenotazioni-table__azioni-inner">
+              <app-button
+                label="Dettaglio"
+                variant="ghost-info"
+                icon="info"
+                [iconOnly]="true"
+                (click)="dettaglio.emit(p)"
+              />
+              <app-button
+                label="Riprogramma"
+                variant="ghost-info"
+                icon="pencil"
+                [iconOnly]="true"
+                (click)="riprogramma.emit(p)"
+              />
+              <app-button
+                label="Cancella"
+                variant="ghost"
+                icon="trash"
+                [iconOnly]="true"
+                (click)="cancella.emit(p)"
+              />
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

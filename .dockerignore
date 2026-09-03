@@ -1,0 +1,12 @@
+node_modules
+dist
+.angular
+.git
+.github
+.vscode
+design-src
+*.md
+!README.md
+.editorconfig
+.prettierrc
+.DS_Store

@@ -1,0 +1,61 @@
+<main class="login">
+  <div class="login__card">
+    <p class="login__brand">Gedosan · Area amministrativa</p>
+    <h1 class="login__title">Accedi</h1>
+    <p class="login__lead">Inserisci le credenziali amministrative.</p>
+
+    @if (errore(); as msg) {
+      <p class="login__error" role="alert" tabindex="-1">{{ msg }}</p>
+    }
+
+    <form class="login__form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <div class="field">
+        <label for="login-username">Username</label>
+        <input
+          id="login-username"
+          type="text"
+          formControlName="username"
+          autocomplete="username"
+          autocapitalize="none"
+          spellcheck="false"
+          [attr.aria-invalid]="messaggio('username') ? true : null"
+          [attr.aria-describedby]="messaggio('username') ? 'login-username-err' : null"
+        />
+        @if (messaggio('username'); as m) {
+          <p class="field__err" id="login-username-err">{{ m }}</p>
+        }
+      </div>
+
+      <div class="field">
+        <label for="login-password">Password</label>
+        <input
+          id="login-password"
+          type="password"
+          formControlName="password"
+          autocomplete="current-password"
+          [attr.aria-invalid]="messaggio('password') ? true : null"
+          [attr.aria-describedby]="messaggio('password') ? 'login-password-err' : null"
+        />
+        @if (messaggio('password'); as m) {
+          <p class="field__err" id="login-password-err">{{ m }}</p>
+        }
+      </div>
+
+      <app-button
+        [label]="inCorso() ? 'Accesso in corso…' : 'Accedi'"
+        type="submit"
+        [disabled]="inCorso()"
+        [block]="true"
+      />
+    </form>
+
+    <app-button
+      label="Torna alla home"
+      variant="ghost"
+      link="/"
+      icon="chevron-left"
+      iconPosition="start"
+      [block]="true"
+    />
+  </div>
+</main>

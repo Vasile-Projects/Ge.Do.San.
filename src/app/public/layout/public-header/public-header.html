@@ -1,0 +1,23 @@
+<div class="public-header__inner container">
+  <a
+    routerLink="/"
+    class="public-header__brand"
+    aria-label="Ge.Do.San. — Gestione donatori sangue, home"
+  >
+    <img src="gedosan-logo.png" alt="" width="45" height="45" class="public-header__logo" />
+    <span class="public-header__brand-text">
+      <span class="public-header__wordmark"
+        >Ge.Do.<span class="public-header__wordmark-accent">San.</span></span
+      >
+      <span class="public-header__tagline">Gestione donatori sangue</span>
+    </span>
+  </a>
+
+  <div class="public-header__actions">
+    @if (azione() === 'home') {
+      <app-button label="Home" variant="ghost" icon="chevron-left" iconPosition="start" link="/" />
+    } @else {
+      <app-button label="Prenota ora" variant="primary" link="/prenota" />
+    }
+  </div>
+</div>

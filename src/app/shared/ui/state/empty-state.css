@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-8);
+  border: 1px dashed var(--c-border);
+  border-radius: var(--radius-card);
+  color: var(--c-text-muted);
+}
+
+.empty-state__msg {
+  margin: 0;
+  font-size: var(--fs-body);
+}

@@ -1,0 +1,9 @@
+<ul class="eligibility__grid">
+  @for (c of criteri; track c.label) {
+    <li class="eligibility__tile">
+      <app-icon [name]="c.icon" [size]="26" class="eligibility__icon" />
+      <span class="eligibility__value">{{ c.value }}</span>
+      <span class="eligibility__label">{{ c.label }}</span>
+    </li>
+  }
+</ul>

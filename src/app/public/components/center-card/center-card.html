@@ -1,0 +1,33 @@
+<article class="center-card">
+  <app-map-embed
+    class="center-card__map"
+    [query]="mapsQuery()"
+    [title]="'Mappa — ' + centro().nome"
+  />
+
+  <div class="center-card__body">
+    <h3 class="center-card__name">{{ centro().nome }}</h3>
+
+    <p class="center-card__row">
+      <app-icon name="map-pin" [size]="18" />
+      <span>{{ indirizzo() }}</span>
+    </p>
+
+    @if (centro().telefono) {
+      <p class="center-card__row">
+        <app-icon name="phone" [size]="18" />
+        <a [href]="'tel:' + centro().telefono">{{ centro().telefono }}</a>
+      </p>
+    }
+
+    <p class="center-card__row">
+      <app-icon name="clock" [size]="18" />
+      <span>Tutti i giorni, 8:30 &ndash; 11:30</span>
+    </p>
+
+    <a class="center-card__directions" [href]="directionsUrl()" target="_blank" rel="noopener">
+      Indicazioni
+      <app-icon name="arrow-right" [size]="16" />
+    </a>
+  </div>
+</article>

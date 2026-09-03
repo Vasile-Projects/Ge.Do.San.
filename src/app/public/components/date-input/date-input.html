@@ -1,0 +1,56 @@
+<div
+  class="date-input"
+  role="group"
+  aria-label="Data di nascita"
+  [attr.aria-describedby]="invalido() && erroreId() ? erroreId() : null"
+>
+  <input
+    #giornoEl
+    class="date-input__giorno"
+    type="text"
+    inputmode="numeric"
+    pattern="[0-9]*"
+    autocomplete="bday-day"
+    maxlength="2"
+    placeholder="15"
+    aria-label="Giorno"
+    [value]="giorno()"
+    [disabled]="disabilitato()"
+    [attr.aria-invalid]="invalido() ? true : null"
+    (input)="onCifre('giorno', $event)"
+    (blur)="onBlur()"
+  />
+
+  <select
+    class="date-input__mese"
+    [class.date-input__mese--placeholder]="!mese()"
+    autocomplete="bday-month"
+    aria-label="Mese"
+    [value]="mese()"
+    [disabled]="disabilitato()"
+    [attr.aria-invalid]="invalido() ? true : null"
+    (change)="onMese($event)"
+    (blur)="onBlur()"
+  >
+    <option value="" disabled>Mese</option>
+    @for (nome of mesi; track $index) {
+      <option [value]="$index + 1">{{ nome }}</option>
+    }
+  </select>
+
+  <input
+    class="date-input__anno"
+    type="text"
+    inputmode="numeric"
+    pattern="[0-9]*"
+    autocomplete="bday-year"
+    maxlength="4"
+    placeholder="1990"
+    aria-label="Anno"
+    [value]="anno()"
+    [disabled]="disabilitato()"
+    [attr.aria-invalid]="invalido() ? true : null"
+    (input)="onCifre('anno', $event)"
+    (blur)="onBlur()"
+  />
+</div>

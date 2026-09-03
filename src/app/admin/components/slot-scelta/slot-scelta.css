@@ -1,0 +1,16 @@
+.slot-scelta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.slot-scelta__giorno {
+  max-width: 440px;
+}
+
+.slot-scelta__label {
+  margin: 0 0 var(--space-3);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--c-text-muted);
+}

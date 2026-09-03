@@ -1,0 +1,85 @@
+<div class="date-picker">
+  <div class="date-picker__head">
+    <button
+      type="button"
+      class="date-picker__nav"
+      [disabled]="!puoIndietro()"
+      (click)="vaiMese(-1)"
+      aria-label="Mese precedente"
+    >
+      <app-icon name="chevron-left" [size]="18" />
+    </button>
+    <span class="date-picker__month" aria-live="polite">{{ etichettaMese() }}</span>
+    <button
+      type="button"
+      class="date-picker__nav"
+      [disabled]="!puoAvanti()"
+      (click)="vaiMese(1)"
+      aria-label="Mese successivo"
+    >
+      <app-icon name="chevron-right" [size]="18" />
+    </button>
+  </div>
+
+  <div class="date-picker__grid-wrap">
+    <table
+      class="date-picker__grid"
+      role="grid"
+      [attr.aria-label]="'Calendario ' + etichettaMese()"
+    >
+      <thead>
+        <tr>
+          @for (g of giorniSettimana; track g) {
+            <th scope="col">{{ g }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (settimana of settimane(); track $index) {
+          <tr>
+            @for (giorno of settimana; track giorno.iso) {
+              <td>
+                @if (giorno.nelMese && nelFinestra(giorno.iso)) {
+                  <button
+                    #cella
+                    type="button"
+                    class="date-picker__day"
+                    [attr.data-iso]="giorno.iso"
+                    [class.date-picker__day--sel]="giorno.iso === selezionata()"
+                    [class.date-picker__day--chiuso]="chiuso(giorno.iso)"
+                    [class.date-picker__day--oggi]="giorno.iso === oggi"
+                    [tabindex]="giorno.iso === isoAttivo() ? 0 : -1"
+                    [attr.aria-pressed]="giorno.iso === selezionata()"
+                    [attr.aria-disabled]="chiusoBloccato(giorno.iso) ? true : null"
+                    [attr.aria-label]="estesa(giorno.iso) + (chiuso(giorno.iso) ? ' — chiuso' : '')"
+                    (click)="onClick(giorno.iso)"
+                    (keydown)="onKeydown($event, giorno.iso)"
+                  >
+                    {{ giorno.giorno }}
+                  </button>
+                } @else {
+                  <span class="date-picker__day date-picker__day--vuoto" aria-hidden="true">
+                    {{ giorno.giorno }}
+                  </span>
+                }
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    @if (caricamento()) {
+      <div class="date-picker__overlay" role="status" aria-live="polite">
+        <span class="date-picker__spinner" aria-hidden="true"></span>
+        <span class="visually-hidden">Aggiornamento disponibilità…</span>
+      </div>
+    }
+  </div>
+
+  <p class="date-picker__legend">
+    <span class="date-picker__legend-item"><span class="dot dot--oggi"></span> oggi</span>
+    <span class="date-picker__legend-item"><span class="dot dot--sel"></span> selezionato</span>
+    <span class="date-picker__legend-item"><span class="dot dot--chiuso"></span> chiuso</span>
+  </p>
+</div>

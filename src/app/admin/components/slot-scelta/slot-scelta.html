@@ -1,0 +1,44 @@
+<div class="slot-scelta">
+  <div class="slot-scelta__giorno">
+    <h4 class="slot-scelta__label">Giorno</h4>
+    @if (giorniErrore(); as err) {
+      <app-error-state [message]="err" (retry)="ricaricaGiorni.emit()" />
+    } @else {
+      <app-date-picker
+        [mese]="mese()"
+        [selezionata]="dataIso()"
+        [giorniNonDisponibili]="giorniNonDisponibili()"
+        [minIso]="minIso()"
+        [maxIso]="maxIso()"
+        [caricamento]="giorniInCaricamento()"
+        (cambiaMese)="cambiaMese.emit($event)"
+        (selezionaData)="selezionaData.emit($event)"
+      />
+    }
+  </div>
+
+  @if (dataIso() !== null) {
+    <div class="slot-scelta__orario">
+      <h4 class="slot-scelta__label">Orario</h4>
+      @switch (slotStatus()) {
+        @case ('loading') {
+          <app-loading label="Caricamento degli orari…" />
+        }
+        @case ('error') {
+          <app-error-state [message]="slotErrore() ?? ''" (retry)="ricaricaSlot.emit()" />
+        }
+        @case ('success') {
+          @if (slots().length === 0) {
+            <app-empty-state message="Nessun orario per questo giorno." />
+          } @else {
+            <app-slot-picker
+              [slots]="slots()"
+              [selezionatoId]="idSlot()"
+              (seleziona)="selezionaSlot.emit($event)"
+            />
+          }
+        }
+      }
+    </div>
+  }
+</div>

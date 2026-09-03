@@ -1,0 +1,138 @@
+<main id="contenuto" class="container section prenota">
+  <h1 class="prenota__title">Prenota la tua donazione</h1>
+  <p class="prenota__lead">
+    Segui la procedura guidata per prenotare la tua donazione di sangue. In caso di dubbi, puoi
+    contattare il centro trasfusionale scelto.
+  </p>
+
+  @if (conferma(); as c) {
+    <app-booking-confirmation
+      class="prenota__confirmation"
+      [conferma]="c"
+      (nuovaPrenotazione)="ricomincia()"
+    />
+  } @else {
+    @if (erroreGenerale(); as msg) {
+      <p class="prenota__banner" role="alert">{{ msg }}</p>
+    }
+
+    <div class="prenota__layout">
+      <div class="prenota__steps">
+        <section class="step" aria-labelledby="step-centro">
+          <h2 id="step-centro" class="step__title">
+            <span>1</span> Scegli il centro trasfusionale
+          </h2>
+          @switch (centriStatus()) {
+            @case ('loading') {
+              <app-loading label="Caricamento dei centri…" />
+            }
+            @case ('error') {
+              <app-error-state
+                [message]="centriError()?.message ?? ''"
+                (retry)="ricaricaCentri()"
+              />
+            }
+            @default {
+              @if (centri().length === 0) {
+                <app-empty-state message="Nessun centro trasfusionale disponibile al momento." />
+              } @else {
+                <app-center-selector
+                  [centri]="centri()"
+                  [selezionatoId]="idTrasfusionale()"
+                  (seleziona)="onCentroSelect($event)"
+                />
+              }
+            }
+          }
+        </section>
+
+        @if (idTrasfusionale() !== null) {
+          <section class="step" aria-labelledby="step-giorno">
+            <h2 id="step-giorno" class="step__title"><span>2</span> Seleziona il giorno</h2>
+            @if (giorniError(); as err) {
+              <app-error-state [message]="err.message" (retry)="ricaricaGiorni()" />
+            } @else {
+              <app-date-picker
+                [mese]="mese()"
+                [selezionata]="dataIso()"
+                [giorniNonDisponibili]="giorniNonDisponibili()"
+                [minIso]="minIso"
+                [maxIso]="maxIso"
+                [caricamento]="giorniStatus() === 'loading'"
+                (cambiaMese)="onCambiaMese($event)"
+                (selezionaData)="onSelezionaData($event)"
+              />
+            }
+          </section>
+        }
+
+        @if (dataIso() !== null) {
+          <section class="step" aria-labelledby="step-orario">
+            <h2 id="step-orario" class="step__title"><span>3</span> Scegli un orario</h2>
+            @switch (slotStatus()) {
+              @case ('loading') {
+                <app-loading label="Caricamento degli orari…" />
+              }
+              @case ('error') {
+                <app-error-state [message]="slotError()?.message ?? ''" (retry)="ricaricaSlot()" />
+              }
+              @case ('success') {
+                @if (slots().length === 0) {
+                  <app-empty-state message="Nessun orario disponibile per questo giorno." />
+                } @else {
+                  <app-slot-picker
+                    [slots]="slots()"
+                    [selezionatoId]="idSlot()"
+                    (seleziona)="onSelezionaSlot($event)"
+                  />
+                }
+              }
+            }
+          </section>
+        }
+
+        @if (mostraForm()) {
+          <section class="step" aria-labelledby="step-dati">
+            <h2 id="step-dati" class="step__title"><span>4</span> Compila con i tuoi dati</h2>
+            <p class="prenota__hint">
+              I campi contrassegnati con <span aria-hidden="true">*</span> sono obbligatori.
+            </p>
+            @if (rateLimited()) {
+              <p class="prenota__banner prenota__banner--warn" role="status">
+                Troppi tentativi ravvicinati. Riprova tra qualche minuto.
+              </p>
+            }
+            <app-donor-form
+              [dataDonazione]="dataIso()"
+              [inCorso]="invioInCorso()"
+              [puoInviare]="idSlot() !== null"
+              [erroriServer]="erroriCampo()"
+              (invia)="onInvia($event)"
+            />
+            @if (idSlot() === null) {
+              <p class="prenota__hint">Seleziona un orario per confermare.</p>
+            }
+          </section>
+        }
+      </div>
+
+      <aside class="prenota__rail">
+        <app-booking-summary
+          [centro]="centroSelezionato()"
+          [dataIso]="dataIso()"
+          [slot]="slotSelezionato()"
+        />
+      </aside>
+    </div>
+
+    @if (confermaUscita()) {
+      <app-confirm-dialog
+        titolo="Sicuro di voler uscire?"
+        messaggio="Perderai i dati inseriti e le selezioni fatte finora."
+        etichettaConferma="Esci"
+        (conferma)="confermaUscitaHome()"
+        (annulla)="annullaUscita()"
+      />
+    }
+  }
+</main>

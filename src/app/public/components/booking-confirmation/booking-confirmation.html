@@ -1,0 +1,36 @@
+<section class="booking-confirmation" aria-labelledby="conf-title" tabindex="-1">
+  <app-icon name="check-circle" [size]="40" class="booking-confirmation__icon" />
+  <h2 id="conf-title" class="booking-confirmation__title">Prenotazione confermata</h2>
+  <p class="booking-confirmation__lead">
+    {{ conferma().nomeDonatore }} {{ conferma().cognomeDonatore }}, ti aspettiamo per la tua
+    donazione.
+  </p>
+
+  <dl class="booking-confirmation__list">
+    <div>
+      <dt>Centro</dt>
+      <dd>{{ conferma().nomeTrasfusionale }}</dd>
+    </div>
+    <div>
+      <dt>Giorno</dt>
+      <dd>{{ data() }}</dd>
+    </div>
+    <div>
+      <dt>Orario</dt>
+      <dd>{{ orario() }}</dd>
+    </div>
+    <div>
+      <dt>Codice prenotazione</dt>
+      <dd>#{{ conferma().id }}</dd>
+    </div>
+  </dl>
+
+  <p class="booking-confirmation__note">
+    Riceverai un'email di conferma. Per modifiche o disdette, contatta il centro trasfusionale.
+  </p>
+
+  <div class="booking-confirmation__actions">
+    <app-button label="Nuova prenotazione" variant="secondary" (click)="nuovaPrenotazione.emit()" />
+    <app-button label="Torna alla home" variant="ghost" link="/" />
+  </div>
+</section>

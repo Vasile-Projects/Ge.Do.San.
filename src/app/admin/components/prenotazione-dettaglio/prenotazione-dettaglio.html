@@ -1,0 +1,45 @@
+<section class="dettaglio" role="dialog" aria-modal="true" aria-labelledby="dettaglio-title">
+  <div class="dettaglio__head">
+    <h3 id="dettaglio-title">Dettaglio prenotazione #{{ prenotazione().id }}</h3>
+    <button type="button" class="dettaglio__close" (click)="chiudi.emit()" aria-label="Chiudi">
+      <app-icon name="close" [size]="18" />
+    </button>
+  </div>
+
+  <dl class="dettaglio__list">
+    <div>
+      <dt>Donatore</dt>
+      <dd>{{ prenotazione().nomeDonatore }} {{ prenotazione().cognomeDonatore }}</dd>
+    </div>
+    <div>
+      <dt>Email</dt>
+      <dd>
+        <a [href]="'mailto:' + prenotazione().emailDonatore">{{ prenotazione().emailDonatore }}</a>
+      </dd>
+    </div>
+    <div>
+      <dt>Cellulare</dt>
+      <dd>{{ prenotazione().cellulareDonatore }}</dd>
+    </div>
+    <div>
+      <dt>Centro</dt>
+      <dd>{{ prenotazione().nomeTrasfusionale }}</dd>
+    </div>
+    <div>
+      <dt>Giorno</dt>
+      <dd>{{ estesa(prenotazione().dataPrenotazione) }}</dd>
+    </div>
+    <div>
+      <dt>Orario</dt>
+      <dd>{{ ora(prenotazione().orarioPrenotazione) }}</dd>
+    </div>
+    <div>
+      <dt>Tipo donazione</dt>
+      <dd>Sangue intero</dd>
+    </div>
+    <div>
+      <dt>Creata il</dt>
+      <dd>{{ dataOra(prenotazione().createdAt) }}</dd>
+    </div>
+  </dl>
+</section>

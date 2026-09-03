@@ -1,0 +1,45 @@
+@let cls =
+  'btn btn--' + variant() + (block() ? ' btn--block' : '') + (iconOnly() ? ' btn--icon-only' : '');
+@let ttl = iconOnly() ? label() : null;
+@let icoSize = iconOnly() ? 20 : 16;
+
+<ng-template #inner>
+  @if (icon(); as ic) {
+    @if (iconPosition() === 'start') {
+      <app-icon [name]="ic" [size]="icoSize" />
+    }
+  }
+  <span [class.visually-hidden]="iconOnly()">{{ label() }}</span>
+  @if (icon(); as ic) {
+    @if (iconPosition() === 'end') {
+      <app-icon [name]="ic" [size]="icoSize" />
+    }
+  }
+</ng-template>
+
+@if (link(); as l) {
+  <a [routerLink]="l" [class]="cls" [attr.aria-label]="ariaLabel()" [attr.title]="ttl">
+    <ng-container [ngTemplateOutlet]="inner" />
+  </a>
+} @else if (href(); as h) {
+  <a
+    [href]="h"
+    target="_blank"
+    rel="noopener"
+    [class]="cls"
+    [attr.aria-label]="ariaLabel()"
+    [attr.title]="ttl"
+  >
+    <ng-container [ngTemplateOutlet]="inner" />
+  </a>
+} @else {
+  <button
+    [type]="type()"
+    [disabled]="disabled()"
+    [class]="cls"
+    [attr.aria-label]="ariaLabel()"
+    [attr.title]="ttl"
+  >
+    <ng-container [ngTemplateOutlet]="inner" />
+  </button>
+}

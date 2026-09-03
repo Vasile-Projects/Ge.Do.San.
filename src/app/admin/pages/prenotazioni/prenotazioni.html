@@ -1,0 +1,187 @@
+<section class="pren">
+  <h1 class="visually-hidden">Prenotazioni</h1>
+
+  @if (avviso(); as msg) {
+    <p class="pren__avviso" role="status" tabindex="-1">{{ msg }}</p>
+  }
+
+  <div class="pren__contesto">
+    <div class="pren__campo">
+      <h2 class="pren__label">Centro</h2>
+      @switch (centriStatus()) {
+        @case ('loading') {
+          <app-loading label="Caricamento dei centri…" />
+        }
+        @case ('error') {
+          <app-error-state [message]="centriError()?.message ?? ''" (retry)="ricaricaCentri()" />
+        }
+        @default {
+          @if (centri().length === 0) {
+            <app-empty-state message="Nessun centro trasfusionale disponibile." />
+          } @else {
+            <app-center-selector
+              [centri]="centri()"
+              [selezionatoId]="idTrasfusionale()"
+              (seleziona)="onCentroSelect($event)"
+            />
+          }
+        }
+      }
+    </div>
+
+    <div class="pren__campo">
+      <h2 class="pren__label">Giorno</h2>
+      <div class="pren__calendario">
+        <app-date-picker
+          [mese]="mese()"
+          [selezionata]="dataIso()"
+          [giorniNonDisponibili]="giorniNonDisponibili()"
+          [chiusiSelezionabili]="true"
+          [minIso]="minIso"
+          [maxIso]="maxIso"
+          (cambiaMese)="onCambiaMese($event)"
+          (selezionaData)="onSelezionaData($event)"
+        />
+      </div>
+    </div>
+  </div>
+
+  @if (idTrasfusionale() !== null) {
+    <div class="pren__tabella">
+      <div class="pren__barra">
+        <h2 class="pren__giorno-label">{{ estesa(dataIso()) }}</h2>
+        <div class="pren__strumenti">
+          <app-button
+            label="Nuova prenotazione"
+            variant="primary"
+            icon="plus"
+            iconPosition="start"
+            [disabled]="centroSelezionato() === null"
+            (click)="apriNuova()"
+          />
+          <app-button
+            label="Esporta PDF"
+            variant="secondary"
+            icon="download"
+            iconPosition="start"
+            [disabled]="elencoStatus() !== 'success' || prenotazioni().length === 0"
+            (click)="chiediEsporta()"
+          />
+        </div>
+      </div>
+
+      @switch (elencoStatus()) {
+        @case ('loading') {
+          <app-loading label="Caricamento delle prenotazioni…" />
+        }
+        @case ('error') {
+          <app-error-state [message]="elencoError()?.message ?? ''" (retry)="caricaElenco()" />
+        }
+        @case ('success') {
+          @if (prenotazioni().length === 0) {
+            <app-empty-state message="Nessuna prenotazione per questo giorno." />
+          } @else {
+            <app-prenotazioni-table
+              [prenotazioni]="prenotazioni()"
+              (dettaglio)="apriDettaglio($event)"
+              (riprogramma)="apriRiprogramma($event)"
+              (cancella)="chiediCancella($event)"
+            />
+          }
+        }
+      }
+    </div>
+  }
+
+  <div class="pren__log">
+    <h2 class="pren__label">Log modifiche</h2>
+    <app-admin-log />
+  </div>
+</section>
+
+@if (pannello().tipo !== 'nessuno') {
+  <div class="overlay">
+    <div class="overlay__scrim" (click)="chiudiPannelloRichiesto()"></div>
+    <div class="overlay__box">
+      @switch (pannello().tipo) {
+        @case ('dettaglio') {
+          @switch (dettaglioStatus()) {
+            @case ('loading') {
+              <div class="overlay__stato"><app-loading label="Caricamento del dettaglio…" /></div>
+            }
+            @case ('error') {
+              <div class="overlay__stato">
+                <app-error-state [message]="dettaglioErrore()?.message ?? ''" [retryable]="false" />
+              </div>
+            }
+            @case ('success') {
+              @if (dettaglioData(); as d) {
+                <app-prenotazione-dettaglio [prenotazione]="d" (chiudi)="chiudiPannello()" />
+              }
+            }
+          }
+        }
+        @case ('riprogramma') {
+          @if (riprogrammaCtx(); as ctx) {
+            <app-riprogramma-prenotazione
+              [prenotazione]="ctx.pren"
+              [idTrasfusionale]="ctx.id"
+              (riprogrammata)="onRiprogrammata($event)"
+              (annulla)="chiudiPannelloRichiesto()"
+            />
+          }
+        }
+        @case ('nuova') {
+          @if (centroSelezionato(); as c) {
+            <app-nuova-prenotazione
+              [centro]="c"
+              [dataContesto]="dataIso()"
+              (creata)="onCreata($event)"
+              (annulla)="chiudiPannelloRichiesto()"
+            />
+          }
+        }
+      }
+    </div>
+  </div>
+}
+
+@if (daCancellare(); as p) {
+  <app-confirm-dialog
+    titolo="Cancellare la prenotazione?"
+    [messaggio]="
+      'La prenotazione di ' + p.nomeDonatore + ' ' + p.cognomeDonatore + ' verrà eliminata.'
+    "
+    dettaglio="Operazione non reversibile: il posto sullo slot viene liberato e il donatore non riceve alcuna notifica automatica. Avvisalo separatamente."
+    etichettaConferma="Cancella"
+    [distruttiva]="true"
+    [inCorso]="cancellaInCorso()"
+    [errore]="cancellaErrore()"
+    (conferma)="confermaCancella()"
+    (annulla)="annullaCancella()"
+  />
+}
+
+@if (esportaAperto()) {
+  <app-confirm-dialog
+    titolo="Scaricare il PDF?"
+    [messaggio]="messaggioEsporta()"
+    etichettaConferma="Scarica"
+    [inCorso]="esportaInCorso()"
+    [errore]="esportaErrore()"
+    (conferma)="confermaEsporta()"
+    (annulla)="annullaEsporta()"
+  />
+}
+
+@if (chiediUscita()) {
+  <app-confirm-dialog
+    titolo="Chiudere il pannello?"
+    messaggio="Nel pannello aperto c'è una prenotazione non ancora salvata."
+    dettaglio="Chiudendo, i dati inseriti andranno persi."
+    etichettaConferma="Chiudi senza salvare"
+    [distruttiva]="true"
+    (conferma)="risolviUscita(true)"
+    (annulla)="risolviUscita(false)"
+  />
+}

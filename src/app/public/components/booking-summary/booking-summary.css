@@ -1,0 +1,44 @@
+.booking-summary {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-left: var(--card-bar-w) solid var(--c-gold);
+  border-radius: var(--radius-card);
+  padding: var(--space-6) var(--space-6);
+}
+
+.booking-summary__title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin-bottom: var(--space-4);
+}
+
+.booking-summary__list {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.booking-summary__row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  font-size: 0.9375rem;
+}
+.booking-summary__row + .booking-summary__row {
+  border-top: 1px solid var(--c-border);
+}
+.booking-summary__row:first-child {
+  padding-top: 0;
+}
+.booking-summary__row:last-child {
+  padding-bottom: 0;
+}
+.booking-summary__row dt {
+  color: var(--c-text-muted);
+}
+.booking-summary__row dd {
+  margin: 0;
+  font-weight: 600;
+  text-align: right;
+}

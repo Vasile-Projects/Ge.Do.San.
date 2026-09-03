@@ -1,0 +1,6 @@
+<p class="empty-state__msg">{{ message() }}</p>
+@if (actionLabel(); as lbl) {
+  @if (actionLink(); as lnk) {
+    <app-button [label]="lbl" variant="secondary" [link]="lnk" />
+  }
+}

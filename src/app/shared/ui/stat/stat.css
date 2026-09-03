@@ -1,0 +1,18 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.stat__value {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--fs-stat);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.stat__label {
+  font-size: var(--fs-small);
+  color: var(--stat-label-color, var(--c-text-muted));
+}

@@ -1,0 +1,68 @@
+<a class="skip-link" href="#admin-contenuto">Salta al contenuto</a>
+
+<div class="dashboard">
+  <header class="dashboard__bar">
+    <p class="dashboard__brand">
+      <span class="dashboard__wordmark"
+        >Ge.Do.<span class="dashboard__wordmark-accent">San.</span></span
+      >
+      <span class="dashboard__brand-sub">Area operatori</span>
+    </p>
+
+    <div class="dashboard__account">
+      @if (username(); as u) {
+        <span class="dashboard__user">{{ u }}</span>
+      }
+      <a
+        class="dashboard__icona"
+        routerLink="/"
+        title="Sito pubblico"
+        aria-label="Vai al sito pubblico"
+      >
+        <app-icon name="home" [size]="18" />
+      </a>
+      <button
+        type="button"
+        class="dashboard__icona"
+        title="Disconnetti"
+        aria-label="Disconnetti"
+        (click)="logout()"
+      >
+        <app-icon name="logout" [size]="18" />
+      </button>
+    </div>
+  </header>
+
+  <nav class="dashboard__tabs" aria-label="Sezioni">
+    <a routerLink="prenotazioni" routerLinkActive="is-active">
+      <app-icon name="calendar" [size]="17" /> Prenotazioni
+    </a>
+    <a routerLink="calendario" routerLinkActive="is-active">
+      <app-icon name="clock" [size]="17" /> Gestione calendario
+    </a>
+  </nav>
+
+  @if (preavviso() && !sessioneScaduta()) {
+    <p class="dashboard__avviso-sessione" role="status">
+      La sessione sta per scadere. Completa e conferma il lavoro in corso: alla scadenza dovrai
+      accedere di nuovo.
+    </p>
+  }
+
+  @if (sessioneScaduta() && modaleRimandata()) {
+    <p class="dashboard__avviso-sessione dashboard__avviso-sessione--scaduta" role="alert">
+      Sessione scaduta. Le azioni non sono più disponibili.
+      <button type="button" class="dashboard__avviso-azione" (click)="riapriModale()">
+        Vai al login
+      </button>
+    </p>
+  }
+
+  <main id="admin-contenuto" class="dashboard__main container">
+    <router-outlet />
+  </main>
+</div>
+
+@if (sessioneScaduta() && !modaleRimandata()) {
+  <app-session-expired (vaiAlLogin)="onVaiAlLogin()" (resta)="onRestaSullaPagina()" />
+}

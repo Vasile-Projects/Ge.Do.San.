@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap">
+  <style>
+    body { margin:0; background:#FAF6F4; color:#23313A;
+      font-family:'Inter', system-ui, -apple-system, sans-serif; }
+    h1,h2,h3 { font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif; margin:0; }
+    a { color:#C8102E; } a:hover { color:#A30E26; }
+  </style>
+</helmet>
+
+<div style="width:1440px; background:#FAF6F4; position:relative;">
+
+  <!-- sticky minimal header (always visible, overlaid) -->
+  <div style="position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between;
+    padding:20px 64px; background:rgba(250,246,244,0.86); border-bottom:1px solid #E7DEDC;">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="#C8102E"><path d="M12 2.5S5.5 10 5.5 15A6.5 6.5 0 0 0 18.5 15C18.5 10 12 2.5 12 2.5Z"/></svg>
+      <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:19px; letter-spacing:-0.01em;">Gedosan</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:24px;">
+      <span style="font-size:13px; color:#4B5B64;">prenotazioni@gedosan.it</span>
+      <span style="background:#C8102E; color:#fff; font-weight:600; font-size:14px; padding:10px 18px; border-radius:2px 12px 2px 12px;">Prenota ora</span>
+    </div>
+  </div>
+
+  <!-- HERO — editorial / typographic -->
+  <div style="padding:96px 64px 88px; display:grid; grid-template-columns:1.35fr 1fr; gap:56px; align-items:center;">
+    <div>
+      <h1 style="font-weight:700; font-size:66px; line-height:1.03; letter-spacing:-0.02em;">
+        Un'ora del tuo tempo.<br>Una vita per qualcun&nbsp;altro.
+      </h1>
+      <p style="max-width:30rem; font-size:18px; line-height:1.6; color:#4B5B64; margin:24px 0 34px;">
+        Prenota la tua donazione di sangue nei centri trasfusionali Pertini e S.&nbsp;Eugenio.
+        Scegli il giorno e l'orario in meno di un minuto. <span style="color:#4B5B64;">[copy da rivedere]</span>
+      </p>
+      <div style="display:flex; gap:14px; align-items:center;">
+        <span style="background:#C8102E; color:#fff; font-weight:600; font-size:15px; padding:13px 24px; border-radius:2px 12px 2px 12px;">Prenota ora</span>
+        <span style="color:#23313A; font-weight:600; font-size:15px; padding:12px 22px; border:1px solid #23313A; border-radius:2px 12px 2px 12px;">Scopri i centri</span>
+      </div>
+      <div style="display:flex; gap:40px; margin-top:48px; padding-top:26px; border-top:1px solid #E7DEDC;">
+        <div><div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:34px;">18<span style="font-size:18px;">+</span></div><div style="font-size:13px; color:#4B5B64;">età minima</div></div>
+        <div><div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:34px;">2</div><div style="font-size:13px; color:#4B5B64;">centri trasfusionali</div></div>
+        <div><div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:34px;">60<span style="font-size:18px;">gg</span></div><div style="font-size:13px; color:#4B5B64;">finestra di prenotazione</div></div>
+      </div>
+    </div>
+    <!-- calm asymmetric graphic -->
+    <div style="position:relative; height:420px;">
+      <div style="position:absolute; inset:0; background:#F3DEDE; border-radius:8px 90px 8px 90px;"></div>
+      <div style="position:absolute; left:40px; top:56px; right:64px; bottom:56px; background:#fff; border:1px solid #E7DEDC; border-radius:4px 60px 4px 60px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;">
+        <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#C8102E" stroke-width="1.4"><path d="M12 3S6 10 6 14.5A6 6 0 0 0 18 14.5C18 10 12 3 12 3Z"/></svg>
+        <span style="font-size:13px; color:#4B5B64;">illustrazione / foto — placeholder</span>
+      </div>
+      <div style="position:absolute; right:0; bottom:-18px; width:12px; height:120px; background:#C99A3E; border-radius:999px;"></div>
+    </div>
+  </div>
+
+  <div style="padding:0 64px 20px;">
+    <span style="font-size:13px; color:#4B5B64;">Direzione A — <strong>Editoriale, calma</strong> · tipografia protagonista, molto respiro, un solo accento rosso. Pro: elegante, autorevole, non “markettaro”. Contro: meno spinta all'azione immediata; richiede copy forte.</span>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

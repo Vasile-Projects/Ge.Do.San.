@@ -1,0 +1,208 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap">
+  <style>
+    body { margin:0; background:#FAF6F4; color:#23313A;
+      font-family:'Inter', system-ui, -apple-system, sans-serif; }
+    h1,h2,h3,h4 { font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif; margin:0; }
+    a { color:#C8102E; } a:hover { color:#A30E26; }
+    p { margin:0; }
+  </style>
+</helmet>
+
+<div style="width:1440px; background:#FAF6F4;">
+
+  <!-- ============ STICKY MINIMAL HEADER — always visible, overlaid on hero ============ -->
+  <div style="position:relative; z-index:3; display:flex; align-items:center; justify-content:space-between;
+    padding:18px 64px; background:rgba(35,49,58,0.55);">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M12 2.5S5.5 10 5.5 15A6.5 6.5 0 0 0 18.5 15C18.5 10 12 2.5 12 2.5Z"/></svg>
+      <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:19px; color:#fff; letter-spacing:-0.01em;">Gedosan</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:22px;">
+      <span style="font-size:13px; color:rgba(255,255,255,0.82);">prenotazioni@gedosan.it</span>
+      <span style="background:#C8102E; color:#fff; font-weight:600; font-size:14px; padding:10px 18px; border-radius:2px 12px 2px 12px;">Prenota ora</span>
+    </div>
+  </div>
+
+  <!-- ============ HERO — bold full-bleed slate, collapses/fades on scroll ============ -->
+  <div style="background:#23313A; color:#fff; padding:78px 64px 92px; margin-top:-64px; padding-top:142px; position:relative; overflow:hidden;">
+    <div style="position:absolute; right:-120px; top:-120px; width:420px; height:420px; background:#A30E26; opacity:0.35; border-radius:60px 240px 60px 240px;"></div>
+    <div style="position:relative; max-width:1180px;">
+      <h1 style="font-weight:700; font-size:72px; line-height:1.02; letter-spacing:-0.025em; max-width:16ch;">
+        Dona sangue.<br>Salva vite. <span style="color:#C8102E;">Prenota adesso.</span>
+      </h1>
+      <p style="max-width:34rem; font-size:19px; line-height:1.6; color:rgba(255,255,255,0.8); margin:26px 0 36px;">
+        Il portale di prenotazione dei centri trasfusionali Pertini e S.&nbsp;Eugenio.
+        Scegli centro, giorno e orario in meno di un minuto. <span style="color:rgba(255,255,255,0.55);">[copy da rivedere]</span>
+      </p>
+      <div style="display:flex; gap:14px; align-items:center;">
+        <span style="background:#C8102E; color:#fff; font-weight:600; font-size:15px; padding:14px 26px; border-radius:2px 12px 2px 12px;">Prenota ora</span>
+        <span style="color:#fff; font-weight:600; font-size:15px; padding:13px 24px; border:1px solid rgba(255,255,255,0.5); border-radius:2px 12px 2px 12px;">Scopri i centri</span>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(4, max-content); gap:56px; margin-top:56px; padding-top:30px; border-top:1px solid rgba(255,255,255,0.16);">
+        <div><div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:46px; line-height:1;">18<span style="font-size:22px;">+</span></div><div style="font-size:13px; color:rgba(255,255,255,0.65); margin-top:6px;">età minima</div></div>
+        <div><div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:46px; line-height:1;">2</div><div style="font-size:13px; color:rgba(255,255,255,0.65); margin-top:6px;">centri trasfusionali</div></div>
+        <div><div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:46px; line-height:1;">90<span style="font-size:22px;">/365</span></div><div style="font-size:13px; color:rgba(255,255,255,0.65); margin-top:6px;">giorni tra donazioni (U / D)</div></div>
+        <div><div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:46px; line-height:1;">60<span style="font-size:22px;">gg</span></div><div style="font-size:13px; color:rgba(255,255,255,0.65); margin-top:6px;">finestra prenotabile</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ INTRO ============ -->
+  <div style="padding:96px 64px; display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; align-items:start;">
+    <h2 style="font-weight:600; font-size:36px; line-height:1.15; letter-spacing:-0.01em;">Perché la tua donazione conta</h2>
+    <div>
+      <p style="font-size:18px; line-height:1.65; color:#4B5B64;">
+        [Paragrafo introduttivo sulla donazione di sangue in generale — fornito separatamente o
+        redatto con il committente. 2–4 frasi: fabbisogno costante, sicurezza del prelievo, chi può donare,
+        cosa succede dopo.]
+      </p>
+      <div style="display:flex; gap:10px; margin-top:22px;">
+        <span style="width:36px; height:3px; background:#C8102E; align-self:center;"></span>
+        <a style="font-weight:600; font-size:15px;">Come funziona una donazione</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TRANSFUSION CENTER CARDS — two independent map embeds ============ -->
+  <div style="padding:0 64px 96px;">
+    <h2 style="font-weight:600; font-size:30px; margin-bottom:8px;">I due centri</h2>
+    <p style="font-size:15px; color:#4B5B64; margin-bottom:28px;">Dati e mappe caricati da <span style="font-family:'Space Grotesk',sans-serif;">GET /api/trasfusionali</span> — nessuna informazione hardcoded.</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+      <!-- card 1 -->
+      <div style="display:flex; background:#fff; border:1px solid #E7DEDC; border-radius:4px 22px 4px 22px; overflow:hidden;">
+        <div style="width:5px; background:#C8102E;"></div>
+        <div style="flex:1;">
+          <div style="height:220px; background:#E7DEDC; display:flex; align-items:center; justify-content:center; color:#4B5B64; font-size:13px; gap:8px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4B5B64" stroke-width="1.8"><path d="M12 21s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            Google Map — Centro Pertini (embed indipendente)
+          </div>
+          <div style="padding:22px 24px 26px;">
+            <h3 style="font-size:21px; font-weight:600;">Centro Pertini</h3>
+            <div style="display:flex; flex-direction:column; gap:8px; margin-top:12px; font-size:14px; color:#4B5B64;">
+              <div>[indirizzo, civico — da API]</div>
+              <div>[città — da API]</div>
+              <div>[telefono — da API]</div>
+              <div>[orari — da API se disponibili]</div>
+            </div>
+            <a style="display:inline-flex; align-items:center; gap:6px; font-weight:600; font-size:14px; margin-top:16px;">Indicazioni
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C8102E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <!-- card 2 -->
+      <div style="display:flex; background:#fff; border:1px solid #E7DEDC; border-radius:4px 22px 4px 22px; overflow:hidden;">
+        <div style="width:5px; background:#C8102E;"></div>
+        <div style="flex:1;">
+          <div style="height:220px; background:#E7DEDC; display:flex; align-items:center; justify-content:center; color:#4B5B64; font-size:13px; gap:8px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4B5B64" stroke-width="1.8"><path d="M12 21s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            Google Map — Centro S. Eugenio (embed indipendente)
+          </div>
+          <div style="padding:22px 24px 26px;">
+            <h3 style="font-size:21px; font-weight:600;">Centro S. Eugenio</h3>
+            <div style="display:flex; flex-direction:column; gap:8px; margin-top:12px; font-size:14px; color:#4B5B64;">
+              <div>[indirizzo, civico — da API]</div>
+              <div>[città — da API]</div>
+              <div>[telefono — da API]</div>
+              <div>[orari — da API se disponibili]</div>
+            </div>
+            <a style="display:inline-flex; align-items:center; gap:6px; font-weight:600; font-size:14px; margin-top:16px;">Indicazioni
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C8102E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ELIGIBILITY — infographic grid on blush ============ -->
+  <div style="background:#F3DEDE; padding:88px 64px;">
+    <h2 style="font-weight:600; font-size:30px; margin-bottom:8px;">Posso donare?</h2>
+    <p style="font-size:15px; color:#4B5B64; margin-bottom:32px; max-width:46rem;">
+      Soglie prese dalle regole di business della documentazione API. I requisiti clinici completi
+      (peso, stato di salute, documento) vanno confermati con il committente.
+    </p>
+    <div style="display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:16px;">
+      <div style="background:#FAF6F4; border-radius:3px 16px 3px 16px; padding:22px;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C8102E" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg>
+        <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:30px; margin-top:14px;">18+</div>
+        <div style="font-size:14px; color:#4B5B64; margin-top:4px;">Età minima, calcolata alla data della donazione</div>
+      </div>
+      <div style="background:#FAF6F4; border-radius:3px 16px 3px 16px; padding:22px;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C8102E" stroke-width="1.8"><path d="M12 3v4"/><path d="M5 8h14l-1.5 11a2 2 0 0 1-2 1.8h-7a2 2 0 0 1-2-1.8Z"/></svg>
+        <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:30px; margin-top:14px;">90 gg</div>
+        <div style="font-size:14px; color:#4B5B64; margin-top:4px;">Intervallo minimo tra donazioni — uomini</div>
+      </div>
+      <div style="background:#FAF6F4; border-radius:3px 16px 3px 16px; padding:22px;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C8102E" stroke-width="1.8"><path d="M12 3v4"/><path d="M5 8h14l-1.5 11a2 2 0 0 1-2 1.8h-7a2 2 0 0 1-2-1.8Z"/></svg>
+        <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:30px; margin-top:14px;">365 gg</div>
+        <div style="font-size:14px; color:#4B5B64; margin-top:4px;">Intervallo minimo tra donazioni — donne</div>
+      </div>
+      <div style="background:#FAF6F4; border-radius:3px 16px 3px 16px; padding:22px;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C8102E" stroke-width="1.8"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg>
+        <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:30px; margin-top:14px;">60 gg</div>
+        <div style="font-size:14px; color:#4B5B64; margin-top:4px;">Finestra futura in cui è possibile prenotare</div>
+      </div>
+      <div style="background:#FAF6F4; border-radius:3px 16px 3px 16px; padding:22px;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C8102E" stroke-width="1.8"><path d="M12 3S6 10 6 14.5A6 6 0 0 0 18 14.5C18 10 12 3 12 3Z"/></svg>
+        <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:30px; margin-top:14px;">Sangue intero</div>
+        <div style="font-size:14px; color:#4B5B64; margin-top:4px;">Unico tipo di donazione attualmente prenotabile</div>
+      </div>
+      <div style="background:#FAF6F4; border-radius:3px 16px 3px 16px; padding:22px;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C8102E" stroke-width="1.8"><path d="M6 3h9l3 3v15H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
+        <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:20px; margin-top:14px;">Codice fiscale valido</div>
+        <div style="font-size:14px; color:#4B5B64; margin-top:4px;">Coerente con data di nascita e sesso (verifica backend)</div>
+      </div>
+      <div style="background:#FAF6F4; border-radius:3px 16px 3px 16px; padding:22px; border:1px dashed #C99A3E;">
+        <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:20px; color:#C99A3E;">Altri requisiti</div>
+        <div style="font-size:14px; color:#4B5B64; margin-top:4px;">Peso, salute, documento d'identità — [da definire con il committente]</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CTA BAND ============ -->
+  <div style="background:#C8102E; color:#fff; padding:72px 64px; display:flex; align-items:center; justify-content:space-between; gap:32px;">
+    <div>
+      <h2 style="font-weight:700; font-size:40px; letter-spacing:-0.02em;">Pronto a donare?</h2>
+      <p style="font-size:17px; color:rgba(255,255,255,0.85); margin-top:8px;">Bastano un minuto e il tuo codice fiscale.</p>
+    </div>
+    <span style="background:#fff; color:#C8102E; font-weight:700; font-size:16px; padding:16px 30px; border-radius:2px 14px 2px 14px; white-space:nowrap;">Prenota ora →</span>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <div style="background:#23313A; color:rgba(255,255,255,0.7); padding:56px 64px 40px;">
+    <div style="display:flex; justify-content:space-between; gap:48px; flex-wrap:wrap;">
+      <div style="max-width:22rem;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M12 2.5S5.5 10 5.5 15A6.5 6.5 0 0 0 18.5 15C18.5 10 12 2.5 12 2.5Z"/></svg>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:17px; color:#fff;">Gedosan</span>
+        </div>
+        <p style="font-size:13px; margin-top:12px; line-height:1.6;">Portale di prenotazione donazioni di sangue. [ente / disclaimer da fornire]</p>
+      </div>
+      <div style="font-size:14px; line-height:2;">
+        <div style="color:#fff; font-weight:600; font-family:'Space Grotesk',sans-serif;">Centri</div>
+        <div>Centro Pertini</div><div>Centro S. Eugenio</div>
+      </div>
+      <div style="font-size:14px; line-height:2;">
+        <div style="color:#fff; font-weight:600; font-family:'Space Grotesk',sans-serif;">Contatti</div>
+        <div>prenotazioni@gedosan.it</div><div>[telefono]</div>
+      </div>
+      <div style="font-size:14px; line-height:2;">
+        <div style="color:#fff; font-weight:600; font-family:'Space Grotesk',sans-serif;">Info</div>
+        <div>Privacy</div><div>Accesso operatori</div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.14); margin-top:36px; padding-top:20px; font-size:12px;">© 2026 Gedosan — [ragione sociale]</div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

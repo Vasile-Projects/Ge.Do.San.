@@ -1,0 +1,7 @@
+services:
+  gedosan:
+    build: .
+    container_name: gedosan
+    restart: unless-stopped
+    ports:
+      - "8084:80"

@@ -1,0 +1,199 @@
+<section class="aperture">
+  <h1 class="aperture__title">Gestione calendario</h1>
+  <p class="aperture__lead">
+    Chiudi un giorno normalmente aperto o apri un festivo. Un'eccezione sulla data vince sempre sul
+    calendario ordinario.
+  </p>
+
+  @if (avviso(); as msg) {
+    <p class="aperture__avviso" role="status" tabindex="-1">{{ msg }}</p>
+  }
+
+  <div class="aperture__centro">
+    <h2 class="aperture__label">Centro</h2>
+    @switch (centriStatus()) {
+      @case ('loading') {
+        <app-loading label="Caricamento dei centri…" />
+      }
+      @case ('error') {
+        <app-error-state [message]="centriError()?.message ?? ''" (retry)="ricaricaCentri()" />
+      }
+      @default {
+        @if (centri().length === 0) {
+          <app-empty-state message="Nessun centro trasfusionale disponibile." />
+        } @else {
+          <app-center-selector
+            [centri]="centri()"
+            [selezionatoId]="idTrasfusionale()"
+            (seleziona)="onCentroSelect($event)"
+          />
+        }
+      }
+    }
+  </div>
+
+  @if (idTrasfusionale() !== null) {
+    <div class="aperture__pianificazione">
+      <div class="aperture__giorno">
+        <h2 class="aperture__label">Giorno</h2>
+        @switch (datiStatus()) {
+          @case ('loading') {
+            <app-loading label="Caricamento del calendario…" />
+          }
+          @case ('error') {
+            <app-error-state [message]="datiErrore()?.message ?? ''" (retry)="ricaricaDati()" />
+          }
+          @default {
+            <app-date-picker
+              [mese]="mese()"
+              [selezionata]="dataIso()"
+              [giorniNonDisponibili]="giorniNonDisponibili()"
+              [minIso]="minIso"
+              [maxIso]="maxIso"
+              [chiusiSelezionabili]="true"
+              (cambiaMese)="onCambiaMese($event)"
+              (selezionaData)="onSelezionaData($event)"
+            />
+          }
+        }
+      </div>
+
+      @if (dataIso(); as d) {
+        @if (datiStatus() === 'loading') {
+          <app-loading label="Aggiornamento dello stato del giorno…" />
+        } @else if (datiStatus() === 'success' && statoGiorno(); as stato) {
+          <div class="aperture__stato">
+            <h2 class="aperture__label">{{ estesa(d) }}</h2>
+            <p
+              class="aperture__badge"
+              [class.aperture__badge--chiuso]="
+                chiusoSelezionato() || eccezioneSelezionata()?.apertura === false
+              "
+            >
+              {{ stato.testo }}
+            </p>
+
+            @if (eccezioneSelezionata()?.motivo; as m) {
+              <p class="aperture__motivo-esistente">Motivo: {{ m }}</p>
+            }
+
+            <a
+              class="aperture__vedi-prenotazioni"
+              [routerLink]="['/admin/prenotazioni']"
+              [queryParams]="{ centro: idTrasfusionale(), data: d }"
+            >
+              Gestisci le prenotazioni di questo giorno →
+            </a>
+
+            @if (stato.azione === 'chiudi' || stato.azione === 'apri') {
+              <div class="field aperture__motivo">
+                <label for="aperture-motivo">Motivo (facoltativo)</label>
+                <input
+                  id="aperture-motivo"
+                  type="text"
+                  maxlength="255"
+                  [value]="motivo()"
+                  (input)="onMotivo($event)"
+                />
+              </div>
+            }
+
+            @switch (stato.azione) {
+              @case ('chiudi') {
+                <app-button
+                  label="Chiudi in via straordinaria"
+                  variant="primary"
+                  (click)="chiedi('chiudi')"
+                />
+              }
+              @case ('apri') {
+                <app-button
+                  label="Apri in via straordinaria"
+                  variant="primary"
+                  (click)="chiedi('apri')"
+                />
+              }
+              @case ('rimuovi') {
+                @if (eccezioneSelezionata(); as ecc) {
+                  <app-button
+                    label="Rimuovi eccezione"
+                    variant="secondary"
+                    icon="trash"
+                    iconPosition="start"
+                    (click)="chiediRimuovi(ecc)"
+                  />
+                }
+              }
+            }
+          </div>
+        }
+      }
+    </div>
+
+    @if (datiStatus() === 'success') {
+      <div class="aperture__elenco">
+        <h2 class="aperture__label">Eccezioni impostate</h2>
+        @if (variazioni().length === 0) {
+          <app-empty-state message="Nessuna apertura o chiusura straordinaria per questo centro." />
+        } @else {
+          <div class="aperture__table-wrap">
+            <table class="aperture__table">
+              <thead>
+                <tr>
+                  <th scope="col">Data</th>
+                  <th scope="col">Tipo</th>
+                  <th scope="col">Motivo</th>
+                  <th scope="col"><span class="visually-hidden">Azioni</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (v of variazioni(); track v.id) {
+                  <tr>
+                    <td>{{ compatta(v.dataVariazione) }}</td>
+                    <td>{{ v.apertura ? 'Apertura' : 'Chiusura' }}</td>
+                    <td>{{ v.motivo ?? '—' }}</td>
+                    <td class="aperture__table-azioni">
+                      <app-button
+                        label="Rimuovi"
+                        variant="ghost"
+                        icon="trash"
+                        iconPosition="start"
+                        (click)="chiediRimuovi(v)"
+                      />
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </div>
+    }
+  }
+</section>
+
+@if (dialogConferma(); as dc) {
+  <app-confirm-dialog
+    [titolo]="dc.titolo"
+    [messaggio]="dc.messaggio"
+    [dettaglio]="dc.dettaglio"
+    [etichettaConferma]="dc.etichetta"
+    [distruttiva]="dc.distruttiva"
+    [inCorso]="azioneInCorso()"
+    [errore]="azioneErrore()"
+    (conferma)="conferma()"
+    (annulla)="annullaAzione()"
+  />
+}
+
+@if (chiediUscita()) {
+  <app-confirm-dialog
+    titolo="Uscire dalla pagina?"
+    messaggio="Hai scritto un motivo per una variazione non ancora salvata."
+    dettaglio="Uscendo, il testo inserito andrà perso."
+    etichettaConferma="Esci senza salvare"
+    [distruttiva]="true"
+    (conferma)="risolviUscita(true)"
+    (annulla)="risolviUscita(false)"
+  />
+}

@@ -1,0 +1,21 @@
+<section class="booking-summary" aria-label="Riepilogo prenotazione">
+  <h2 class="booking-summary__title">Riepilogo</h2>
+  <dl class="booking-summary__list">
+    <div class="booking-summary__row">
+      <dt>Centro</dt>
+      <dd>{{ centro()?.nome ?? '—' }}</dd>
+    </div>
+    <div class="booking-summary__row">
+      <dt>Giorno</dt>
+      <dd>{{ dataEstesa() ?? '—' }}</dd>
+    </div>
+    <div class="booking-summary__row">
+      <dt>Orario</dt>
+      <dd>{{ orario() ?? '—' }}</dd>
+    </div>
+    <div class="booking-summary__row">
+      <dt>Tipo</dt>
+      <dd>Sangue intero</dd>
+    </div>
+  </dl>
+</section>

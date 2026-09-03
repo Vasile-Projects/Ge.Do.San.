@@ -1,59 +1,61 @@
 # Gedosan
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.6.
+Frontend del portale di prenotazione per la donazione di sangue di due centri
+trasfusionali. SPA Angular 21 (standalone, signals), che
+consuma un backend Spring Boot 3 / MySQL separato.
 
-## Development server
+## Cosa fa
 
-To start a local development server, run:
+- **`/`** — home pubblica: presentazione dei centri con mappe Google, requisiti di
+  idoneità, call to action.
+- **`/prenota`** — flusso di prenotazione: scelta centro → giorno → orario → dati del
+  donatore, con validazione lato client speculare alle regole del backend.
+- **`/admin`** — area riservata (login JWT): gestione prenotazioni per giorno,
+  aperture straordinarie, log delle modifiche, export PDF.
 
-```bash
-ng serve
-```
+## Stack
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- Angular 21 standalone, `signal()` / `input()` / `output()`, `inject()`
+- Routing con due domini lazy (`public` e `admin`)
+- TypeScript strict (`strict`, `strictTemplates`)
+- CSS vanilla con design token in `src/styles.css`
+- Test con Vitest
 
-## Code scaffolding
+## Requisiti
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Node 22+
+- Backend attivo (vedi `Gedosan-API`)
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+## Comandi
 
 ```bash
-ng build
+npm install
+npm start            
+npm run build        browser
+npm test             # test unitari (Vitest)
+npx prettier --write .   # formattazione
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Struttura
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
+```
+src/app/
+  core/http/      token API base URL, interceptor errori
+  shared/         modelli API, UI riusabile, validazione, helper date/a11y
+  public/         layout, pagine e componenti dell'area pubblica
+  admin/          auth, guard, servizi dati e pagine della dashboard
 ```
 
-## Running end-to-end tests
+Convenzioni: ogni componente è tre file (`.ts` / `.html` / `.css`), selettore con
+prefisso `app-`, `ChangeDetectionStrategy.OnPush`. Dettagli in `CLAUDE.md`.
 
-For end-to-end (e2e) testing, run:
+## Documenti di riferimento
 
-```bash
-ng e2e
-```
+- **`Gedosan-API-Docs.md`** — contratto API del backend (autoritativo)
+- **`istruzioni.md`** — requisiti funzionali e architetturali
+- **`grafica.md`** — design system (palette, tipografia, layout per pagina)
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Deploy
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Immagine Docker multi-stage servita da nginx, CI/CD con GitHub Actions su runner
+self-hosted. Vedi **`DEPLOY.md`**.

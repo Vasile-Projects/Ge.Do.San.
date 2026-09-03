@@ -1,0 +1,65 @@
+<div class="public-footer__inner container">
+  <div class="public-footer__brand">
+    <div class="public-footer__brand-head">
+      <img src="gedosan-logo.png" alt="" width="32" height="32" />
+      <span>Ge.Do.San.</span>
+    </div>
+    <p class="public-footer__tagline">
+      Portale di prenotazione per la donazione di sangue. L'idoneità alla donazione è valutata dal
+      medico del centro prima di ogni donazione. Il servizio non sostituisce il rapporto con il
+      proprio medico.
+    </p>
+  </div>
+
+  <nav class="public-footer__col" aria-label="Contatti">
+    <h2 class="public-footer__title">Contatti</h2>
+    @for (centro of contatti(); track centro.id) {
+      <div class="public-footer__centro">
+        <span class="public-footer__centro-nome">{{ centro.nome }}</span>
+        <span class="public-footer__centro-indirizzo">{{ centro.indirizzo }}</span>
+        @if (centro.telefono) {
+          <a class="public-footer__tel" [href]="'tel:' + centro.telefono">
+            <app-icon name="phone" [size]="15" />
+            <span>{{ centro.telefonoFormattato }}</span>
+          </a>
+        }
+      </div>
+    } @empty {
+      @if (contattiIndisponibili()) {
+        <span class="public-footer__nota">Recapiti dei centri non disponibili al momento.</span>
+      }
+    }
+  </nav>
+
+  <nav class="public-footer__col" aria-label="Informazioni">
+    <h2 class="public-footer__title">Informazioni</h2>
+    <a
+      href="https://www.aslroma2.it/index.php/organizzazione/ospedali/ospedale-sandro-pertini"
+      target="_blank"
+      rel="noopener"
+    >
+      Ospedale S. Pertini
+    </a>
+    <a
+      href="https://www.aslroma2.it/index.php/organizzazione/ospedali/ospedale-s-eugenio"
+      target="_blank"
+      rel="noopener"
+    >
+      Ospedale S. Eugenio
+    </a>
+    <a routerLink="/prenota">Prenota una donazione</a>
+    <a routerLink="/admin/login">Area amministrativa</a>
+  </nav>
+</div>
+
+<div class="public-footer__legal container">
+  <p class="public-footer__privacy">
+    I dati inseriti sono trattati nel massimo rispetto della privacy e non vengono condivisi con
+    terze parti o usati per scopi commerciali o di marketing.
+  </p>
+  <p class="public-footer__disclaimer">
+    Progetto didattico, non ufficiale e non affiliato con ASL Roma 2 né con i centri trasfusionali
+    citati.
+  </p>
+  <p class="public-footer__copyright">© {{ anno }} Ge.Do.San. Tutti i diritti riservati.</p>
+</div>

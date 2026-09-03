@@ -1,0 +1,23 @@
+<div class="session-expired__backdrop"></div>
+
+<div
+  class="session-expired__panel"
+  role="alertdialog"
+  aria-modal="true"
+  aria-labelledby="session-expired-title"
+  aria-describedby="session-expired-msg"
+>
+  <app-icon name="lock" [size]="28" class="session-expired__icon" />
+  <h2 id="session-expired-title" class="session-expired__title">Sessione scaduta</h2>
+  <p id="session-expired-msg" class="session-expired__msg">
+    La sessione è scaduta per motivi di sicurezza. Accedi di nuovo per continuare. Il lavoro non
+    ancora salvato in questa pagina andrà perso: se ti serve, scegli «Resta sulla pagina» per
+    copiarlo prima di rientrare.
+  </p>
+  <div class="session-expired__actions">
+    <app-button label="Resta sulla pagina" variant="secondary" (click)="resta.emit()" />
+    <span class="session-expired__cta" data-autofocus>
+      <app-button label="Vai al login" variant="primary" (click)="vaiAlLogin.emit()" />
+    </span>
+  </div>
+</div>

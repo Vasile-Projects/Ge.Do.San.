@@ -24,7 +24,6 @@ import {
 import { Button, ConfirmDialog, Icon } from '../../../shared/ui';
 import { comportamentoDialog } from '../../../shared/a11y';
 import { aggiungiGiorni, meseCorrente, meseDi, oggiIso } from '../../../shared/date';
-import { TrasfusionaliService } from '../../../shared/data/trasfusionali.service';
 import { PrenotazioniAdminService } from '../../data/prenotazioni-admin.service';
 import { SlotSelezione } from '../../data/slot-selezione';
 import { SlotScelta } from '../slot-scelta/slot-scelta';
@@ -58,7 +57,7 @@ export class NuovaPrenotazione {
   readonly creata = output<PrenotazioneAdminResponse>();
   readonly annulla = output<void>();
 
-  protected readonly sel = new SlotSelezione(inject(TrasfusionaliService), this.destroyRef);
+  protected readonly sel = new SlotSelezione();
 
   protected readonly minIso = oggiIso();
   protected readonly maxIso = aggiungiGiorni(
@@ -145,28 +144,15 @@ export class NuovaPrenotazione {
       return;
     }
 
+    // Le violazioni di regola sulla prenotazione tornano tutte come 409 con titolo
+    // unico ("Prenotazione non consentita"): si mostra `messaggio` e si ricarica la
+    // disponibilità, senza branching su `errore`.
     if (e.status === 409 || e.status === 404) {
-      switch (e.errore) {
-        case 'Slot esaurito':
-        case 'Risorsa non trovata':
-          this.confermaAperta.set(false);
-          this.mostraBanner(`${e.message} Scegli un altro orario e conferma di nuovo.`);
-          this.sel.ricaricaSlot();
-          return;
-        case 'Giorno non disponibile':
-          this.confermaAperta.set(false);
-          this.mostraBanner(e.message);
-          this.sel.ricaricaGiorni();
-          this.sel.ricaricaSlot();
-          return;
-        case 'Email non coerente':
-          this.confermaAperta.set(false);
-          this.erroriCampo.set({ email: e.message });
-          return;
-        default:
-          this.erroreDialog.set(e.message);
-          return;
-      }
+      this.confermaAperta.set(false);
+      this.mostraBanner(e.message);
+      this.sel.ricaricaGiorni();
+      this.sel.ricaricaSlot();
+      return;
     }
 
     this.erroreDialog.set(e.message);

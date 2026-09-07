@@ -1,0 +1,54 @@
+<div class="gc">
+  <div class="gc__toolbar">
+    <label for="gc-anno" class="gc__anno-label">Anno</label>
+    <select id="gc-anno" class="gc__anno" [value]="anno()" (change)="onAnno($event)">
+      @for (a of anniSelezionabili; track a) {
+        <option [value]="a">{{ a }}</option>
+      }
+    </select>
+  </div>
+
+  @switch (status()) {
+    @case ('loading') {
+      <app-loading label="Caricamento dei giorni di chiusura…" />
+    }
+    @case ('error') {
+      <app-error-state [message]="errore()?.message ?? ''" (retry)="ricarica()" />
+    }
+    @case ('success') {
+      @if (giorni().length === 0) {
+        <app-empty-state
+          [message]="'Nessun giorno di chiusura registrato per il ' + anno() + '.'"
+        />
+      } @else {
+        <div class="gc__table-wrap">
+          <table class="gc__table">
+            <thead>
+              <tr>
+                <th scope="col">Data</th>
+                <th scope="col">Descrizione</th>
+                <th scope="col">Tipo</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (g of giorni(); track g.data) {
+                <tr>
+                  <td class="gc__data">{{ data(g.data) }}</td>
+                  <td>{{ g.descrizione }}</td>
+                  <td>
+                    <span
+                      class="gc__badge"
+                      [class.gc__badge--straordinario]="g.tipo === 'STRAORDINARIO'"
+                    >
+                      {{ g.tipo === 'STRAORDINARIO' ? 'Straordinario' : 'Ordinario' }}
+                    </span>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    }
+  }
+</div>

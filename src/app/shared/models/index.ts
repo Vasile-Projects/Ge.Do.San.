@@ -4,6 +4,7 @@ export * from './trasfusionale.model';
 export * from './disponibilita.model';
 export * from './prenotazione.model';
 export * from './variazione-apertura.model';
+export * from './giorno-chiusura.model';
 export * from './log-modifica.model';
 export * from './auth.model';
 export * from './api-error.model';

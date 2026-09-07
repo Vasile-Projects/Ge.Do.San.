@@ -7,6 +7,7 @@ import {
   effect,
   inject,
   signal,
+  untracked,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -22,6 +23,7 @@ import { Loading, ErrorState, EmptyState, ConfirmDialog } from '../../../shared/
 import { RequestState, requestError, requestSuccess } from '../../../shared/state';
 import { aggiungiGiorni, meseCorrente, oggiIso } from '../../../shared/date';
 import { TrasfusionaliService } from '../../../shared/data/trasfusionali.service';
+import { creaRisorsaGiorniNonDisponibili } from '../../../shared/data/giorni-non-disponibili.resource';
 import { PrenotazioniService } from '../../data/prenotazioni.service';
 import { AvvisoUscita } from '../../guards/conferma-uscita.guard';
 import { CenterSelector } from '../../components/center-selector/center-selector';
@@ -74,7 +76,10 @@ export class Prenota implements AvvisoUscita {
 
   protected readonly idTrasfusionale = signal<number | null>(null);
   protected readonly mese = signal<string>(meseCorrente());
-  private readonly giorniState = signal<RequestState<ReadonlySet<string>>>({ status: 'idle' });
+  private readonly risorsaGiorni = creaRisorsaGiorniNonDisponibili({
+    idTrasfusionale: this.idTrasfusionale,
+    mese: this.mese,
+  });
   protected readonly dataIso = signal<string | null>(null);
   private readonly slotState = signal<RequestState<readonly Slot[]>>({ status: 'idle' });
   protected readonly idSlot = signal<number | null>(null);
@@ -95,15 +100,9 @@ export class Prenota implements AvvisoUscita {
     () => this.centri().find((c) => c.id === this.idTrasfusionale()) ?? null,
   );
 
-  protected readonly giorniStatus = computed(() => this.giorniState().status);
-  protected readonly giorniError = computed(() => {
-    const s = this.giorniState();
-    return s.status === 'error' ? s.error : null;
-  });
-  protected readonly giorniNonDisponibili = computed<ReadonlySet<string>>(() => {
-    const s = this.giorniState();
-    return s.status === 'success' ? s.data : new Set<string>();
-  });
+  protected readonly giorniStatus = computed(() => this.risorsaGiorni.stato().status);
+  protected readonly giorniError = this.risorsaGiorni.errore;
+  protected readonly giorniNonDisponibili = this.risorsaGiorni.giorni;
 
   protected readonly slotStatus = computed(() => this.slotState().status);
   protected readonly slotError = computed(() => {
@@ -131,7 +130,6 @@ export class Prenota implements AvvisoUscita {
   protected readonly confermaUscita = signal(false);
   private risolviUscita: ((esci: boolean) => void) | null = null;
 
-  private giorniToken = 0;
   private slotToken = 0;
   private preselezionaOggi = false;
 
@@ -143,33 +141,18 @@ export class Prenota implements AvvisoUscita {
         );
       }
     });
+
+    // Dopo il primo caricamento dei giorni per un centro appena scelto, preseleziona "oggi"
+    // se è prenotabile (la risorsa reagisce da sé al cambio di centro/mese).
+    effect(() => {
+      const s = this.risorsaGiorni.stato();
+      if (s.status !== 'success' || !this.preselezionaOggi) return;
+      untracked(() => this.forsePreselezionaOggi(s.data));
+    });
   }
 
   protected ricaricaCentri(): void {
     this.trasfusionali.caricaElenco(true);
-  }
-
-  private caricaGiorni(): void {
-    const id = this.idTrasfusionale();
-    if (id == null) return;
-    const mese = this.mese();
-    const token = ++this.giorniToken;
-    this.giorniState.set({ status: 'loading' });
-    this.trasfusionali
-      .giorniNonDisponibili(id, mese)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (giorni) => {
-          if (token === this.giorniToken) {
-            const set = new Set(giorni);
-            this.giorniState.set(requestSuccess(set));
-            this.forsePreselezionaOggi(set);
-          }
-        },
-        error: (e: NormalizedHttpError) => {
-          if (token === this.giorniToken) this.giorniState.set(requestError(e));
-        },
-      });
   }
 
   private caricaSlot(): void {
@@ -187,12 +170,12 @@ export class Prenota implements AvvisoUscita {
         },
         error: (e: NormalizedHttpError) => {
           if (token !== this.slotToken) return;
-          if (e.status === 409 && e.errore === 'Giorno non disponibile') {
+          if (e.status === 409) {
             this.erroreGenerale.set(e.message);
             this.dataIso.set(null);
             this.idSlot.set(null);
             this.slotState.set({ status: 'idle' });
-            this.caricaGiorni();
+            this.risorsaGiorni.ricarica();
           } else {
             this.slotState.set(requestError(e));
           }
@@ -205,25 +188,23 @@ export class Prenota implements AvvisoUscita {
   }
 
   protected ricaricaGiorni(): void {
-    this.caricaGiorni();
+    this.risorsaGiorni.ricarica();
   }
 
   protected onCentroSelect(id: number): void {
     if (id === this.idTrasfusionale()) return;
-    this.idTrasfusionale.set(id);
     this.dataIso.set(null);
     this.idSlot.set(null);
     this.slotState.set({ status: 'idle' });
-    this.mese.set(meseCorrente());
     this.azzeraErroriInvio();
     this.preselezionaOggi = true;
-    this.caricaGiorni();
+    this.mese.set(meseCorrente());
+    this.idTrasfusionale.set(id);
   }
 
   protected onCambiaMese(mese: string): void {
-    this.mese.set(mese);
     this.preselezionaOggi = false;
-    this.caricaGiorni();
+    this.mese.set(mese);
   }
 
   private forsePreselezionaOggi(giorniNonDisponibili: ReadonlySet<string>): void {
@@ -296,28 +277,15 @@ export class Prenota implements AvvisoUscita {
       return;
     }
 
+    // Le violazioni di regola sulla prenotazione tornano tutte come 409 con titolo
+    // unico ("Prenotazione non consentita"): niente branching su `errore`, si mostra
+    // `messaggio` e si ricaricano gli slot (l'handler di `caricaSlot` riporta al
+    // calendario se il giorno nel frattempo è stato chiuso).
     if (e.status === 409 || e.status === 404) {
-      switch (e.errore) {
-        case 'Slot esaurito':
-        case 'Risorsa non trovata':
-          this.idSlot.set(null);
-          this.erroreGenerale.set(e.message);
-          this.caricaSlot();
-          return;
-        case 'Giorno non disponibile':
-          this.erroreGenerale.set(e.message);
-          this.dataIso.set(null);
-          this.idSlot.set(null);
-          this.slotState.set({ status: 'idle' });
-          this.caricaGiorni();
-          return;
-        case 'Email non coerente':
-          this.erroriCampo.set({ email: e.message });
-          return;
-        default:
-          this.erroreGenerale.set(e.message);
-          return;
-      }
+      this.idSlot.set(null);
+      this.erroreGenerale.set(e.message);
+      this.caricaSlot();
+      return;
     }
 
     this.erroreGenerale.set(e.message);
@@ -351,7 +319,6 @@ export class Prenota implements AvvisoUscita {
     this.dataIso.set(null);
     this.idSlot.set(null);
     this.mese.set(meseCorrente());
-    this.giorniState.set({ status: 'idle' });
     this.slotState.set({ status: 'idle' });
     this.azzeraErroriInvio();
   }

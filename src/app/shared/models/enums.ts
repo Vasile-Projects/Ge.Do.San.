@@ -4,5 +4,7 @@ export type TipoDonazione = 'SI';
 
 export type AzioneAdmin = 'CANCELLAZIONE' | 'RIPROGRAMMAZIONE';
 
+export type TipoGiornoChiusura = 'ORDINARIO' | 'STRAORDINARIO';
+
 export const SESSO_VALUES: readonly Sesso[] = ['M', 'F'];
 export const TIPO_DONAZIONE_DEFAULT: TipoDonazione = 'SI';

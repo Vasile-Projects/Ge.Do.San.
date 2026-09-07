@@ -17,8 +17,13 @@ import {
   cellulareValidator,
   codiceFiscaleCoerenzaValidator,
   codiceFiscaleFormatoValidator,
+  cognomeCoerenzaCodiceFiscaleValidator,
   dataNascitaPassataValidator,
+  etaMassimaValidator,
   etaMinimaValidator,
+  nomeCoerenzaCodiceFiscaleValidator,
+  nomeCognomePatternValidator,
+  normalizzaNomeCognome,
 } from './donor-form.validators';
 
 export type ErroriServer = Readonly<Record<string, string>>;
@@ -30,6 +35,13 @@ const MESSAGGI: Readonly<Record<string, string>> = {
   dataNonValida: 'Inserisci una data di nascita valida (giorno, mese e anno).',
   dataNonPassata: 'La data di nascita deve essere nel passato.',
   etaMinima: `Devi avere almeno ${REGOLE_BUSINESS.etaMinima} anni alla data della donazione.`,
+  etaMassima: `Superata l'età massima di ${REGOLE_BUSINESS.etaMassima} anni per prenotare online. Contatta il trasfusionale per valutare l'idoneità.`,
+  nomeCognomeFormato:
+    'Inseriscilo come sulla tessera sanitaria: solo lettere, spazi, apostrofi, punti e trattini.',
+  nomeCoerenza:
+    'Il nome non corrisponde al codice fiscale: inseriscilo per intero, come sulla tessera sanitaria.',
+  cognomeCoerenza:
+    'Il cognome non corrisponde al codice fiscale: inseriscilo come sulla tessera sanitaria.',
   codiceFiscaleFormato: 'Codice fiscale non valido.',
   codiceFiscaleCoerenza:
     'Il codice fiscale non è coerente con la data di nascita e/o il sesso dichiarati.',
@@ -57,13 +69,30 @@ export class DonorForm {
   protected readonly sessi: readonly Sesso[] = ['M', 'F'];
 
   protected readonly form = this.fb.nonNullable.group({
-    nome: ['', [Validators.required, Validators.maxLength(60)]],
-    cognome: ['', [Validators.required, Validators.maxLength(120)]],
+    nome: [
+      '',
+      [
+        Validators.required,
+        Validators.maxLength(60),
+        nomeCognomePatternValidator,
+        nomeCoerenzaCodiceFiscaleValidator,
+      ],
+    ],
+    cognome: [
+      '',
+      [
+        Validators.required,
+        Validators.maxLength(120),
+        nomeCognomePatternValidator,
+        cognomeCoerenzaCodiceFiscaleValidator,
+      ],
+    ],
     dataNascita: [
       '',
       [
         dataNascitaPassataValidator,
         etaMinimaValidator(() => this.dataDonazione(), REGOLE_BUSINESS.etaMinima),
+        etaMassimaValidator(() => this.dataDonazione(), REGOLE_BUSINESS.etaMassima),
       ],
     ],
     sesso: this.fb.nonNullable.control<Sesso | ''>('', [Validators.required]),
@@ -90,6 +119,14 @@ export class DonorForm {
       this.form.controls.codiceFiscale.updateValueAndValidity({ emitEvent: false });
     this.form.controls.dataNascita.valueChanges.pipe(takeUntilDestroyed()).subscribe(rivalidaCf);
     this.form.controls.sesso.valueChanges.pipe(takeUntilDestroyed()).subscribe(rivalidaCf);
+
+    const rivalidaNomeCognome = () => {
+      this.form.controls.nome.updateValueAndValidity({ emitEvent: false });
+      this.form.controls.cognome.updateValueAndValidity({ emitEvent: false });
+    };
+    this.form.controls.codiceFiscale.valueChanges
+      .pipe(takeUntilDestroyed())
+      .subscribe(rivalidaNomeCognome);
 
     effect(() => {
       const errori = this.erroriServer() ?? {};
@@ -165,8 +202,8 @@ export class DonorForm {
 
     const v = this.form.getRawValue();
     this.invia.emit({
-      nome: v.nome.trim(),
-      cognome: v.cognome.trim(),
+      nome: normalizzaNomeCognome(v.nome),
+      cognome: normalizzaNomeCognome(v.cognome),
       dataNascita: v.dataNascita,
       sesso: v.sesso as Sesso,
       codiceFiscale: normalizzaCodiceFiscale(v.codiceFiscale),

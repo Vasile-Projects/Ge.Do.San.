@@ -24,7 +24,6 @@ import {
   meseDi,
   oggiIso,
 } from '../../../shared/date';
-import { TrasfusionaliService } from '../../../shared/data/trasfusionali.service';
 import { PrenotazioniAdminService } from '../../data/prenotazioni-admin.service';
 import { SlotSelezione } from '../../data/slot-selezione';
 import { SlotScelta } from '../slot-scelta/slot-scelta';
@@ -47,7 +46,7 @@ export class RiprogrammaPrenotazione {
   readonly riprogrammata = output<PrenotazioneAdminResponse>();
   readonly annulla = output<void>();
 
-  protected readonly sel = new SlotSelezione(inject(TrasfusionaliService), this.destroyRef);
+  protected readonly sel = new SlotSelezione();
 
   protected readonly minIso = oggiIso();
   protected readonly maxIso = aggiungiGiorni(
@@ -124,10 +123,7 @@ export class RiprogrammaPrenotazione {
   }
 
   private gestisciErrore(e: NormalizedHttpError): void {
-    if (
-      e.status === 409 &&
-      (e.errore === 'Slot esaurito' || e.errore === 'Giorno non disponibile')
-    ) {
+    if (e.status === 409) {
       this.confermaAperta.set(false);
       this.errorePannello.set(`${e.message} Scegli un altro orario e conferma di nuovo.`);
       this.sel.ricaricaGiorni();

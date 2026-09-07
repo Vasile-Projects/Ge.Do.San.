@@ -117,6 +117,57 @@ function decodifica(cf: string): DatiDecodificati | null {
   return { annoUltimeDueCifre: anno, mese: meseIdx + 1, giorno, sesso };
 }
 
+// --- Coerenza CF ↔ cognome/nome (algoritmo Agenzia delle Entrate) ---------------
+// Speculare a CodiceCognomeNome.java del backend. Le prime 6 lettere del CF sono
+// sempre alfabetiche (mai omocodia), quindi confrontabili anche se la parte
+// data/sesso non è decodificabile.
+
+function pulisciNomeCognome(testo: string): string {
+  return testo
+    .normalize('NFD')
+    .replace(/\p{M}+/gu, '')
+    .toUpperCase()
+    .replace(/[^A-Z]/g, '');
+}
+
+function soleConsonanti(s: string): string {
+  return s.replace(/[AEIOU]/g, '');
+}
+
+function soleVocali(s: string): string {
+  return s.replace(/[^AEIOU]/g, '');
+}
+
+/** Prime 3 lettere del CF attese per un cognome, o `null` se il testo non contiene lettere. */
+export function codiceCognomeDaTesto(testo: string): string | null {
+  const p = pulisciNomeCognome(testo);
+  if (!p) return null;
+  return (soleConsonanti(p) + soleVocali(p) + 'XXX').slice(0, 3);
+}
+
+/** Lettere 4-6 del CF attese per un nome, o `null` se il testo non contiene lettere. */
+export function codiceNomeDaTesto(testo: string): string | null {
+  const p = pulisciNomeCognome(testo);
+  if (!p) return null;
+  const c = soleConsonanti(p);
+  if (c.length >= 4) return c[0] + c[2] + c[3];
+  return (c + soleVocali(p) + 'XXX').slice(0, 3);
+}
+
+export function codiceFiscaleCoerenteConCognome(cf: string, cognome: string): boolean {
+  const norm = normalizzaCodiceFiscale(cf);
+  if (!FORMATO.test(norm)) return true;
+  const atteso = codiceCognomeDaTesto(cognome);
+  return atteso === null || atteso === norm.slice(0, 3);
+}
+
+export function codiceFiscaleCoerenteConNome(cf: string, nome: string): boolean {
+  const norm = normalizzaCodiceFiscale(cf);
+  if (!FORMATO.test(norm)) return true;
+  const atteso = codiceNomeDaTesto(nome);
+  return atteso === null || atteso === norm.slice(3, 6);
+}
+
 export function codiceFiscaleCoerente(cf: string, dataNascitaIso: string, sesso: Sesso): boolean {
   if (!validaFormatoCodiceFiscale(cf)) {
     return false;

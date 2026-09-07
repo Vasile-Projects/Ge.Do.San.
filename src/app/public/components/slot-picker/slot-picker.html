@@ -15,9 +15,6 @@
       (keydown)="onKeydown($event, i)"
     >
       <span class="slot-picker__ora">{{ ora(slot.orario) }}</span>
-      @if (!slot.disponibile) {
-        <span class="slot-picker__stato">esaurito</span>
-      }
     </button>
   }
 </div>

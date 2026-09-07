@@ -41,10 +41,3 @@
   font-weight: 600;
   font-size: 0.9375rem;
 }
-.slot-picker__stato {
-  font-size: 0.6875rem;
-  color: var(--c-text-muted);
-}
-.slot-picker__opt--sel .slot-picker__stato {
-  color: var(--c-red);
-}

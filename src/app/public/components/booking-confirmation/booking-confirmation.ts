@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { Button, Icon } from '../../../shared/ui';
 import { PrenotazioneConfermaResponse } from '../../../shared/models';
+import { formattaTelefono } from '../../../shared/format/telefono';
 import { formattaDataEstesa, formattaOrario } from '../../../shared/date';
 
 @Component({
@@ -16,4 +17,15 @@ export class BookingConfirmation {
 
   protected readonly data = computed(() => formattaDataEstesa(this.conferma().dataPrenotazione));
   protected readonly orario = computed(() => formattaOrario(this.conferma().orarioPrenotazione));
+
+  protected readonly indirizzo = computed(() => {
+    const c = this.conferma();
+    return c.civicoTrasfusionale != null
+      ? `${c.indirizzoTrasfusionale}, ${c.civicoTrasfusionale}`
+      : c.indirizzoTrasfusionale;
+  });
+  protected readonly telefono = computed(() => {
+    const t = this.conferma().telefonoTrasfusionale;
+    return t ? formattaTelefono(t) : null;
+  });
 }

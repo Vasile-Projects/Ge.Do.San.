@@ -12,6 +12,18 @@
       <dd>{{ conferma().nomeTrasfusionale }}</dd>
     </div>
     <div>
+      <dt>Indirizzo</dt>
+      <dd>{{ indirizzo() }}</dd>
+    </div>
+    @if (telefono(); as tel) {
+      <div>
+        <dt>Telefono</dt>
+        <dd>
+          <a [href]="'tel:' + conferma().telefonoTrasfusionale">{{ tel }}</a>
+        </dd>
+      </div>
+    }
+    <div>
       <dt>Giorno</dt>
       <dd>{{ data() }}</dd>
     </div>

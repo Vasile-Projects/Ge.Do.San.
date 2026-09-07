@@ -63,8 +63,9 @@ export class Login {
     }
 
     this.inCorso.set(true);
+    const { username, password } = this.form.getRawValue();
     this.auth
-      .login(this.form.getRawValue())
+      .login({ username: username.trim(), password })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {

@@ -12,7 +12,8 @@ export interface PrenotazioneRequest {
   readonly tipoDonazione: TipoDonazione;
 }
 
-export interface PrenotazioneConfermaResponse {
+/** Campi comuni alle due risposte di prenotazione (donatore e admin). */
+export interface PrenotazioneBase {
   readonly id: number;
   readonly nomeDonatore: string;
   readonly cognomeDonatore: string;
@@ -22,7 +23,15 @@ export interface PrenotazioneConfermaResponse {
   readonly tipoDonazione: TipoDonazione;
 }
 
-export interface PrenotazioneAdminResponse extends PrenotazioneConfermaResponse {
+/** Risposta di `POST /api/prenotazioni` (flusso donatore): include i recapiti del centro. */
+export interface PrenotazioneConfermaResponse extends PrenotazioneBase {
+  readonly indirizzoTrasfusionale: string;
+  readonly civicoTrasfusionale: number | null;
+  readonly telefonoTrasfusionale: string | null;
+}
+
+/** Risposta degli endpoint admin: include i contatti del donatore e `createdAt`. */
+export interface PrenotazioneAdminResponse extends PrenotazioneBase {
   readonly emailDonatore: string;
   readonly cellulareDonatore: string;
   readonly createdAt: string;

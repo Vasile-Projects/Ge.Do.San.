@@ -26,10 +26,12 @@ import {
   oggiIso,
 } from '../../../shared/date';
 import { TrasfusionaliService } from '../../../shared/data/trasfusionali.service';
+import { creaRisorsaGiorniNonDisponibili } from '../../../shared/data/giorni-non-disponibili.resource';
 import { VariazioniAperturaService } from '../../data/variazioni-apertura.service';
 import { PrenotazioniAdminService } from '../../data/prenotazioni-admin.service';
 import { CenterSelector } from '../../../public/components/center-selector/center-selector';
 import { DatePicker } from '../../../public/components/date-picker/date-picker';
+import { GiorniChiusuraTabella } from '../../components/giorni-chiusura-tabella/giorni-chiusura-tabella';
 
 type Azione =
   | { readonly kind: 'chiudi' }
@@ -42,6 +44,7 @@ type Azione =
   imports: [
     CenterSelector,
     DatePicker,
+    GiorniChiusuraTabella,
     ConfirmDialog,
     Loading,
     ErrorState,
@@ -67,7 +70,10 @@ export class Aperture implements ConLavoroInCorso {
   protected readonly dataIso = signal<string | null>(oggiIso());
   protected readonly motivo = signal<string>('');
 
-  private readonly giorniState = signal<RequestState<ReadonlySet<string>>>({ status: 'idle' });
+  private readonly risorsaGiorni = creaRisorsaGiorniNonDisponibili({
+    idTrasfusionale: this.idTrasfusionale,
+    mese: this.mese,
+  });
   private readonly variazioniState = signal<RequestState<readonly VariazioneApertura[]>>({
     status: 'idle',
   });
@@ -95,25 +101,23 @@ export class Aperture implements ConLavoroInCorso {
   protected readonly centriError = this.trasfusionali.erroreElenco;
 
   protected readonly datiStatus = computed(() => {
-    const g = this.giorniState();
+    const g = this.risorsaGiorni.stato();
     const v = this.variazioniState();
     if (g.status === 'error' || v.status === 'error') return 'error' as const;
     if (g.status === 'loading' || v.status === 'loading') return 'loading' as const;
     if (g.status === 'success' && v.status === 'success') return 'success' as const;
     return 'idle' as const;
   });
-  protected readonly datiErrore = computed(() => {
-    const g = this.giorniState();
-    const v = this.variazioniState();
-    if (g.status === 'error') return g.error;
-    if (v.status === 'error') return v.error;
-    return null;
+  protected readonly datiErrore = computed(
+    () => this.risorsaGiorni.errore() ?? this.variazioniErrore(),
+  );
+
+  private readonly variazioniErrore = computed(() => {
+    const s = this.variazioniState();
+    return s.status === 'error' ? s.error : null;
   });
 
-  protected readonly giorniNonDisponibili = computed<ReadonlySet<string>>(() => {
-    const s = this.giorniState();
-    return s.status === 'success' ? s.data : new Set<string>();
-  });
+  protected readonly giorniNonDisponibili = this.risorsaGiorni.giorni;
   protected readonly variazioni = computed<readonly VariazioneApertura[]>(() => {
     const s = this.variazioniState();
     return s.status === 'success' ? s.data : [];
@@ -193,7 +197,6 @@ export class Aperture implements ConLavoroInCorso {
   });
 
   private variazioniToken = 0;
-  private giorniToken = 0;
 
   constructor() {
     effect(() => {
@@ -206,24 +209,6 @@ export class Aperture implements ConLavoroInCorso {
 
   protected ricaricaCentri(): void {
     this.trasfusionali.caricaElenco(true);
-  }
-
-  private caricaGiorni(): void {
-    const id = this.idTrasfusionale();
-    if (id == null) return;
-    const token = ++this.giorniToken;
-    this.giorniState.set({ status: 'loading' });
-    this.trasfusionali
-      .giorniNonDisponibili(id, this.mese())
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (g) => {
-          if (token === this.giorniToken) this.giorniState.set(requestSuccess(new Set(g)));
-        },
-        error: (e: NormalizedHttpError) => {
-          if (token === this.giorniToken) this.giorniState.set(requestError(e));
-        },
-      });
   }
 
   private caricaVariazioni(): void {
@@ -245,24 +230,22 @@ export class Aperture implements ConLavoroInCorso {
   }
 
   protected ricaricaDati(): void {
-    this.caricaGiorni();
+    this.risorsaGiorni.ricarica();
     this.caricaVariazioni();
   }
 
   protected onCentroSelect(id: number): void {
     if (id === this.idTrasfusionale()) return;
-    this.idTrasfusionale.set(id);
     this.dataIso.set(oggiIso());
     this.motivo.set('');
     this.avviso.set(null);
     this.mese.set(meseCorrente());
-    this.caricaGiorni();
+    this.idTrasfusionale.set(id);
     this.caricaVariazioni();
   }
 
   protected onCambiaMese(mese: string): void {
     this.mese.set(mese);
-    this.caricaGiorni();
   }
 
   protected onSelezionaData(iso: string): void {

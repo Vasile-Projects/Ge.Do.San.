@@ -13,7 +13,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { NormalizedHttpError } from '../../../core/http';
-import { PrenotazioneAdminResponse } from '../../../shared/models';
+import { PrenotazioneAdminResponse, REGOLE_BUSINESS } from '../../../shared/models';
 import { RequestState, requestError, requestSuccess } from '../../../shared/state';
 import { Button, ConfirmDialog, EmptyState, ErrorState, Loading } from '../../../shared/ui';
 import { ConLavoroInCorso } from '../../guards/lavoro-in-corso.guard';
@@ -25,6 +25,7 @@ import {
   oggiIso,
 } from '../../../shared/date';
 import { TrasfusionaliService } from '../../../shared/data/trasfusionali.service';
+import { creaRisorsaGiorniNonDisponibili } from '../../../shared/data/giorni-non-disponibili.resource';
 import { PrenotazioniAdminService } from '../../data/prenotazioni-admin.service';
 import { CenterSelector } from '../../../public/components/center-selector/center-selector';
 import { DatePicker } from '../../../public/components/date-picker/date-picker';
@@ -71,7 +72,10 @@ export class Prenotazioni implements ConLavoroInCorso {
   private readonly route = inject(ActivatedRoute);
 
   protected readonly minIso = aggiungiGiorni(oggiIso(), -400);
-  protected readonly maxIso = aggiungiGiorni(oggiIso(), 90);
+  protected readonly maxIso = aggiungiGiorni(
+    oggiIso(),
+    REGOLE_BUSINESS.orizzontePrenotazioneGiorni,
+  );
 
   protected readonly idTrasfusionale = signal<number | null>(null);
   protected readonly mese = signal<string>(meseCorrente());
@@ -81,11 +85,14 @@ export class Prenotazioni implements ConLavoroInCorso {
     status: 'idle',
   });
 
-  private readonly giorniState = signal<RequestState<ReadonlySet<string>>>({ status: 'idle' });
-  protected readonly giorniNonDisponibili = computed<ReadonlySet<string>>(() => {
-    const s = this.giorniState();
-    return s.status === 'success' ? s.data : new Set<string>();
+  // `suErrore: 'giorniVuoti'`: se la GET dei giorni chiusi fallisce, il calendario mostra
+  // comunque tutte le date come navigabili (qui serve solo a sfogliare le prenotazioni esistenti).
+  private readonly risorsaGiorni = creaRisorsaGiorniNonDisponibili({
+    idTrasfusionale: this.idTrasfusionale,
+    mese: this.mese,
+    suErrore: 'giorniVuoti',
   });
+  protected readonly giorniNonDisponibili = this.risorsaGiorni.giorni;
 
   protected readonly pannello = signal<Pannello>({ tipo: 'nessuno' });
   private readonly dettaglioState = signal<RequestState<PrenotazioneAdminResponse>>({
@@ -151,7 +158,6 @@ export class Prenotazioni implements ConLavoroInCorso {
   );
 
   private elencoToken = 0;
-  private giorniToken = 0;
   private dettaglioToken = 0;
 
   constructor() {
@@ -164,7 +170,6 @@ export class Prenotazioni implements ConLavoroInCorso {
         this.dataIso.set(data);
         this.mese.set(meseDi(data));
       }
-      this.caricaGiorni();
       this.caricaElenco();
     }
 
@@ -178,24 +183,6 @@ export class Prenotazioni implements ConLavoroInCorso {
 
   protected ricaricaCentri(): void {
     this.trasfusionali.caricaElenco(true);
-  }
-
-  private caricaGiorni(): void {
-    const id = this.idTrasfusionale();
-    if (id == null) return;
-    const token = ++this.giorniToken;
-    this.giorniState.set({ status: 'loading' });
-    this.trasfusionali
-      .giorniNonDisponibili(id, this.mese())
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (g) => {
-          if (token === this.giorniToken) this.giorniState.set(requestSuccess(new Set(g)));
-        },
-        error: () => {
-          if (token === this.giorniToken) this.giorniState.set(requestSuccess(new Set<string>()));
-        },
-      });
   }
 
   protected caricaElenco(): void {
@@ -222,13 +209,11 @@ export class Prenotazioni implements ConLavoroInCorso {
     this.idTrasfusionale.set(id);
     this.chiudiPannello();
     this.avviso.set(null);
-    this.caricaGiorni();
     this.caricaElenco();
   }
 
   protected onCambiaMese(mese: string): void {
     this.mese.set(mese);
-    this.caricaGiorni();
   }
 
   protected onEscOverlay(): void {
@@ -239,12 +224,10 @@ export class Prenotazioni implements ConLavoroInCorso {
 
   protected onSelezionaData(iso: string): void {
     if (iso === this.dataIso()) return;
-    const meseCambiato = meseDi(iso) !== this.mese();
     this.dataIso.set(iso);
     this.mese.set(meseDi(iso));
     this.chiudiPannello();
     this.avviso.set(null);
-    if (meseCambiato) this.caricaGiorni();
     this.caricaElenco();
   }
 

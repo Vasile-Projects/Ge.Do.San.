@@ -49,12 +49,6 @@ src/app/
 Convenzioni: ogni componente è tre file (`.ts` / `.html` / `.css`), selettore con
 prefisso `app-`, `ChangeDetectionStrategy.OnPush`. Dettagli in `CLAUDE.md`.
 
-## Documenti di riferimento
-
-- **`Gedosan-API-Docs.md`** — contratto API del backend (autoritativo)
-- **`istruzioni.md`** — requisiti funzionali e architetturali
-- **`grafica.md`** — design system (palette, tipografia, layout per pagina)
-
 ## Deploy
 
 Immagine Docker multi-stage servita da nginx, CI/CD con GitHub Actions su runner

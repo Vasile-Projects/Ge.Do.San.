@@ -28,7 +28,11 @@
   overflow: hidden;
 }
 
-.hero__inner {
+/* Solo il blocco sopra i vantaggi sfuma allo scroll: su mobile l'hero supera lo schermo e la
+   lista dei vantaggi deve restare leggibile. */
+.hero__title,
+.hero__lead,
+.hero__actions {
   opacity: calc(1 - var(--hero-progress, 0));
   transform: translateY(calc(var(--hero-progress, 0) * -24px));
   transition:
@@ -44,10 +48,6 @@
   max-width: 16ch;
   color: #fff;
 }
-.hero__title-accent {
-  color: var(--c-red);
-}
-
 .hero__lead {
   max-width: 34rem;
   margin-top: var(--space-6);
@@ -66,24 +66,57 @@
   margin-top: var(--space-8);
 }
 
-.hero__stats {
+.hero__vantaggi {
+  list-style: none;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-6) var(--space-8);
+  grid-template-columns: 1fr;
   margin: var(--space-12) 0 0;
-  padding-top: var(--space-6);
+  padding: var(--space-2) 0 0;
   border-top: 1px solid rgb(255 255 255 / 0.16);
-  max-width: 40rem;
 }
-@media (min-width: 900px) {
-  .hero__stats {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    max-width: none;
+@media (min-width: 640px) {
+  .hero__vantaggi {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6) var(--space-8);
+    padding-top: var(--space-6);
   }
 }
-.hero__stats app-stat {
+@media (min-width: 1024px) {
+  .hero__vantaggi {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.hero__vantaggio {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-block: var(--space-4);
+}
+.hero__vantaggio + .hero__vantaggio {
+  border-top: 1px solid rgb(255 255 255 / 0.16);
+}
+@media (min-width: 640px) {
+  .hero__vantaggio {
+    padding-block: 0;
+  }
+  .hero__vantaggio + .hero__vantaggio {
+    border-top: 0;
+  }
+}
+
+.hero__vantaggio-titolo {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.1875rem;
+  line-height: 1.3;
   color: #fff;
-  --stat-label-color: rgb(255 255 255 / 0.65);
+}
+.hero__vantaggio-testo {
+  max-width: 30ch;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: rgb(255 255 255 / 0.72);
 }
 
 .intro {
@@ -94,9 +127,14 @@
   font-size: var(--fs-h2);
 }
 .intro__body {
+  max-width: 42rem;
   font-size: var(--fs-body-lg);
   line-height: var(--lh-body);
   color: var(--c-text-muted);
+}
+
+.intro + .centri {
+  padding-top: 0;
 }
 
 .centri__title {
@@ -121,9 +159,10 @@
   font-size: var(--fs-h2);
 }
 .eligibility-section__intro {
-  margin: var(--space-3) 0 var(--space-8);
+  max-width: 42rem;
+  margin: var(--space-6) 0 var(--space-12);
   color: var(--c-text-muted);
-  font-size: var(--fs-small);
+  font-size: var(--fs-body-lg);
 }
 
 .cta-band {

@@ -1,9 +1,19 @@
-<ul class="eligibility__grid">
-  @for (c of criteri; track c.label) {
-    <li class="eligibility__tile">
-      <app-icon [name]="c.icon" [size]="26" class="eligibility__icon" />
-      <span class="eligibility__value">{{ c.value }}</span>
-      <span class="eligibility__label">{{ c.label }}</span>
-    </li>
-  }
-</ul>
+<div class="eligibility">
+  <dl class="eligibility__requisiti">
+    @for (r of requisiti; track r.valore) {
+      <div class="eligibility__riga">
+        <dt class="eligibility__valore">{{ r.valore }}</dt>
+        <dd class="eligibility__descrizione">{{ r.descrizione }}</dd>
+      </div>
+    }
+  </dl>
+
+  <section class="eligibility__giorno" aria-labelledby="eligibility-giorno">
+    <h3 id="eligibility-giorno" class="eligibility__giorno-titolo">Il giorno della donazione</h3>
+    <ul class="eligibility__lista">
+      @for (voce of giornoDonazione; track voce) {
+        <li>{{ voce }}</li>
+      }
+    </ul>
+  </section>
+</div>

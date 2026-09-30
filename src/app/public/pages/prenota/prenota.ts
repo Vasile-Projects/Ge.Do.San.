@@ -21,7 +21,14 @@ import {
 } from '../../../shared/models';
 import { Loading, ErrorState, EmptyState, ConfirmDialog } from '../../../shared/ui';
 import { RequestState, requestError, requestSuccess } from '../../../shared/state';
-import { aggiungiGiorni, meseCorrente, oggiIso } from '../../../shared/date';
+import {
+  aggiungiGiorni,
+  meseCorrente,
+  meseDi,
+  oggiIso,
+  primoGiornoPrenotabile,
+  spostaMese,
+} from '../../../shared/date';
 import { TrasfusionaliService } from '../../../shared/data/trasfusionali.service';
 import { creaRisorsaGiorniNonDisponibili } from '../../../shared/data/giorni-non-disponibili.resource';
 import { PrenotazioniService } from '../../data/prenotazioni.service';
@@ -33,6 +40,9 @@ import { DonorForm, ErroriServer } from '../../components/donor-form/donor-form'
 import { BookingSummary } from '../../components/booking-summary/booking-summary';
 import { BookingConfirmation } from '../../components/booking-confirmation/booking-confirmation';
 import { PrenotazioneConfermaResponse } from '../../../shared/models';
+
+/** Mesi che il calendario può saltare da solo cercando un giorno libero (rate limit GET 60/min). */
+const MAX_SALTI_MESE = 2;
 
 const CAMPI_FORM = new Set([
   'nome',
@@ -131,7 +141,8 @@ export class Prenota implements AvvisoUscita {
   private risolviUscita: ((esci: boolean) => void) | null = null;
 
   private slotToken = 0;
-  private preselezionaOggi = false;
+  private posizionamentoAutomatico = false;
+  private saltiMese = 0;
 
   constructor() {
     effect(() => {
@@ -142,12 +153,13 @@ export class Prenota implements AvvisoUscita {
       }
     });
 
-    // Dopo il primo caricamento dei giorni per un centro appena scelto, preseleziona "oggi"
-    // se è prenotabile (la risorsa reagisce da sé al cambio di centro/mese).
+    // Dopo aver scelto un centro: se il mese corrente non ha più giorni prenotabili passa al
+    // successivo, altrimenti preseleziona "oggi" se è prenotabile (la risorsa reagisce da sé
+    // al cambio di centro/mese).
     effect(() => {
       const s = this.risorsaGiorni.stato();
-      if (s.status !== 'success' || !this.preselezionaOggi) return;
-      untracked(() => this.forsePreselezionaOggi(s.data));
+      if (s.status !== 'success' || !this.posizionamentoAutomatico) return;
+      untracked(() => this.posizionaCalendario(s.data));
     });
   }
 
@@ -197,24 +209,38 @@ export class Prenota implements AvvisoUscita {
     this.idSlot.set(null);
     this.slotState.set({ status: 'idle' });
     this.azzeraErroriInvio();
-    this.preselezionaOggi = true;
+    this.posizionamentoAutomatico = true;
+    this.saltiMese = 0;
     this.mese.set(meseCorrente());
     this.idTrasfusionale.set(id);
   }
 
   protected onCambiaMese(mese: string): void {
-    this.preselezionaOggi = false;
+    this.posizionamentoAutomatico = false;
     this.mese.set(mese);
   }
 
-  private forsePreselezionaOggi(giorniNonDisponibili: ReadonlySet<string>): void {
-    if (!this.preselezionaOggi) return;
-    this.preselezionaOggi = false;
-    if (this.dataIso() !== null || this.mese() !== meseCorrente()) return;
-    const oggi = oggiIso();
-    if (oggi < this.minIso || oggi > this.maxIso || giorniNonDisponibili.has(oggi)) return;
-    this.dataIso.set(oggi);
-    this.caricaSlot();
+  private posizionaCalendario(giorniNonDisponibili: ReadonlySet<string>): void {
+    if (!this.posizionamentoAutomatico || this.dataIso() !== null) return;
+    const mese = this.mese();
+    const primo = primoGiornoPrenotabile(mese, this.minIso, this.maxIso, giorniNonDisponibili);
+
+    if (primo === null) {
+      const successivo = spostaMese(mese, 1);
+      if (this.saltiMese < MAX_SALTI_MESE && successivo <= meseDi(this.maxIso)) {
+        this.saltiMese++;
+        this.mese.set(successivo);
+      } else {
+        this.posizionamentoAutomatico = false;
+      }
+      return;
+    }
+
+    this.posizionamentoAutomatico = false;
+    if (primo === oggiIso()) {
+      this.dataIso.set(primo);
+      this.caricaSlot();
+    }
   }
 
   protected onSelezionaData(iso: string): void {

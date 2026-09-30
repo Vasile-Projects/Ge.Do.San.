@@ -1,51 +1,44 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Icon, IconName } from '../../../shared/ui';
+import { REGOLE_BUSINESS } from '../../../shared/models';
 
-interface EligibilityCriterion {
-  readonly icon: IconName;
-  readonly value: string;
-  readonly label: string;
+interface Requisito {
+  readonly valore: string;
+  readonly descrizione: string;
 }
+
+const R = REGOLE_BUSINESS;
 
 @Component({
   selector: 'app-eligibility',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Icon],
   templateUrl: './eligibility.html',
   styleUrl: './eligibility.css',
 })
 export class Eligibility {
-  protected readonly criteri: readonly EligibilityCriterion[] = [
+  protected readonly requisiti: readonly Requisito[] = [
     {
-      icon: 'users',
-      value: '18–65 anni',
-      label: 'Età compresa tra 18 e 65 anni.',
+      valore: `${R.etaMinima}–${R.etaMassima} anni`,
+      descrizione: 'L’età per donare sangue intero.',
     },
     {
-      icon: 'scale',
-      value: '50 kg',
-      label: 'Peso corporeo minimo per donare sangue intero.',
+      valore: '50 kg',
+      descrizione: 'Il peso corporeo minimo.',
     },
     {
-      icon: 'heart',
-      value: 'Buona salute',
-      label: 'Pressione ed emoglobina nella norma, controllati dal medico prima della donazione.',
+      valore: `${R.intervalloGiorniUomini} giorni`,
+      descrizione: `Il tempo minimo tra una donazione e la successiva. Le donne possono donare al massimo ${R.maxDonazioniDonnePerFinestra} volte in 12 mesi.`,
     },
     {
-      icon: 'clock',
-      value: '90 giorni',
-      label: 'Intervallo minimo tra due donazioni di sangue intero.',
+      valore: 'Buona salute',
+      descrizione:
+        'Pressione ed emoglobina nella norma: le controlla il medico prima della donazione.',
     },
-    {
-      icon: 'id-card',
-      value: 'Documento valido',
-      label: 'Porta con te un documento d’identità valido e la tessera sanitaria.',
-    },
-    {
-      icon: 'info',
-      value: 'Stile di vita',
-      label:
-        'Evita comportamenti a rischio. Presentati riposato e con una colazione leggera, evitando latte e derivati.',
-    },
+  ];
+
+  protected readonly giornoDonazione: readonly string[] = [
+    'Porta un documento d’identità valido e la tessera sanitaria.',
+    'Fai una colazione leggera, senza latte e derivati.',
+    'Presentati riposato, dopo una notte di sonno.',
+    'Nei giorni prima evita comportamenti a rischio.',
   ];
 }

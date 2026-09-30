@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { Icon, MapEmbed } from '../../../shared/ui';
 import { Trasfusionale } from '../../../shared/models';
+import { formattaTelefono } from '../../../shared/format/telefono';
 
 @Component({
   selector: 'app-center-card',
@@ -16,6 +17,11 @@ export class CenterCard {
     const c = this.centro();
     const via = c.civico != null ? `${c.indirizzo}, ${c.civico}` : c.indirizzo;
     return `${via}, ${c.citta}`;
+  });
+
+  protected readonly telefonoFormattato = computed(() => {
+    const t = this.centro().telefono;
+    return t ? formattaTelefono(t) : null;
   });
 
   protected readonly mapsQuery = computed(() => {

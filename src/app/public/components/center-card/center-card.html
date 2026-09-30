@@ -16,13 +16,13 @@
     @if (centro().telefono) {
       <p class="center-card__row">
         <app-icon name="phone" [size]="18" />
-        <a [href]="'tel:' + centro().telefono">{{ centro().telefono }}</a>
+        <a [href]="'tel:' + centro().telefono">{{ telefonoFormattato() }}</a>
       </p>
     }
 
     <p class="center-card__row">
       <app-icon name="clock" [size]="18" />
-      <span>Tutti i giorni, 8:30 &ndash; 11:30</span>
+      <span>Tutti i giorni, 8:00 &ndash; 11:30</span>
     </p>
 
     <a class="center-card__directions" [href]="directionsUrl()" target="_blank" rel="noopener">

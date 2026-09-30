@@ -1,46 +1,70 @@
-.eligibility__grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.eligibility {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-4);
-}
-
-@media (min-width: 640px) {
-  .eligibility__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  gap: var(--space-12);
+  align-items: start;
 }
 @media (min-width: 1024px) {
-  .eligibility__grid {
-    grid-template-columns: repeat(3, 1fr);
+  .eligibility {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    gap: var(--space-24);
   }
 }
 
-.eligibility__tile {
+.eligibility__requisiti {
+  margin: 0;
+  border-bottom: 1px solid var(--c-border);
+}
+
+.eligibility__riga {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
-  padding: var(--space-6);
-  background: var(--c-bg);
-  border: 1px solid var(--c-border);
-  border-left: 4px solid var(--c-red);
-  border-radius: var(--radius-card);
+  gap: var(--space-1);
+  padding-block: var(--space-6);
+  border-top: 1px solid var(--c-border);
+}
+@media (min-width: 640px) {
+  .eligibility__riga {
+    display: grid;
+    grid-template-columns: 15rem minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: baseline;
+  }
 }
 
-.eligibility__icon {
-  color: var(--c-red);
-}
-
-.eligibility__value {
+.eligibility__valore {
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 1.25rem;
-  line-height: 1.2;
+  font-size: clamp(1.75rem, 3vw, 2.125rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
-.eligibility__label {
-  font-size: var(--fs-small);
+.eligibility__descrizione {
+  margin: 0;
   color: var(--c-text-muted);
+}
+
+.eligibility__giorno {
+  padding: var(--space-6);
+  background: var(--c-bg);
+  border-radius: var(--radius-card-lg);
+}
+@media (min-width: 768px) {
+  .eligibility__giorno {
+    padding: var(--space-8);
+  }
+}
+
+.eligibility__giorno-titolo {
+  font-size: var(--fs-h3);
+}
+
+.eligibility__lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: var(--space-4) 0 0;
+  padding-left: var(--space-6);
+  line-height: 1.5;
 }

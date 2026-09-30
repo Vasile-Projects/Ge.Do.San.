@@ -50,11 +50,9 @@
   margin: 0 0 var(--space-1);
   padding-bottom: var(--space-2);
   font-family: var(--font-heading);
-  font-size: 0.75rem;
+  font-size: 0.9375rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  color: rgb(255 255 255 / 0.9);
+  color: #fff;
   border-bottom: 2px solid var(--c-gold);
 }
 

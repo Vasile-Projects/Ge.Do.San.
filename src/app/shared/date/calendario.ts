@@ -51,6 +51,19 @@ export function nelRange(iso: string, minIso: string, maxIso: string): boolean {
   return iso >= minIso && iso <= maxIso;
 }
 
+/** Primo giorno del mese dentro `[minIso, maxIso]` e non escluso, oppure `null`. */
+export function primoGiornoPrenotabile(
+  meseIso: string,
+  minIso: string,
+  maxIso: string,
+  esclusi: ReadonlySet<string>,
+): string | null {
+  for (let iso = `${meseIso}-01`; meseDi(iso) === meseIso; iso = aggiungiGiorni(iso, 1)) {
+    if (nelRange(iso, minIso, maxIso) && !esclusi.has(iso)) return iso;
+  }
+  return null;
+}
+
 const FMT_MESE = new Intl.DateTimeFormat('it-IT', { month: 'long', year: 'numeric' });
 const FMT_DATA_ESTESA = new Intl.DateTimeFormat('it-IT', {
   weekday: 'long',

@@ -8,3 +8,4 @@ export * from './giorno-chiusura.model';
 export * from './log-modifica.model';
 export * from './auth.model';
 export * from './api-error.model';
+export * from './donatore.model';

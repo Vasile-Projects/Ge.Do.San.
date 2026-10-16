@@ -5,10 +5,11 @@
     contattare il centro trasfusionale scelto.
   </p>
 
-  @if (conferma(); as c) {
-    <app-booking-confirmation
+  @if (richiestaInviata(); as r) {
+    <app-richiesta-inviata
       class="prenota__confirmation"
-      [conferma]="c"
+      [riepilogo]="r"
+      [minutiValidita]="minutiAttesaConferma"
       (nuovaPrenotazione)="ricomincia()"
     />
   } @else {
@@ -107,6 +108,7 @@
               [inCorso]="invioInCorso()"
               [puoInviare]="idSlot() !== null"
               [erroriServer]="erroriCampo()"
+              [verificaAntiBot]="true"
               (invia)="onInvia($event)"
             />
             @if (idSlot() === null) {

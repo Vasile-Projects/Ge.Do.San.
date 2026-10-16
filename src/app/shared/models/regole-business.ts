@@ -9,4 +9,5 @@ export const REGOLE_BUSINESS = {
   maxDonazioniDonnePerFinestra: 2,
   orizzontePrenotazioneGiorni: 365,
   anticipoMinimoMinuti: 90,
+  minutiAttesaConferma: 30,
 } as const;

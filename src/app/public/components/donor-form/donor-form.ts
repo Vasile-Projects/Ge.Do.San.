@@ -6,10 +6,12 @@ import {
   inject,
   input,
   output,
+  signal,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Button } from '../../../shared/ui';
+import { Button, Turnstile } from '../../../shared/ui';
 import { DateInput } from '../date-input/date-input';
 import { DatiDonatore, REGOLE_BUSINESS, Sesso } from '../../../shared/models';
 import { normalizzaCodiceFiscale } from '../../../shared/validation';
@@ -28,7 +30,7 @@ import {
 
 export type ErroriServer = Readonly<Record<string, string>>;
 
-const MESSAGGI: Readonly<Record<string, string>> = {
+export const MESSAGGI: Readonly<Record<string, string>> = {
   required: 'Campo obbligatorio.',
   email: 'Inserisci un indirizzo email valido.',
   maxlength: 'Valore troppo lungo.',
@@ -51,7 +53,7 @@ const MESSAGGI: Readonly<Record<string, string>> = {
 @Component({
   selector: 'app-donor-form',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, Button, DateInput],
+  imports: [ReactiveFormsModule, Button, DateInput, Turnstile],
   templateUrl: './donor-form.html',
   styleUrl: './donor-form.css',
 })
@@ -63,10 +65,15 @@ export class DonorForm {
   readonly inCorso = input(false);
   readonly puoInviare = input(true);
   readonly erroriServer = input<ErroriServer | null>(null);
+  /** Mostra il widget anti-bot e lo richiede prima dell'invio (solo nel flusso pubblico). */
+  readonly verificaAntiBot = input(false);
 
   readonly invia = output<DatiDonatore>();
 
   protected readonly sessi: readonly Sesso[] = ['M', 'F'];
+
+  private readonly turnstile = viewChild(Turnstile);
+  protected readonly tokenTurnstile = signal<string | null>(null);
 
   protected readonly form = this.fb.nonNullable.group({
     nome: [
@@ -200,8 +207,12 @@ export class DonorForm {
       return;
     }
 
+    const token = this.tokenTurnstile();
+    if (this.verificaAntiBot() && !token) return;
+
     const v = this.form.getRawValue();
     this.invia.emit({
+      ...(this.verificaAntiBot() && token ? { turnstileToken: token } : {}),
       nome: normalizzaNomeCognome(v.nome),
       cognome: normalizzaNomeCognome(v.cognome),
       dataNascita: v.dataNascita,
@@ -210,5 +221,10 @@ export class DonorForm {
       email: v.email.trim(),
       cellulare: `+39${v.cellulare}`,
     });
+  }
+
+  /** Il token Turnstile vale per un solo invio: va rinnovato dopo ogni risposta del server. */
+  resetVerifica(): void {
+    this.turnstile()?.reset();
   }
 }

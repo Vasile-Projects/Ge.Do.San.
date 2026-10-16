@@ -8,6 +8,7 @@ import {
   inject,
   signal,
   untracked,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -38,8 +39,10 @@ import { DatePicker } from '../../components/date-picker/date-picker';
 import { SlotPicker } from '../../components/slot-picker/slot-picker';
 import { DonorForm, ErroriServer } from '../../components/donor-form/donor-form';
 import { BookingSummary } from '../../components/booking-summary/booking-summary';
-import { BookingConfirmation } from '../../components/booking-confirmation/booking-confirmation';
-import { PrenotazioneConfermaResponse } from '../../../shared/models';
+import {
+  RichiestaInviata,
+  RiepilogoRichiesta,
+} from '../../components/richiesta-inviata/richiesta-inviata';
 
 /** Mesi che il calendario può saltare da solo cercando un giorno libero (rate limit GET 60/min). */
 const MAX_SALTI_MESE = 2;
@@ -66,7 +69,7 @@ const CAMPI_FORM = new Set([
     SlotPicker,
     DonorForm,
     BookingSummary,
-    BookingConfirmation,
+    RichiestaInviata,
     ConfirmDialog,
   ],
   templateUrl: './prenota.html',
@@ -98,7 +101,9 @@ export class Prenota implements AvvisoUscita {
   protected readonly rateLimited = signal(false);
   protected readonly erroriCampo = signal<ErroriServer | null>(null);
   protected readonly erroreGenerale = signal<string | null>(null);
-  protected readonly conferma = signal<PrenotazioneConfermaResponse | null>(null);
+  protected readonly richiestaInviata = signal<RiepilogoRichiesta | null>(null);
+  protected readonly minutiAttesaConferma = REGOLE_BUSINESS.minutiAttesaConferma;
+  private readonly donorForm = viewChild(DonorForm);
 
   protected readonly centriStatus = computed(() => {
     const s = this.trasfusionali.elencoStato().status;
@@ -133,7 +138,7 @@ export class Prenota implements AvvisoUscita {
 
   private readonly haDatiInLavorazione = computed(
     () =>
-      this.conferma() === null &&
+      this.richiestaInviata() === null &&
       (this.idTrasfusionale() !== null || this.dataIso() !== null || this.idSlot() !== null),
   );
 
@@ -146,9 +151,9 @@ export class Prenota implements AvvisoUscita {
 
   constructor() {
     effect(() => {
-      if (this.conferma()) {
+      if (this.richiestaInviata()) {
         queueMicrotask(() =>
-          this.host.nativeElement.querySelector<HTMLElement>('.booking-confirmation')?.focus(),
+          this.host.nativeElement.querySelector<HTMLElement>('.richiesta-inviata')?.focus(),
         );
       }
     });
@@ -269,16 +274,27 @@ export class Prenota implements AvvisoUscita {
       tipoDonazione: TIPO_DONAZIONE_DEFAULT,
     };
 
+    const centro = this.centroSelezionato();
+    const slot = this.slotSelezionato();
+    const dataIso = this.dataIso();
+
     this.prenotazioni
-      .crea(body)
+      .richiedi(body)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (conf) => {
+        next: () => {
           this.invioInCorso.set(false);
-          this.conferma.set(conf);
+          this.richiestaInviata.set({
+            email: dati.email,
+            nomeTrasfusionale: centro?.nome ?? '',
+            dataIso: dataIso ?? '',
+            orario: slot?.orario ?? '',
+          });
         },
         error: (e: NormalizedHttpError) => {
           this.invioInCorso.set(false);
+          // Il token anti-bot è già stato consumato dal server: ne serve uno nuovo.
+          this.donorForm()?.resetVerifica();
           this.gestisciErroreInvio(e);
         },
       });
@@ -340,7 +356,7 @@ export class Prenota implements AvvisoUscita {
   }
 
   protected ricomincia(): void {
-    this.conferma.set(null);
+    this.richiestaInviata.set(null);
     this.idTrasfusionale.set(null);
     this.dataIso.set(null);
     this.idSlot.set(null);

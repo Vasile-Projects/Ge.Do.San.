@@ -10,6 +10,20 @@ export interface PrenotazioneRequest {
   readonly cellulare: string;
   readonly idSlot: number;
   readonly tipoDonazione: TipoDonazione;
+  /** Token del widget Turnstile: richiesto solo nel flusso pubblico, ignorato dall'area admin. */
+  readonly turnstileToken?: string;
+}
+
+/**
+ * Risposta 202 di `POST /api/prenotazioni`: sempre lo stesso messaggio, qualunque sia l'esito legato
+ * alla persona. La prenotazione esiste solo dopo la conferma dal link ricevuto per email.
+ */
+export interface RichiestaPrenotazioneResponse {
+  readonly messaggio: string;
+}
+
+export interface ConfermaPrenotazioneRequest {
+  readonly token: string;
 }
 
 /** Campi comuni alle due risposte di prenotazione (donatore e admin). */
@@ -23,7 +37,7 @@ export interface PrenotazioneBase {
   readonly tipoDonazione: TipoDonazione;
 }
 
-/** Risposta di `POST /api/prenotazioni` (flusso donatore): include i recapiti del centro. */
+/** Risposta di `POST /api/prenotazioni/conferma` (flusso donatore): include i recapiti del centro. */
 export interface PrenotazioneConfermaResponse extends PrenotazioneBase {
   readonly indirizzoTrasfusionale: string;
   readonly civicoTrasfusionale: number | null;

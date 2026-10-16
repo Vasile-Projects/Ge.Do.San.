@@ -1,0 +1,70 @@
+<section class="donatori">
+  <p class="donatori__lead">
+    Cerca un donatore per cognome (anche solo l'inizio), codice fiscale o email. Da qui puoi
+    correggere l'anagrafica quando un donatore ne fa richiesta al centro.
+  </p>
+
+  <form class="donatori__ricerca" role="search" (submit)="cerca($event)">
+    <div class="field donatori__campo">
+      <label for="don-q">Cognome, codice fiscale o email</label>
+      <input
+        id="don-q"
+        type="search"
+        autocomplete="off"
+        maxlength="255"
+        [value]="testo()"
+        [attr.aria-invalid]="erroreInput() ? true : null"
+        [attr.aria-describedby]="erroreInput() ? 'don-q-err' : null"
+        (input)="onInput($event)"
+      />
+      @if (erroreInput(); as m) {
+        <p class="field__err" id="don-q-err">{{ m }}</p>
+      }
+    </div>
+    <app-button label="Cerca" type="submit" icon="users" iconPosition="start" />
+  </form>
+
+  @let s = stato();
+  @if (s.status === 'loading') {
+    <app-loading label="Ricerca in corso…" />
+  } @else if (s.status === 'error') {
+    <app-error-state [message]="s.error.message" (retry)="riprova()" />
+  } @else if (s.status === 'success') {
+    @if (s.data.length === 0) {
+      <app-empty-state message="Nessun donatore trovato." />
+    } @else {
+      <div class="donatori__table-wrap">
+        <table class="donatori__table">
+          <caption class="visually-hidden">
+            Risultati della ricerca donatori
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Donatore</th>
+              <th scope="col">Codice fiscale</th>
+              <th scope="col">Nascita</th>
+              <th scope="col">Email</th>
+              <th scope="col"><span class="visually-hidden">Azioni</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (d of s.data; track d.id) {
+              <tr>
+                <td class="donatori__nome">{{ d.cognome }} {{ d.nome }}</td>
+                <td class="donatori__mono">{{ d.codiceFiscale }}</td>
+                <td>{{ data(d.dataNascita) }}</td>
+                <td>{{ d.email }}</td>
+                <td class="donatori__azioni">
+                  <a [routerLink]="['/admin/donatori', d.id]">Apri scheda</a>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      @if (s.data.length === 50) {
+        <p class="donatori__lead">Mostrati i primi 50 risultati: affina la ricerca.</p>
+      }
+    }
+  }
+</section>

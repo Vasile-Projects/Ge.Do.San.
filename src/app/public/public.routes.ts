@@ -13,5 +13,10 @@ export const PUBLIC_ROUTES: Routes = [
     canDeactivate: [confermaUscitaGuard],
     title: 'Prenota — Gedosan',
   },
+  {
+    path: 'conferma',
+    loadComponent: () => import('./pages/conferma/conferma').then((m) => m.Conferma),
+    title: 'Conferma prenotazione — Gedosan',
+  },
   { path: '**', redirectTo: '' },
 ];

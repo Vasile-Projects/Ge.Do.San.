@@ -1,0 +1,55 @@
+<main id="contenuto" class="container section conferma">
+  @let s = stato();
+
+  @if (s.tipo === 'confermata') {
+    <app-booking-confirmation
+      [conferma]="s.prenotazione"
+      (nuovaPrenotazione)="nuovaPrenotazione()"
+    />
+  } @else if (s.tipo === 'senzaToken') {
+    <section class="conferma__card" aria-labelledby="cf-title">
+      <app-icon name="alert" [size]="36" class="conferma__icon conferma__icon--warn" />
+      <h1 id="cf-title" class="conferma__title">Link non valido</h1>
+      <p class="conferma__lead">
+        Il link è incompleto. Apri di nuovo il link ricevuto per email, oppure ripeti la
+        prenotazione.
+      </p>
+      <div class="conferma__actions">
+        <app-button label="Prenota una donazione" link="/prenota" />
+      </div>
+    </section>
+  } @else if (s.tipo === 'errore') {
+    <section class="conferma__card" aria-labelledby="cf-title">
+      <app-icon name="alert" [size]="36" class="conferma__icon conferma__icon--warn" />
+      <h1 id="cf-title" class="conferma__title">Prenotazione non confermata</h1>
+      <p class="conferma__lead" role="alert">{{ s.messaggio }}</p>
+      <div class="conferma__actions">
+        @if (s.riprovabile) {
+          <app-button label="Riprova" (click)="conferma()" />
+        }
+        <app-button
+          label="Ripeti la prenotazione"
+          [variant]="s.riprovabile ? 'secondary' : 'primary'"
+          link="/prenota"
+        />
+      </div>
+    </section>
+  } @else {
+    <section class="conferma__card" aria-labelledby="cf-title">
+      <app-icon name="mail" [size]="36" class="conferma__icon" />
+      <h1 id="cf-title" class="conferma__title">Conferma la tua prenotazione</h1>
+      <p class="conferma__lead">
+        Premi il pulsante per completare la prenotazione della tua donazione. Se non l'hai richiesta
+        tu, chiudi questa pagina: senza conferma non verrà registrato nulla.
+      </p>
+      <div class="conferma__actions">
+        <app-button
+          [label]="s.tipo === 'invio' ? 'Conferma in corso…' : 'Conferma prenotazione'"
+          icon="check"
+          [disabled]="s.tipo === 'invio'"
+          (click)="conferma()"
+        />
+      </div>
+    </section>
+  }
+</main>

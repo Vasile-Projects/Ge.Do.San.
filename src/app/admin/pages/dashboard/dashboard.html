@@ -40,6 +40,9 @@
     <a routerLink="calendario" routerLinkActive="is-active">
       <app-icon name="clock" [size]="17" /> Gestione calendario
     </a>
+    <a routerLink="donatori" routerLinkActive="is-active">
+      <app-icon name="users" [size]="17" /> Donatori
+    </a>
   </nav>
 
   @if (preavviso() && !sessioneScaduta()) {

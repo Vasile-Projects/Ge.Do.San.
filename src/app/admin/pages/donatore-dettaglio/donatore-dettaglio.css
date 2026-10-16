@@ -1,0 +1,142 @@
+:host {
+  display: block;
+}
+
+.scheda {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.scheda__indietro {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  align-self: flex-start;
+  font-size: 0.9375rem;
+}
+
+.scheda__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.scheda__title {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+}
+
+.scheda__sottotitolo {
+  margin-top: var(--space-4);
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+.scheda__card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+}
+
+.scheda__dati {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+}
+.scheda__dati dt {
+  font-size: var(--fs-small);
+  color: var(--c-text-muted);
+}
+.scheda__dati dd {
+  margin: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.scheda__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.scheda__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-4);
+}
+
+.scheda__nascita {
+  max-width: 480px;
+}
+
+.scheda__azioni {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.scheda__nota,
+.scheda__vuoto {
+  color: var(--c-text-muted);
+  font-size: 0.9375rem;
+}
+
+.scheda__esito {
+  padding: var(--space-3) var(--space-4);
+  border-left: 4px solid var(--c-gold);
+  background: var(--c-surface);
+}
+
+.scheda__errore {
+  padding: var(--space-3) var(--space-4);
+  border-left: 4px solid var(--c-red);
+  background: var(--c-blush);
+  color: var(--c-red-dark);
+}
+
+.scheda__mono {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+.scheda__table-wrap {
+  min-width: 0;
+  overflow-x: auto;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-card);
+}
+.scheda__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+.scheda__table th,
+.scheda__table td {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  border-bottom: 1px solid var(--c-border);
+  white-space: nowrap;
+}
+.scheda__table thead th {
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--c-text-muted);
+  background: var(--c-bg);
+}
+.scheda__table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.scheda__modifiche {
+  margin: 0;
+  padding-left: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-size: 0.9375rem;
+}

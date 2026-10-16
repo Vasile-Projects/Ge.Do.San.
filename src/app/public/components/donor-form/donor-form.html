@@ -138,10 +138,17 @@
     </div>
   </div>
 
+  @if (verificaAntiBot()) {
+    <app-turnstile class="donor-form__verifica" (token)="tokenTurnstile.set($event)" />
+  }
+
   <app-button
-    label="Conferma prenotazione"
+    [label]="verificaAntiBot() ? 'Invia richiesta di prenotazione' : 'Conferma prenotazione'"
     type="submit"
-    [disabled]="inCorso() || !puoInviare()"
+    [disabled]="inCorso() || !puoInviare() || (verificaAntiBot() && !tokenTurnstile())"
     [block]="true"
   />
+  @if (verificaAntiBot() && !tokenTurnstile()) {
+    <p class="field__hint">Completa la verifica qui sopra per inviare la richiesta.</p>
+  }
 </form>

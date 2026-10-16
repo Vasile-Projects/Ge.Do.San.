@@ -1,0 +1,35 @@
+<section class="richiesta-inviata" aria-labelledby="ri-title" tabindex="-1">
+  <app-icon name="mail" [size]="40" class="richiesta-inviata__icon" />
+  <h2 id="ri-title" class="richiesta-inviata__title">Controlla la tua email</h2>
+  <p class="richiesta-inviata__lead">
+    Se i dati sono corretti, a <strong>{{ riepilogo().email }}</strong> sta arrivando un'email con
+    il link per confermare la prenotazione. Apri il link e premi
+    <strong>"Conferma prenotazione"</strong> entro {{ minutiValidita() }} minuti: fino ad allora il
+    posto resta riservato a te.
+  </p>
+
+  <dl class="richiesta-inviata__list">
+    <div>
+      <dt>Centro</dt>
+      <dd>{{ riepilogo().nomeTrasfusionale }}</dd>
+    </div>
+    <div>
+      <dt>Giorno</dt>
+      <dd>{{ data() }}</dd>
+    </div>
+    <div>
+      <dt>Orario</dt>
+      <dd>{{ orario() }}</dd>
+    </div>
+  </dl>
+
+  <p class="richiesta-inviata__note">
+    Non vedi l'email dopo qualche minuto? Controlla la cartella spam. Se non arriva, contatta il
+    centro trasfusionale: potrebbe esserci un problema con i dati registrati.
+  </p>
+
+  <div class="richiesta-inviata__actions">
+    <app-button label="Nuova prenotazione" variant="secondary" (click)="nuovaPrenotazione.emit()" />
+    <app-button label="Torna alla home" variant="ghost" link="/" />
+  </div>
+</section>

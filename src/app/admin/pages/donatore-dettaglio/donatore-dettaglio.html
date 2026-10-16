@@ -1,0 +1,219 @@
+<section class="scheda">
+  <a class="scheda__indietro" routerLink="/admin/donatori">
+    <app-icon name="chevron-left" [size]="16" /> Ricerca donatori
+  </a>
+
+  @let s = stato();
+  @if (s.status === 'loading') {
+    <app-loading label="Caricamento della scheda…" />
+  } @else if (s.status === 'error') {
+    <app-error-state [message]="s.error.message" (retry)="carica()" />
+  } @else if (s.status === 'success') {
+    @let d = s.data.donatore;
+
+    <header class="scheda__header">
+      <h2 class="scheda__title">{{ d.cognome }} {{ d.nome }}</h2>
+      @if (!inModifica()) {
+        <app-button
+          label="Modifica anagrafica"
+          variant="secondary"
+          icon="pencil"
+          iconPosition="start"
+          (click)="apriModifica(d)"
+        />
+      }
+    </header>
+
+    @if (esito(); as msg) {
+      <p class="scheda__esito" role="status">{{ msg }}</p>
+    }
+
+    @if (inModifica()) {
+      <form class="scheda__card scheda__form" [formGroup]="form" (ngSubmit)="salva()" novalidate>
+        <p class="scheda__nota">
+          Modifica i dati solo dopo aver verificato l'identità del donatore. Nome, cognome, data di
+          nascita e sesso devono essere coerenti con il codice fiscale.
+        </p>
+        @if (erroreSalvataggio(); as msg) {
+          <p class="scheda__errore" role="alert">{{ msg }}</p>
+        }
+
+        <div class="scheda__grid">
+          <div class="field">
+            <label for="sd-nome">Nome</label>
+            <input
+              id="sd-nome"
+              type="text"
+              formControlName="nome"
+              maxlength="60"
+              [attr.aria-invalid]="messaggio('nome') ? true : null"
+            />
+            @if (messaggio('nome'); as m) {
+              <p class="field__err">{{ m }}</p>
+            }
+          </div>
+          <div class="field">
+            <label for="sd-cognome">Cognome</label>
+            <input
+              id="sd-cognome"
+              type="text"
+              formControlName="cognome"
+              maxlength="120"
+              [attr.aria-invalid]="messaggio('cognome') ? true : null"
+            />
+            @if (messaggio('cognome'); as m) {
+              <p class="field__err">{{ m }}</p>
+            }
+          </div>
+          <fieldset class="field field--full scheda__nascita">
+            <legend>Data di nascita</legend>
+            <app-date-input
+              formControlName="dataNascita"
+              [invalido]="!!messaggio('dataNascita')"
+              erroreId="sd-nascita-err"
+            />
+            @if (messaggio('dataNascita'); as m) {
+              <p class="field__err" id="sd-nascita-err">{{ m }}</p>
+            }
+          </fieldset>
+          <div class="field">
+            <label for="sd-sesso">Sesso</label>
+            <select id="sd-sesso" formControlName="sesso">
+              @for (x of sessi; track x) {
+                <option [value]="x">{{ x === 'M' ? 'Maschile' : 'Femminile' }}</option>
+              }
+            </select>
+          </div>
+          <div class="field">
+            <label for="sd-cf">Codice fiscale</label>
+            <input
+              id="sd-cf"
+              type="text"
+              formControlName="codiceFiscale"
+              maxlength="16"
+              autocapitalize="characters"
+              (input)="onCodiceFiscaleInput($event)"
+              [attr.aria-invalid]="messaggio('codiceFiscale') ? true : null"
+            />
+            @if (messaggio('codiceFiscale'); as m) {
+              <p class="field__err">{{ m }}</p>
+            }
+          </div>
+          <div class="field">
+            <label for="sd-email">Email</label>
+            <input
+              id="sd-email"
+              type="email"
+              formControlName="email"
+              maxlength="255"
+              [attr.aria-invalid]="messaggio('email') ? true : null"
+            />
+            @if (messaggio('email'); as m) {
+              <p class="field__err">{{ m }}</p>
+            }
+          </div>
+          <div class="field">
+            <label for="sd-cell">Cellulare (senza +39)</label>
+            <input
+              id="sd-cell"
+              type="tel"
+              formControlName="cellulare"
+              maxlength="10"
+              inputmode="numeric"
+              [attr.aria-invalid]="messaggio('cellulare') ? true : null"
+            />
+            @if (messaggio('cellulare'); as m) {
+              <p class="field__err">{{ m }}</p>
+            }
+          </div>
+        </div>
+
+        <div class="scheda__azioni">
+          <app-button
+            [label]="salvataggio() ? 'Salvataggio…' : 'Salva modifiche'"
+            type="submit"
+            [disabled]="salvataggio()"
+          />
+          <app-button
+            label="Annulla"
+            variant="ghost"
+            [disabled]="salvataggio()"
+            (click)="annullaModifica()"
+          />
+        </div>
+      </form>
+    } @else {
+      <dl class="scheda__card scheda__dati">
+        <div>
+          <dt>Codice fiscale</dt>
+          <dd class="scheda__mono">{{ d.codiceFiscale }}</dd>
+        </div>
+        <div>
+          <dt>Data di nascita</dt>
+          <dd>{{ data(d.dataNascita) }}</dd>
+        </div>
+        <div>
+          <dt>Sesso</dt>
+          <dd>{{ d.sesso === 'M' ? 'Maschile' : 'Femminile' }}</dd>
+        </div>
+        <div>
+          <dt>Email</dt>
+          <dd>{{ d.email }}</dd>
+        </div>
+        <div>
+          <dt>Cellulare</dt>
+          <dd>{{ telefono(d.cellulare) }}</dd>
+        </div>
+        <div>
+          <dt>Registrato il</dt>
+          <dd>{{ dataOra(d.createdAt) }}</dd>
+        </div>
+      </dl>
+    }
+
+    <h3 class="scheda__sottotitolo">Prenotazioni</h3>
+    @if (s.data.prenotazioni.length === 0) {
+      <p class="scheda__vuoto">Nessuna prenotazione.</p>
+    } @else {
+      <div class="scheda__table-wrap">
+        <table class="scheda__table">
+          <caption class="visually-hidden">
+            Prenotazioni del donatore
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Codice</th>
+              <th scope="col">Centro</th>
+              <th scope="col">Giorno</th>
+              <th scope="col">Orario</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (p of s.data.prenotazioni; track p.id) {
+              <tr>
+                <td>#{{ p.id }}</td>
+                <td>{{ p.nomeTrasfusionale }}</td>
+                <td>{{ data(p.data) }}</td>
+                <td>{{ orario(p.orario) }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+
+    <h3 class="scheda__sottotitolo">Modifiche all'anagrafica</h3>
+    @if (s.data.modifiche.length === 0) {
+      <p class="scheda__vuoto">Nessuna modifica registrata.</p>
+    } @else {
+      <ul class="scheda__modifiche">
+        @for (m of s.data.modifiche; track $index) {
+          <li>
+            <span class="scheda__mono">{{ dataOra(m.timestamp) }}</span> · {{ m.usernameAdmin }} ha
+            modificato: {{ campi(m.campiModificati) }}
+          </li>
+        }
+      </ul>
+    }
+  }
+</section>

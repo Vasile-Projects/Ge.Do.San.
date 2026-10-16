@@ -27,6 +27,19 @@ export const ADMIN_ROUTES: Routes = [
         canDeactivate: [lavoroInCorsoGuard],
         title: 'Gestione calendario — Gedosan Admin',
       },
+      {
+        path: 'donatori',
+        loadComponent: () => import('./pages/donatori/donatori').then((m) => m.Donatori),
+        title: 'Donatori — Gedosan Admin',
+      },
+      {
+        path: 'donatori/:id',
+        loadComponent: () =>
+          import('./pages/donatore-dettaglio/donatore-dettaglio').then(
+            (m) => m.DonatoreDettaglioPage,
+          ),
+        title: 'Scheda donatore — Gedosan Admin',
+      },
       { path: 'aperture', redirectTo: 'calendario' },
       { path: 'log', redirectTo: 'prenotazioni' },
       { path: '**', redirectTo: 'prenotazioni' },

@@ -1,63 +1,78 @@
 :root {
-  --c-red: #c8102e;
-  --c-red-dark: #a30e26;
-  --c-red-on-dark: #ff7a85;
-  --c-slate: #23313a;
-  --c-slate-soft: #4b5b64;
-  --c-bg: #faf6f4;
+  /* Palette: rosso sangue, inchiostro e carta. Il rosso è per le azioni e per l'hero; le
+     selezioni usano l'inchiostro, così il rosso resta riconoscibile come "agisci". */
+  --c-red: #b0001c;
+  --c-red-dark: #8c0016;
+  --c-red-on-dark: #ff8a93;
+  --c-ink: #221a1c;
+  --c-ink-soft: #5d5355;
+  --c-paper: #ffffff;
   --c-surface: #ffffff;
-  --c-blush: #f3dede;
-  --c-gold: #c99a3e;
-  --c-border: #e7dedc;
-  --c-info: var(--c-slate);
-  --c-info-dark: #12191e;
+  --c-bg: #f5efed;
+  --c-blush: #f6dfe0;
+  --c-border: #e4d9d7;
+  --c-select: var(--c-ink);
+  --c-info: var(--c-ink);
+  --c-info-dark: #120d0e;
 
-  --c-text: var(--c-slate);
-  --c-text-muted: var(--c-slate-soft);
+  --c-on-dark: #ffffff;
+  --c-on-dark-muted: rgb(255 255 255 / 0.78);
+  --c-on-dark-line: rgb(255 255 255 / 0.2);
+
+  --c-text: var(--c-ink);
+  --c-text-muted: var(--c-ink-soft);
   --c-link: var(--c-red);
   --c-link-hover: var(--c-red-dark);
-  --c-focus-ring: var(--c-gold);
+  --c-focus-ring: var(--c-red);
 
-  --font-heading: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Un'unica famiglia variabile: la larghezza fa da gerarchia. Condensato per i titoli,
+     normale per il testo. */
+  --font-heading: 'Archivo', 'Arial Narrow', system-ui, sans-serif;
+  --font-body: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --stretch-display: 68%;
+  --stretch-heading: 80%;
 
-  --fs-hero: clamp(2.75rem, 6vw, 4.25rem);
-  --fs-h2: clamp(1.625rem, 3.4vw, 2.25rem);
-  --fs-h3: 1.3125rem;
-  --fs-body-lg: 1.125rem;
-  --fs-body: 1rem;
-  --fs-small: 0.8125rem;
-  --fs-stat: clamp(2.5rem, 4vw, 3.5rem);
+  --fs-mega: clamp(4rem, 13vw, 9.5rem);
+  --fs-statement: clamp(2.5rem, 7vw, 6rem);
+  --fs-hero: var(--fs-mega);
+  --fs-h2: clamp(2rem, 4.6vw, 3.5rem);
+  --fs-h3: 1.375rem;
+  --fs-body-lg: 1.1875rem;
+  --fs-body: 1.0625rem;
+  --fs-small: 0.875rem;
+  --fs-stat: clamp(2.25rem, 5vw, 3.75rem);
 
-  --lh-tight: 1.03;
-  --lh-heading: 1.15;
-  --lh-body: 1.6;
+  --lh-tight: 0.88;
+  --lh-heading: 1.05;
+  --lh-body: 1.55;
 
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
+  --space-5: 20px;
   --space-6: 24px;
   --space-8: 32px;
   --space-12: 48px;
   --space-16: 64px;
   --space-24: 96px;
+  --space-30: 120px;
 
-  --section-y: var(--space-16);
+  --section-y: 72px;
   --gutter: var(--space-4);
-  --container-max: 1200px;
+  --container-max: 1280px;
 
-  --radius-card: 3px 14px 3px 14px;
-  --radius-card-lg: 4px 22px 4px 22px;
-  --radius-input: 2px 10px 2px 10px;
-  --radius-button: 2px 12px 2px 12px;
+  /* Forme nette, da etichetta stampata: raggi piccoli, bordi pieni. */
+  --radius-card: 6px;
+  --radius-card-lg: 6px;
+  --radius-input: 4px;
+  --radius-button: 4px;
   --radius-pill: 999px;
 
-  --card-bar-w: 4px;
-  --card-bar-color: var(--c-red);
+  --shadow-lift: 0 30px 60px -30px rgb(40 0 8 / 0.55);
 
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --dur: 240ms;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 200ms;
 
   --z-header: 100;
   --z-modal: 1000;
@@ -65,13 +80,17 @@
 
 @media (min-width: 768px) {
   :root {
-    --section-y: var(--space-24);
     --gutter: var(--space-8);
+  }
+}
+@media (min-width: 900px) {
+  :root {
+    --section-y: var(--space-30);
   }
 }
 @media (min-width: 1024px) {
   :root {
-    --gutter: var(--space-12);
+    --gutter: 40px;
   }
 }
 
@@ -88,7 +107,7 @@ html {
 body {
   margin: 0;
   min-height: 100dvh;
-  background: var(--c-bg);
+  background: var(--c-paper);
   color: var(--c-text);
   font-family: var(--font-body);
   font-size: var(--fs-body);
@@ -106,9 +125,11 @@ h5,
 h6 {
   margin: 0;
   font-family: var(--font-heading);
-  font-weight: 600;
+  font-weight: 800;
+  font-stretch: var(--stretch-heading);
   line-height: var(--lh-heading);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
   color: var(--c-text);
 }
 
@@ -123,6 +144,14 @@ a {
 a:hover {
   color: var(--c-link-hover);
   text-decoration: underline;
+}
+a {
+  text-underline-offset: 3px;
+}
+
+::selection {
+  background: var(--c-red);
+  color: #fff;
 }
 
 img,
@@ -145,9 +174,49 @@ button {
 }
 
 :focus-visible {
-  outline: 2px solid var(--c-focus-ring);
-  outline-offset: 2px;
+  outline: 3px solid var(--c-focus-ring);
+  outline-offset: 3px;
   border-radius: 2px;
+}
+
+/* Superfici scure (hero rosso, inchiostro): testo e focus bianchi. */
+.on-dark {
+  --c-focus-ring: var(--c-on-dark);
+  color: var(--c-on-dark);
+}
+.on-dark :is(h1, h2, h3, h4) {
+  color: inherit;
+}
+
+/* Titoli condensati: la tipografia è l'elemento grafico principale. */
+.t-mega,
+.t-statement,
+.t-h2 {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-stretch: var(--stretch-display);
+  text-wrap: balance;
+}
+.t-mega {
+  font-size: var(--fs-mega);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.02em;
+}
+.t-statement {
+  font-size: var(--fs-statement);
+  line-height: 0.92;
+  letter-spacing: -0.015em;
+}
+.t-h2 {
+  font-size: var(--fs-h2);
+  font-stretch: 72%;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+}
+.t-lead {
+  max-width: 40rem;
+  font-size: var(--fs-body-lg);
+  color: var(--c-text-muted);
 }
 :focus:not(:focus-visible) {
   outline: none;

@@ -14,7 +14,7 @@
   align-items: center;
   gap: var(--space-3);
   padding: var(--space-3) var(--gutter);
-  background: var(--c-slate);
+  background: var(--c-ink);
   color: #fff;
 }
 
@@ -103,7 +103,7 @@
 .dashboard__avviso-sessione {
   margin: 0;
   padding: var(--space-3) var(--gutter);
-  background: color-mix(in srgb, var(--c-gold) 18%, var(--c-bg));
+  background: color-mix(in srgb, var(--c-select) 18%, var(--c-bg));
   color: var(--c-text);
   font-size: 0.9375rem;
   text-align: center;

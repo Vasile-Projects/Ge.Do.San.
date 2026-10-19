@@ -1,0 +1,41 @@
+<aside class="bag-label" aria-labelledby="bag-label-titolo">
+  <div class="bag-label__testa">
+    <strong>Sangue intero, 450 ml</strong>
+    <span id="bag-label-titolo">Cosa diventa la tua sacca</span>
+  </div>
+
+  <p class="bag-label__aiuti">
+    <span class="bag-label__chiave">Con una donazione aiuti</span>
+    <span class="bag-label__valore">fino a 3 persone</span>
+  </p>
+
+  <div
+    class="bag-label__separazione"
+    role="img"
+    aria-label="Dopo il prelievo la sacca viene separata: circa metà globuli rossi, metà plasma, e uno strato sottile da cui si ricavano le piastrine."
+  >
+    <div class="bag-label__barra" aria-hidden="true">
+      <span class="bag-label__parte bag-label__parte--rossi"></span>
+      <span class="bag-label__parte bag-label__parte--piastrine"></span>
+      <span class="bag-label__parte bag-label__parte--plasma"></span>
+    </div>
+    <div class="bag-label__legenda" aria-hidden="true">
+      <span>Globuli rossi</span>
+      <span>Piastrine</span>
+      <span>Plasma</span>
+    </div>
+  </div>
+
+  <dl class="bag-label__componenti">
+    @for (c of componenti; track c.nome) {
+      <div class="bag-label__componente">
+        <span class="bag-label__campione" [class]="'bag-label__campione--' + c.tono"></span>
+        <div class="bag-label__riga">
+          <dt>{{ c.nome }}</dt>
+          <span class="bag-label__durata">{{ c.durata }}</span>
+        </div>
+        <dd>{{ c.uso }}</dd>
+      </div>
+    }
+  </dl>
+</aside>

@@ -1,7 +1,7 @@
 <div class="eligibility">
   <dl class="eligibility__requisiti">
     @for (r of requisiti; track r.valore) {
-      <div class="eligibility__riga">
+      <div class="eligibility__campo">
         <dt class="eligibility__valore">{{ r.valore }}</dt>
         <dd class="eligibility__descrizione">{{ r.descrizione }}</dd>
       </div>
@@ -10,10 +10,10 @@
 
   <section class="eligibility__giorno" aria-labelledby="eligibility-giorno">
     <h3 id="eligibility-giorno" class="eligibility__giorno-titolo">Il giorno della donazione</h3>
-    <ul class="eligibility__lista">
+    <ol class="eligibility__lista">
       @for (voce of giornoDonazione; track voce) {
         <li>{{ voce }}</li>
       }
-    </ul>
+    </ol>
   </section>
 </div>

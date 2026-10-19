@@ -59,7 +59,7 @@
   display: inline-block;
   padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-pill);
-  background: color-mix(in srgb, var(--c-slate) 8%, var(--c-bg));
+  background: color-mix(in srgb, var(--c-ink) 8%, var(--c-bg));
   font-size: var(--fs-small);
   font-weight: 600;
   white-space: nowrap;

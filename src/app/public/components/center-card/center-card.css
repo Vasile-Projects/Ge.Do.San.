@@ -3,48 +3,49 @@
 }
 
 .center-card {
-  display: flex;
-  flex-direction: column;
-  background: var(--c-surface);
-  border: 1px solid var(--c-border);
-  border-left: var(--card-bar-w) solid var(--c-red);
-  border-radius: var(--radius-card-lg);
-  overflow: hidden;
+  display: grid;
+  gap: var(--space-5);
+  padding-block: var(--space-8);
+  border-bottom: 1px solid var(--c-border);
 }
-
-.center-card__map {
-  height: 200px;
-}
-
-.center-card__body {
-  padding: var(--space-6);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
+@media (min-width: 900px) {
+  .center-card {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) auto;
+    gap: 40px;
+    align-items: center;
+  }
 }
 
 .center-card__name {
-  font-size: var(--fs-h3);
-  font-weight: 600;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  font-stretch: 70%;
+  line-height: 0.95;
+}
+
+.center-card__info {
+  display: grid;
+  gap: var(--space-2);
 }
 
 .center-card__row {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-2);
-  font-size: var(--fs-small);
-  color: var(--c-text-muted);
+  gap: 10px;
 }
 .center-card__row app-icon {
+  flex: none;
+  margin-top: 2px;
   color: var(--c-red);
-  margin-top: 1px;
 }
 
-.center-card__directions {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  margin-top: var(--space-1);
-  font-weight: 600;
-  font-size: var(--fs-small);
+.center-card__tel {
+  color: inherit;
+  font-variant-numeric: tabular-nums;
+}
+
+.center-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }

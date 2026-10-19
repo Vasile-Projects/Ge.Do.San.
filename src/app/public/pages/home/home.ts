@@ -5,6 +5,8 @@ import { TELEGRAM_BOT_URL } from '../../../core/config/telegram.config';
 
 import { TrasfusionaliService } from '../../../shared/data/trasfusionali.service';
 import { Button, EmptyState, ErrorState, Icon, Loading } from '../../../shared/ui';
+import { BagLabel } from '../../components/bag-label/bag-label';
+import { BloodCompat } from '../../components/blood-compat/blood-compat';
 import { CenterCard } from '../../components/center-card/center-card';
 import { Eligibility } from '../../components/eligibility/eligibility';
 
@@ -16,7 +18,18 @@ interface Vantaggio {
 @Component({
   selector: 'app-home',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, Button, Icon, Loading, ErrorState, EmptyState, CenterCard, Eligibility],
+  imports: [
+    RouterLink,
+    Button,
+    Icon,
+    Loading,
+    ErrorState,
+    EmptyState,
+    BagLabel,
+    BloodCompat,
+    CenterCard,
+    Eligibility,
+  ],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

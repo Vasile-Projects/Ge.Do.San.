@@ -1,7 +1,6 @@
 .richiesta-inviata {
   background: var(--c-surface);
-  border: 1px solid var(--c-gold);
-  border-left: 5px solid var(--c-gold);
+  border: 2px solid var(--c-ink);
   border-radius: var(--radius-card-lg);
   padding: var(--space-8);
   display: flex;
@@ -13,7 +12,7 @@
 }
 
 .richiesta-inviata__icon {
-  color: var(--c-gold);
+  color: var(--c-red);
 }
 
 .richiesta-inviata__title {

@@ -1,6 +1,6 @@
 @if (!suRottaAdmin()) {
   <a class="skip-link" href="#contenuto">Salta al contenuto</a>
-  <app-public-header [overlay]="headerOverlay()" [azione]="azione()" />
+  <app-public-header [azione]="azione()" />
 }
 
 <div class="app-main">
@@ -9,6 +9,7 @@
 
 @if (!suRottaAdmin()) {
   <app-public-footer
+    data-nasconde-assistente
     [centri]="trasfusionali.centri()"
     [contattiIndisponibili]="trasfusionali.elencoStato().status === 'error'"
   />

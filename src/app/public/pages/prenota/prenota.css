@@ -45,11 +45,11 @@
   padding: var(--space-3) var(--space-4);
   background: var(--c-blush);
   border-radius: var(--radius-input);
-  color: var(--c-slate);
+  color: var(--c-ink);
   font-size: 0.9375rem;
 }
 .prenota__banner--warn {
-  background: color-mix(in srgb, var(--c-gold) 18%, var(--c-bg));
+  background: color-mix(in srgb, var(--c-select) 18%, var(--c-bg));
 }
 
 .prenota__layout {
@@ -89,7 +89,7 @@
   width: 26px;
   height: 26px;
   border-radius: 999px;
-  background: var(--c-slate);
+  background: var(--c-ink);
   color: #fff;
   font-family: var(--font-heading);
   font-size: 0.8125rem;

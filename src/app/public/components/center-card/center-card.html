@@ -1,13 +1,7 @@
 <article class="center-card">
-  <app-map-embed
-    class="center-card__map"
-    [query]="mapsQuery()"
-    [title]="'Mappa — ' + centro().nome"
-  />
+  <h3 class="center-card__name">{{ centro().nome }}</h3>
 
-  <div class="center-card__body">
-    <h3 class="center-card__name">{{ centro().nome }}</h3>
-
+  <div class="center-card__info">
     <p class="center-card__row">
       <app-icon name="map-pin" [size]="18" />
       <span>{{ indirizzo() }}</span>
@@ -16,18 +10,26 @@
     @if (centro().telefono) {
       <p class="center-card__row">
         <app-icon name="phone" [size]="18" />
-        <a [href]="'tel:' + centro().telefono">{{ telefonoFormattato() }}</a>
+        <a class="center-card__tel" [href]="'tel:' + centro().telefono">{{
+          telefonoFormattato()
+        }}</a>
       </p>
     }
 
     <p class="center-card__row">
       <app-icon name="clock" [size]="18" />
-      <span>Tutti i giorni, 8:00 &ndash; 11:30</span>
+      <span>Tutti i giorni, 8:00&ndash;11:30</span>
     </p>
+  </div>
 
-    <a class="center-card__directions" [href]="directionsUrl()" target="_blank" rel="noopener">
-      Indicazioni
-      <app-icon name="arrow-right" [size]="16" />
-    </a>
+  <div class="center-card__actions">
+    <app-button
+      label="Indicazioni"
+      variant="secondary"
+      size="sm"
+      [href]="directionsUrl()"
+      [ariaLabel]="'Indicazioni per ' + centro().nome + ' (si apre in una nuova scheda)'"
+    />
+    <app-button label="Prenota qui" variant="primary" size="sm" link="/prenota" />
   </div>
 </article>

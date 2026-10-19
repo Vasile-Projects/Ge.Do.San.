@@ -8,9 +8,7 @@ import { Button } from '../../../shared/ui';
   imports: [RouterLink, Button],
   templateUrl: './public-header.html',
   styleUrl: './public-header.css',
-  host: { '[class.public-header--overlay]': 'overlay()' },
 })
 export class PublicHeader {
-  readonly overlay = input(false);
   readonly azione = input<'prenota' | 'home'>('prenota');
 }

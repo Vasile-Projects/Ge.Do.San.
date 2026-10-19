@@ -1,5 +1,9 @@
 @let cls =
-  'btn btn--' + variant() + (block() ? ' btn--block' : '') + (iconOnly() ? ' btn--icon-only' : '');
+  'btn btn--' +
+  variant() +
+  (size() !== 'md' ? ' btn--' + size() : '') +
+  (block() ? ' btn--block' : '') +
+  (iconOnly() ? ' btn--icon-only' : '');
 @let ttl = iconOnly() ? label() : null;
 @let icoSize = iconOnly() ? 20 : 16;
 

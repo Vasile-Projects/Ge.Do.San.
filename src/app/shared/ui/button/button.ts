@@ -17,6 +17,7 @@ export type ButtonVariant =
 export class Button {
   readonly label = input.required<string>();
   readonly variant = input<ButtonVariant>('primary');
+  readonly size = input<'sm' | 'md' | 'lg'>('md');
   readonly type = input<'button' | 'submit'>('button');
   readonly link = input<string | null>(null);
   readonly href = input<string | null>(null);

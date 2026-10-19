@@ -1,8 +1,8 @@
 :host {
   display: block;
-  background: var(--c-slate);
-  color: rgb(255 255 255 / 0.72);
-  border-top: 3px solid var(--c-red);
+  background: var(--c-ink);
+  color: var(--c-on-dark-muted);
+  --c-focus-ring: var(--c-on-dark);
 }
 
 .public-footer__inner {
@@ -27,8 +27,9 @@
 }
 .public-footer__brand-head span {
   font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 1.125rem;
+  font-weight: 800;
+  font-stretch: 90%;
+  font-size: 1.1875rem;
   color: #fff;
 }
 .public-footer__tagline {
@@ -48,12 +49,10 @@
 
 .public-footer__title {
   margin: 0 0 var(--space-1);
-  padding-bottom: var(--space-2);
-  font-family: var(--font-heading);
-  font-size: 0.9375rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 700;
+  font-stretch: 100%;
   color: #fff;
-  border-bottom: 2px solid var(--c-gold);
 }
 
 .public-footer__col > a {
@@ -95,7 +94,7 @@
   color: #fff;
 }
 .public-footer__tel app-icon {
-  color: var(--c-gold);
+  color: var(--c-red-on-dark);
   flex-shrink: 0;
 }
 

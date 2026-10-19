@@ -2,7 +2,7 @@
   padding: var(--space-6);
   background: var(--c-surface);
   border: 1px solid var(--c-border);
-  border-left: 5px solid var(--c-slate);
+  border-left: 5px solid var(--c-ink);
   border-radius: var(--radius-card-lg);
 }
 

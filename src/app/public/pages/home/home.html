@@ -1,19 +1,31 @@
 <main id="contenuto">
-  <section class="hero">
-    <div class="hero__inner container">
-      <h1 class="hero__title">Dona sangue. Salva vite. Prenota adesso.</h1>
-      <p class="hero__lead">
-        Il portale di prenotazione dei centri trasfusionali Pertini e S.&nbsp;Eugenio. Donare è un
-        gesto semplice, sicuro e gratuito, e ogni donazione può fare la differenza per chi ne ha
-        bisogno.
-      </p>
+  <section class="hero on-dark" aria-labelledby="hero-titolo">
+    <div class="container">
+      <div class="hero__grid">
+        <div>
+          <h1 id="hero-titolo" class="hero__title t-mega">Dona il sangue.</h1>
+          <p class="hero__sub">
+            Al Pertini o al Sant’Eugenio, tutti i giorni dalle 8:00 alle 11:30.
+          </p>
+          <p class="hero__lead">
+            Scegli il centro, il giorno e l’orario e prenota online, gratis. Donare è un gesto
+            semplice e sicuro, e ogni donazione aiuta chi ne ha bisogno.
+          </p>
+          <div class="hero__actions">
+            <app-button label="Prenota ora" variant="invert" size="lg" link="/prenota" />
+            <app-button
+              label="Dove siamo"
+              variant="outline-light"
+              size="lg"
+              (click)="scrollToCentri()"
+            />
+          </div>
+        </div>
 
-      <div class="hero__actions">
-        <app-button label="Prenota ora" variant="primary" link="/prenota" />
-        <app-button label="Dove siamo" variant="outline-light" (click)="scrollToCentri()" />
+        <app-bag-label />
       </div>
 
-      <ul class="hero__vantaggi" aria-label="Vantaggi per chi dona">
+      <ul class="hero__vantaggi" aria-label="Cosa ricevi quando doni">
         @for (v of vantaggi; track v.titolo) {
           <li class="hero__vantaggio">
             <span class="hero__vantaggio-titolo">{{ v.titolo }}</span>
@@ -24,50 +36,72 @@
     </div>
   </section>
 
-  <section class="intro container section">
-    <h2 class="intro__title">Perché la tua donazione conta</h2>
-    <p class="intro__body">
-      Ogni giorno molte persone hanno bisogno di sangue: chi affronta un intervento, una terapia
-      oncologica, un parto difficile o una malattia cronica. Il sangue non si produce in laboratorio
-      e ha una durata breve, perciò l'unica scorta possibile sono i donatori che tornano con
-      regolarità.
-    </p>
-  </section>
-
-  <section id="centri" class="centri container section">
-    <h2 class="centri__title">Dove donare</h2>
-
-    @if (centriStatus() === 'loading') {
-      <app-loading label="Caricamento dei centri trasfusionali…" />
-    } @else if (centriError(); as err) {
-      <app-error-state [message]="err.message" (retry)="ricaricaCentri()" />
-    } @else if (centriData().length === 0) {
-      <app-empty-state message="Nessun centro trasfusionale disponibile al momento." />
-    } @else {
-      <div class="centri__grid">
-        @for (centro of centriData(); track centro.id) {
-          <app-center-card [centro]="centro" />
-        }
+  <section class="section" aria-labelledby="perche-titolo">
+    <div class="container">
+      <h2 id="perche-titolo" class="perche__title t-statement">
+        Il sangue non si produce in laboratorio.
+      </h2>
+      <div class="perche__colonne">
+        <p>
+          Ogni giorno ne ha bisogno
+          <strong
+            >chi affronta un intervento, una terapia oncologica, un parto difficile o una malattia
+            cronica.</strong
+          >
+        </p>
+        <p>
+          E dura poco: per questo l’unica scorta possibile sono
+          <strong>i donatori che tornano con regolarità.</strong>
+        </p>
       </div>
-    }
+    </div>
   </section>
 
-  <section class="telegram-band" aria-labelledby="telegram-band-titolo">
-    <div class="container telegram-band__inner">
+  <section class="section compat" aria-labelledby="compat-titolo">
+    <div class="container">
+      <app-blood-compat />
+    </div>
+  </section>
+
+  <section id="centri" class="section" aria-labelledby="centri-titolo">
+    <div class="container">
+      <div class="centri__head">
+        <h2 id="centri-titolo" class="t-h2">Dove donare</h2>
+        <p class="t-lead">Due centri trasfusionali, stessi orari, nessun costo.</p>
+      </div>
+
+      @if (centriStatus() === 'loading') {
+        <app-loading label="Caricamento dei centri trasfusionali…" />
+      } @else if (centriError(); as err) {
+        <app-error-state [message]="err.message" (retry)="ricaricaCentri()" />
+      } @else if (centriData().length === 0) {
+        <app-empty-state message="Nessun centro trasfusionale disponibile al momento." />
+      } @else {
+        <div class="centri__lista">
+          @for (centro of centriData(); track centro.id) {
+            <app-center-card [centro]="centro" />
+          }
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="telegram" data-nasconde-assistente aria-labelledby="telegram-titolo">
+    <div class="container telegram__inner">
       <div>
-        <h2 id="telegram-band-titolo" class="telegram-band__title">
+        <h2 id="telegram-titolo" class="telegram__title">
           Hai già donato con noi? Prenota da Telegram
         </h2>
-        <ul class="telegram-band__punti">
+        <ul class="telegram__punti">
           @for (punto of puntiTelegram; track punto) {
-            <li class="telegram-band__punto">
-              <app-icon name="check" [size]="18" class="telegram-band__check" />
+            <li class="telegram__punto">
+              <app-icon name="check" [size]="18" class="telegram__check" />
               {{ punto }}
             </li>
           }
         </ul>
       </div>
-      <div class="telegram-band__azioni">
+      <div class="telegram__azioni">
         <app-button
           label="Apri l'assistente su Telegram"
           variant="primary"
@@ -76,17 +110,17 @@
           [href]="telegramUrl"
           ariaLabel="Apri l'assistente su Telegram (si apre in una nuova scheda)"
         />
-        <p class="telegram-band__nota">
+        <p class="telegram__nota">
           È la tua prima donazione? Usa il <a routerLink="/prenota">modulo di prenotazione</a>.
         </p>
       </div>
     </div>
   </section>
 
-  <section class="eligibility-section">
-    <div class="container section">
-      <h2 class="eligibility-section__title">Posso donare?</h2>
-      <p class="eligibility-section__intro">
+  <section class="section" aria-labelledby="idoneita-titolo">
+    <div class="container">
+      <h2 id="idoneita-titolo" class="t-h2">Posso donare?</h2>
+      <p class="t-lead idoneita__intro">
         L'idoneità la stabilisce il medico, con un questionario e una visita prima di ogni
         donazione. Se hai dubbi puoi comunque prenotare e parlarne con il personale del centro.
       </p>
@@ -94,13 +128,13 @@
     </div>
   </section>
 
-  <section class="cta-band">
-    <div class="container cta-band__inner">
+  <section class="chiusura on-dark" data-nasconde-assistente aria-labelledby="chiusura-titolo">
+    <div class="container chiusura__inner">
       <div>
-        <h2 class="cta-band__title">Pronto a donare?</h2>
-        <p class="cta-band__text">Basta un minuto del tuo tempo.</p>
+        <h2 id="chiusura-titolo" class="chiusura__title t-statement">Pronto a donare?</h2>
+        <p class="chiusura__testo">Prenotare richiede un minuto.</p>
       </div>
-      <app-button label="Prenota ora" variant="invert" link="/prenota" />
+      <app-button label="Prenota ora" variant="primary" size="lg" link="/prenota" />
     </div>
   </section>
 </main>

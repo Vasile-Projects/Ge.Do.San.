@@ -24,16 +24,27 @@
   height: 56px;
   border: 0;
   border-radius: 50%;
-  background: var(--c-red);
+  background: var(--c-ink);
   color: #fff;
-  box-shadow: 0 6px 20px rgb(35 49 58 / 0.28);
+  box-shadow: 0 12px 24px -10px rgb(34 26 28 / 0.6);
   transition:
     background var(--dur) var(--ease),
-    transform var(--dur) var(--ease);
+    transform 320ms var(--ease),
+    opacity 240ms var(--ease),
+    visibility 0s;
 }
 .assistente__pulsante:hover {
-  background: var(--c-red-dark);
+  background: var(--c-red);
   transform: translateY(-2px);
+}
+:host(.assistente--via) .assistente__pulsante {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(24px) scale(0.85);
+  transition:
+    transform 320ms var(--ease),
+    opacity 240ms var(--ease),
+    visibility 0s linear 240ms;
 }
 
 .assistente__box {
@@ -42,9 +53,9 @@
   width: min(calc(100vw - 2 * var(--space-4)), 320px);
   padding: var(--space-4);
   background: var(--c-surface);
-  border-top: var(--card-bar-w) solid var(--c-red);
+  border: 2px solid var(--c-ink);
   border-radius: var(--radius-card);
-  box-shadow: 0 10px 32px rgb(35 49 58 / 0.22);
+  box-shadow: 0 10px 32px rgb(34 26 28 / 0.22);
   animation: assistente-entra var(--dur) var(--ease);
 }
 .assistente__box:focus {
@@ -86,7 +97,8 @@
   .assistente__box {
     animation: none;
   }
-  .assistente__pulsante:hover {
+  .assistente__pulsante:hover,
+  :host(.assistente--via) .assistente__pulsante {
     transform: none;
   }
 }

@@ -88,7 +88,7 @@
 
 .scheda__esito {
   padding: var(--space-3) var(--space-4);
-  border-left: 4px solid var(--c-gold);
+  border-left: 4px solid var(--c-select);
   background: var(--c-surface);
 }
 

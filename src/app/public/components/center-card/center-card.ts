@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { Icon, MapEmbed } from '../../../shared/ui';
+import { Button, Icon } from '../../../shared/ui';
 import { Trasfusionale } from '../../../shared/models';
 import { formattaTelefono } from '../../../shared/format/telefono';
 
 @Component({
   selector: 'app-center-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Icon, MapEmbed],
+  imports: [Button, Icon],
   templateUrl: './center-card.html',
   styleUrl: './center-card.css',
 })

@@ -74,7 +74,7 @@
   justify-content: center;
   border: 1px solid transparent;
   border-radius: 8px;
-  background: color-mix(in srgb, var(--c-slate) 4%, transparent);
+  background: color-mix(in srgb, var(--c-ink) 4%, transparent);
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--c-text);
@@ -90,8 +90,8 @@
 }
 .date-picker__day--sel,
 .date-picker__day--sel:hover {
-  background: var(--c-gold);
-  border-color: var(--c-gold);
+  background: var(--c-select);
+  border-color: var(--c-select);
   color: #fff;
   font-weight: 700;
 }
@@ -158,7 +158,7 @@
   border: 1px solid var(--c-red);
 }
 .dot--sel {
-  background: var(--c-gold);
+  background: var(--c-select);
 }
 .dot--chiuso {
   background: repeating-linear-gradient(

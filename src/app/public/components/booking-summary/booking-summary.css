@@ -1,7 +1,6 @@
 .booking-summary {
   background: var(--c-surface);
-  border: 1px solid var(--c-border);
-  border-left: var(--card-bar-w) solid var(--c-gold);
+  border: 2px solid var(--c-ink);
   border-radius: var(--radius-card);
   padding: var(--space-6) var(--space-6);
 }

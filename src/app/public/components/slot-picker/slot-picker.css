@@ -19,7 +19,7 @@
     box-shadow var(--dur) var(--ease);
 }
 .slot-picker__opt:hover:not(:disabled) {
-  border-color: var(--c-slate-soft);
+  border-color: var(--c-ink-soft);
 }
 
 .slot-picker__opt--sel {

@@ -1,6 +1,6 @@
 .eligibility {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 40px;
   align-items: start;
 }
@@ -14,7 +14,7 @@
 /* I requisiti come i campi di un'etichetta: riquadro pieno, celle separate da filetti. */
 .eligibility__requisiti {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 0;
   border: 2px solid var(--c-ink);
   border-radius: var(--radius-card);
@@ -36,7 +36,7 @@
 }
 @media (max-width: 560px) {
   .eligibility__requisiti {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .eligibility__campo:nth-child(odd) {
     border-right: 0;

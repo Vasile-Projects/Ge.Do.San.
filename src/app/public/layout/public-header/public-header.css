@@ -62,3 +62,10 @@
   align-items: center;
   gap: var(--space-4);
 }
+
+/* Su schermi molto stretti la descrizione sotto il marchio farebbe sbordare l'header. */
+@media (max-width: 379px) {
+  .public-header__tagline {
+    display: none;
+  }
+}

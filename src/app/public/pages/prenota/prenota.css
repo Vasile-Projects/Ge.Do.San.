@@ -72,7 +72,7 @@
 
 .prenota__layout {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 40px;
 }
 @media (min-width: 1000px) {
@@ -87,6 +87,7 @@
 .prenota__steps {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   border-top: 1px solid var(--c-border);
 }
 .step {
@@ -118,6 +119,21 @@
   font-size: 0.875rem;
   font-weight: 700;
   font-stretch: 100%;
+}
+
+/* Su schermi stretti niente rientro: il numero sta accanto al titolo e il contenuto prende
+   tutta la larghezza. */
+@media (max-width: 479px) {
+  .step {
+    padding-left: 0;
+  }
+  .step__title {
+    gap: var(--space-3);
+  }
+  .step__num {
+    position: static;
+    flex: none;
+  }
 }
 
 .prenota__rail {

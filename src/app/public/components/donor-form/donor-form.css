@@ -7,7 +7,7 @@
 .donor-form__grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-4);
+  gap: 18px var(--space-4);
 }
 @media (min-width: 560px) {
   .donor-form__grid {
@@ -24,7 +24,7 @@
   display: flex;
   width: 100%;
   align-self: start;
-  border: 1px solid var(--c-border);
+  border: 1px solid var(--c-ink-soft);
   border-radius: var(--radius-input);
   overflow: hidden;
   background: var(--c-surface);
@@ -41,7 +41,7 @@
   }
 }
 .seg:not(:last-child) {
-  border-right: 1px solid var(--c-border);
+  border-right: 1px solid var(--c-ink-soft);
 }
 .seg input {
   position: absolute;
@@ -56,8 +56,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 14px var(--space-6);
+  padding: 14px 40px;
   font-size: 1rem;
+  font-weight: 700;
   line-height: 1.2;
   text-align: center;
   transition:
@@ -66,7 +67,7 @@
 }
 @media (min-width: 560px) {
   .donor-form__radios {
-    height: 42px;
+    height: 46px;
   }
   .seg span {
     height: 100%;
@@ -76,41 +77,48 @@
   }
 }
 .seg:hover:not(:has(input:checked)) span {
-  background: var(--c-blush);
+  background: var(--c-choice-tint);
 }
 .seg:has(input:checked) span {
-  background: var(--c-red);
+  background: var(--c-choice);
   color: #fff;
-  font-weight: 600;
 }
 .seg:has(input:focus-visible) span {
-  outline: 2px solid var(--c-ink);
-  outline-offset: -2px;
+  outline: 3px solid var(--c-focus-ring);
+  outline-offset: -3px;
 }
 
 .cellulare {
   display: flex;
   align-items: stretch;
-  height: 42px;
-  border: 1px solid var(--c-border);
+  height: 46px;
+  border: 1px solid var(--c-ink-soft);
   border-radius: var(--radius-input);
   overflow: hidden;
   background: var(--c-surface);
 }
+.cellulare:hover {
+  border-color: var(--c-ink);
+}
 .cellulare:focus-within {
-  border-color: var(--c-ink-soft);
+  border-color: var(--c-ink);
+  outline: 3px solid var(--c-focus-ring);
 }
 .cellulare--invalid {
-  border-color: var(--c-red);
+  border: 2px solid var(--c-red);
 }
 .cellulare__prefisso {
   display: flex;
   align-items: center;
   padding: 0 var(--space-3);
   border-right: 1px solid var(--c-border);
-  background: color-mix(in srgb, var(--c-ink) 6%, transparent);
-  color: var(--c-text-muted);
+  background: var(--c-bg);
+  color: var(--c-ink);
   font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.cellulare .cellulare__input:focus-visible {
+  outline: none;
 }
 .cellulare .cellulare__input {
   flex: 1;

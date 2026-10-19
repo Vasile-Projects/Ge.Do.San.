@@ -1,27 +1,35 @@
 <section class="richiesta-inviata" aria-labelledby="ri-title" tabindex="-1">
-  <app-icon name="mail" [size]="40" class="richiesta-inviata__icon" />
   <h2 id="ri-title" class="richiesta-inviata__title">Controlla la tua email</h2>
   <p class="richiesta-inviata__lead">
     Se i dati sono corretti, a <strong>{{ riepilogo().email }}</strong> sta arrivando un'email con
     il link per confermare la prenotazione. Apri il link e premi
-    <strong>"Conferma prenotazione"</strong> entro {{ minutiValidita() }} minuti: fino ad allora il
-    posto resta riservato a te.
+    <strong>"Conferma prenotazione"</strong>: fino ad allora il posto resta riservato a te.
   </p>
 
-  <dl class="richiesta-inviata__list">
-    <div>
-      <dt>Centro</dt>
-      <dd>{{ riepilogo().nomeTrasfusionale }}</dd>
+  <p class="richiesta-inviata__tempo">
+    <strong>{{ minutiValidita() }}</strong> minuti per confermare
+  </p>
+
+  <div class="richiesta-inviata__riepilogo">
+    <div class="richiesta-inviata__testa">
+      <span class="richiesta-inviata__testa-titolo">Riepilogo</span>
+      <span class="richiesta-inviata__stato">In attesa di conferma</span>
     </div>
-    <div>
-      <dt>Giorno</dt>
-      <dd>{{ data() }}</dd>
-    </div>
-    <div>
-      <dt>Orario</dt>
-      <dd>{{ orario() }}</dd>
-    </div>
-  </dl>
+    <dl class="richiesta-inviata__list">
+      <div>
+        <dt>Centro</dt>
+        <dd>{{ riepilogo().nomeTrasfusionale }}</dd>
+      </div>
+      <div>
+        <dt>Giorno</dt>
+        <dd>{{ data() }}</dd>
+      </div>
+      <div>
+        <dt>Orario</dt>
+        <dd>{{ orario() }}</dd>
+      </div>
+    </dl>
+  </div>
 
   <p class="richiesta-inviata__note">
     Non vedi l'email dopo qualche minuto? Controlla la cartella spam. Se non arriva, contatta il

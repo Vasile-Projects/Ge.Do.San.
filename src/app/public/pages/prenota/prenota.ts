@@ -25,6 +25,8 @@ import { Loading, ErrorState, EmptyState, ConfirmDialog, Icon } from '../../../s
 import { RequestState, requestError, requestSuccess } from '../../../shared/state';
 import {
   aggiungiGiorni,
+  formattaDataCompatta,
+  formattaOrario,
   meseCorrente,
   meseDi,
   oggiIso,
@@ -134,6 +136,30 @@ export class Prenota implements AvvisoUscita {
   protected readonly slotSelezionato = computed(
     () => this.slots().find((s) => s.idSlot === this.idSlot()) ?? null,
   );
+
+  // Barra in basso su mobile: a che passo sei e cosa hai già scelto.
+  protected readonly passoCorrente = computed(() => {
+    if (this.idTrasfusionale() === null) return 1;
+    if (this.dataIso() === null) return 2;
+    return this.idSlot() === null ? 3 : 4;
+  });
+  protected readonly titoloPasso = computed(
+    () =>
+      ['Scegli il centro', 'Scegli il giorno', 'Scegli l’orario', 'Inserisci i tuoi dati'][
+        this.passoCorrente() - 1
+      ],
+  );
+  protected readonly scelteFatte = computed(() => {
+    const data = this.dataIso();
+    const slot = this.slotSelezionato();
+    return [
+      this.centroSelezionato()?.nome,
+      data ? formattaDataCompatta(data) : null,
+      slot ? formattaOrario(slot.orario) : null,
+    ]
+      .filter(Boolean)
+      .join(', ');
+  });
 
   protected readonly mostraForm = computed(
     () => this.dataIso() !== null && this.slotState().status === 'success',

@@ -12,6 +12,9 @@
   --c-blush: #f6dfe0;
   --c-border: #e4d9d7;
   --c-select: var(--c-ink);
+  /* Scelte nei flussi di prenotazione (centro, giorno, orario): rosso, con fondo rosato. */
+  --c-choice: var(--c-red);
+  --c-choice-tint: #fdf2f3;
   --c-info: var(--c-ink);
   --c-info-dark: #120d0e;
 
@@ -247,8 +250,8 @@ button {
 }
 .field label,
 .field legend {
-  font-size: var(--fs-small);
-  font-weight: 500;
+  font-size: 0.9375rem;
+  font-weight: 600;
   color: var(--c-text);
   padding: 0;
 }
@@ -257,41 +260,47 @@ button {
 .field textarea {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid var(--c-border);
+  border: 1px solid var(--c-ink-soft);
   border-radius: var(--radius-input);
   background: var(--c-surface);
   color: var(--c-text);
+  font-size: 1rem;
 }
 .field input:not([type='radio']),
 .field select {
-  height: 42px;
+  height: 46px;
+}
+.field input:hover,
+.field select:hover,
+.field textarea:hover {
+  border-color: var(--c-ink);
 }
 input::placeholder,
 textarea::placeholder {
-  font-size: var(--fs-small);
-  font-style: italic;
-  color: var(--c-text-muted);
+  color: rgb(93 83 85 / 0.7);
   opacity: 1;
 }
 
 .field input:focus-visible,
 .field select:focus-visible,
 .field textarea:focus-visible {
-  border-color: var(--c-slate-soft);
+  outline-offset: 0;
+  border-color: var(--c-ink);
 }
 .field input[aria-invalid='true'],
 .field select[aria-invalid='true'],
 .field textarea[aria-invalid='true'] {
-  border-color: var(--c-red);
+  border: 2px solid var(--c-red);
 }
 .field__err {
   margin: 0;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
   color: var(--c-red);
 }
 .field__hint {
   margin: 0;
-  font-size: 0.75rem;
+  font-size: var(--fs-small);
   color: var(--c-text-muted);
 }
 .field__required {

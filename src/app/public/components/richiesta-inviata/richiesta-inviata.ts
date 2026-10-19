@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
-import { Button, Icon } from '../../../shared/ui';
+import { Button } from '../../../shared/ui';
 import { formattaDataEstesa, formattaOrario } from '../../../shared/date';
 
 export interface RiepilogoRichiesta {
@@ -17,7 +17,7 @@ export interface RiepilogoRichiesta {
 @Component({
   selector: 'app-richiesta-inviata',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Button, Icon],
+  imports: [Button],
   templateUrl: './richiesta-inviata.html',
   styleUrl: './richiesta-inviata.css',
 })

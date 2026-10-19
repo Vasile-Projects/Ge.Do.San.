@@ -1,43 +1,75 @@
-.booking-summary {
-  background: var(--c-surface);
-  border: 2px solid var(--c-ink);
-  border-radius: var(--radius-card);
-  padding: var(--space-6) var(--space-6);
+:host {
+  display: block;
 }
 
+.booking-summary {
+  overflow: hidden;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-card);
+}
+
+.booking-summary__testa {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: 14px var(--space-5);
+  background: var(--c-blush);
+  border-bottom: 1px solid var(--c-border);
+}
 .booking-summary__title {
-  font-size: 0.9375rem;
+  font-size: 1.0625rem;
+  font-stretch: 85%;
+}
+.booking-summary__tipo {
+  font-size: 0.8125rem;
   font-weight: 600;
-  margin-bottom: var(--space-4);
+  color: var(--c-red-dark);
 }
 
 .booking-summary__list {
   margin: 0;
-  display: flex;
-  flex-direction: column;
 }
-
 .booking-summary__row {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-4);
-  padding: var(--space-3) 0;
-  font-size: 0.9375rem;
+  display: grid;
+  gap: 2px;
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--c-border);
 }
-.booking-summary__row + .booking-summary__row {
-  border-top: 1px solid var(--c-border);
+.booking-summary__row--doppia {
+  grid-template-columns: 1fr 1fr;
 }
-.booking-summary__row:first-child {
-  padding-top: 0;
+.booking-summary__row--doppia > div {
+  display: grid;
+  gap: 2px;
 }
-.booking-summary__row:last-child {
-  padding-bottom: 0;
+.booking-summary__row--doppia > div + div {
+  padding-left: var(--space-5);
+  border-left: 1px solid var(--c-border);
 }
 .booking-summary__row dt {
+  font-size: 0.8125rem;
   color: var(--c-text-muted);
 }
 .booking-summary__row dd {
   margin: 0;
-  font-weight: 600;
-  text-align: right;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.booking-summary__row dd.booking-summary__vuoto {
+  font-weight: 400;
+  color: var(--c-text-muted);
+}
+
+.booking-summary__nota {
+  padding: var(--space-3) var(--space-5) var(--space-4);
+  font-size: 0.8125rem;
+  color: var(--c-text-muted);
+}
+
+.booking-summary__dopo {
+  margin-top: var(--space-4);
+  font-size: var(--fs-small);
+  color: var(--c-text-muted);
 }

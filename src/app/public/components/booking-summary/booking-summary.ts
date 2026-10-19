@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { Slot, Trasfusionale } from '../../../shared/models';
+import { REGOLE_BUSINESS, Slot, Trasfusionale } from '../../../shared/models';
 import { formattaDataEstesa, formattaOrario } from '../../../shared/date';
 
 @Component({
@@ -12,6 +12,8 @@ export class BookingSummary {
   readonly centro = input<Trasfusionale | null>(null);
   readonly dataIso = input<string | null>(null);
   readonly slot = input<Slot | null>(null);
+
+  protected readonly minutiConferma = REGOLE_BUSINESS.minutiAttesaConferma;
 
   protected readonly dataEstesa = computed(() => {
     const d = this.dataIso();

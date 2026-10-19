@@ -11,8 +11,6 @@
       (click)="seleziona.emit(centro.id)"
       (keydown)="onKeydown($event, i)"
     >
-      <span class="center-selector__bar" aria-hidden="true"></span>
-      <app-icon name="map-pin" [size]="18" class="center-selector__icon" />
       <span class="center-selector__text">
         <span class="center-selector__name">{{ centro.nome }}</span>
         <span class="center-selector__addr">{{ indirizzo(centro) }}</span>

@@ -1,21 +1,33 @@
-<section class="booking-summary" aria-label="Riepilogo prenotazione">
-  <h2 class="booking-summary__title">Riepilogo</h2>
+<section class="booking-summary" aria-labelledby="riepilogo-titolo">
+  <div class="booking-summary__testa">
+    <h2 id="riepilogo-titolo" class="booking-summary__title">Riepilogo</h2>
+    <span class="booking-summary__tipo">Sangue intero</span>
+  </div>
   <dl class="booking-summary__list">
     <div class="booking-summary__row">
       <dt>Centro</dt>
-      <dd>{{ centro()?.nome ?? '—' }}</dd>
+      <dd [class.booking-summary__vuoto]="!centro()">{{ centro()?.nome ?? 'Da scegliere' }}</dd>
     </div>
     <div class="booking-summary__row">
       <dt>Giorno</dt>
-      <dd>{{ dataEstesa() ?? '—' }}</dd>
+      <dd [class.booking-summary__vuoto]="!dataEstesa()">{{ dataEstesa() ?? 'Da scegliere' }}</dd>
     </div>
-    <div class="booking-summary__row">
-      <dt>Orario</dt>
-      <dd>{{ orario() ?? '—' }}</dd>
-    </div>
-    <div class="booking-summary__row">
-      <dt>Tipo</dt>
-      <dd>Sangue intero</dd>
+    <div class="booking-summary__row booking-summary__row--doppia">
+      <div>
+        <dt>Orario</dt>
+        <dd [class.booking-summary__vuoto]="!orario()">{{ orario() ?? '—' }}</dd>
+      </div>
+      <div>
+        <dt>Durata</dt>
+        <dd>circa 1 ora</dd>
+      </div>
     </div>
   </dl>
+  <p class="booking-summary__nota">
+    Porta un documento e la tessera sanitaria. Colazione leggera, senza latte.
+  </p>
 </section>
+<p class="booking-summary__dopo">
+  Il posto resta tuo per {{ minutiConferma }} minuti dopo l’invio, il tempo di confermare
+  dall’email.
+</p>

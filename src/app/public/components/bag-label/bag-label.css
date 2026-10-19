@@ -1,0 +1,165 @@
+/* I colori delle componenti sono quelli reali del sangue separato: servono solo qui. */
+:host {
+  --tono-rossi: var(--c-red);
+  --tono-plasma: #e3bd62;
+  --tono-piastrine: #f1e6cf;
+  display: block;
+}
+
+.bag-label {
+  --c-focus-ring: var(--c-red);
+  background: var(--c-paper);
+  color: var(--c-ink);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-lift);
+}
+@media (min-width: 1000px) {
+  .bag-label {
+    transform: rotate(1.2deg);
+  }
+}
+
+.bag-label__testa {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: 14px var(--space-5);
+  border-bottom: 2px solid var(--c-ink);
+}
+.bag-label__testa strong {
+  font-weight: 800;
+  font-stretch: 80%;
+  font-size: 1.0625rem;
+}
+.bag-label__testa span {
+  font-size: var(--fs-small);
+  font-weight: 600;
+}
+
+.bag-label__aiuti {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-5) 18px;
+}
+.bag-label__chiave {
+  font-size: 0.8125rem;
+  color: var(--c-text-muted);
+}
+.bag-label__valore {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 900;
+  font-stretch: 70%;
+  line-height: 1;
+}
+
+.bag-label__separazione {
+  padding: 0 var(--space-5) 18px;
+  border-bottom: 1px solid var(--c-border);
+}
+.bag-label__barra {
+  display: flex;
+  height: 30px;
+  border: 2px solid var(--c-ink);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.bag-label__parte {
+  display: block;
+  height: 100%;
+  transform-origin: left;
+}
+.bag-label__parte--rossi {
+  flex: 44;
+  background: var(--tono-rossi);
+}
+.bag-label__parte--piastrine {
+  flex: 3;
+  background: var(--tono-piastrine);
+  border-inline: 1px solid var(--c-ink);
+}
+.bag-label__parte--plasma {
+  flex: 53;
+  background: var(--tono-plasma);
+}
+.bag-label__legenda {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: 6px;
+  font-size: 0.75rem;
+  color: var(--c-text-muted);
+}
+
+/* L'unico movimento della home: la sacca si separa nelle sue parti. */
+@media (prefers-reduced-motion: no-preference) {
+  .bag-label__parte {
+    animation: separa 1.1s var(--ease) both;
+  }
+  .bag-label__parte--piastrine {
+    animation-delay: 180ms;
+  }
+  .bag-label__parte--plasma {
+    animation-delay: 300ms;
+  }
+}
+@keyframes separa {
+  from {
+    transform: scaleX(0.05);
+    opacity: 0.4;
+  }
+}
+
+.bag-label__componenti {
+  margin: 0;
+}
+.bag-label__componente {
+  display: grid;
+  grid-template-columns: 12px minmax(0, 1fr);
+  gap: var(--space-1) var(--space-3);
+  padding: 14px var(--space-5);
+  border-bottom: 1px solid var(--c-border);
+}
+.bag-label__componente:last-child {
+  border-bottom: 0;
+}
+.bag-label__campione {
+  grid-row: span 2;
+  width: 12px;
+  height: 12px;
+  margin-top: 5px;
+  border: 1.5px solid var(--c-ink);
+  border-radius: 2px;
+}
+.bag-label__campione--rossi {
+  background: var(--tono-rossi);
+}
+.bag-label__campione--plasma {
+  background: var(--tono-plasma);
+}
+.bag-label__campione--piastrine {
+  background: var(--tono-piastrine);
+}
+.bag-label__riga {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2px var(--space-3);
+}
+.bag-label__riga dt {
+  font-weight: 800;
+  font-stretch: 80%;
+  font-size: 1.125rem;
+}
+.bag-label__durata {
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+.bag-label__componente dd {
+  margin: 0;
+  font-size: var(--fs-small);
+  line-height: 1.45;
+  color: var(--c-text-muted);
+}

@@ -9,11 +9,11 @@
   gap: var(--space-3);
   width: min(calc(100vw - 2 * var(--space-4)), 460px);
   padding: var(--space-3) var(--space-4);
-  background: var(--c-slate);
+  background: var(--c-ink);
   color: #fff;
   border-left: 4px solid var(--c-red);
   border-radius: var(--radius-input);
-  box-shadow: 0 6px 24px rgb(35 49 58 / 0.28);
+  box-shadow: 0 6px 24px rgb(34 26 28 / 0.28);
 }
 
 .error-toast__icon {

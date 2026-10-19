@@ -84,7 +84,7 @@
   font-weight: 600;
 }
 .seg:has(input:focus-visible) span {
-  outline: 2px solid var(--c-slate);
+  outline: 2px solid var(--c-ink);
   outline-offset: -2px;
 }
 
@@ -98,7 +98,7 @@
   background: var(--c-surface);
 }
 .cellulare:focus-within {
-  border-color: var(--c-slate-soft);
+  border-color: var(--c-ink-soft);
 }
 .cellulare--invalid {
   border-color: var(--c-red);
@@ -108,7 +108,7 @@
   align-items: center;
   padding: 0 var(--space-3);
   border-right: 1px solid var(--c-border);
-  background: color-mix(in srgb, var(--c-slate) 6%, transparent);
+  background: color-mix(in srgb, var(--c-ink) 6%, transparent);
   color: var(--c-text-muted);
   font-weight: 600;
 }

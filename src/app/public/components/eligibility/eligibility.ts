@@ -35,10 +35,11 @@ export class Eligibility {
     },
   ];
 
+  // In ordine di tempo: dai giorni prima della donazione all'arrivo al centro.
   protected readonly giornoDonazione: readonly string[] = [
-    'Porta un documento d’identità valido e la tessera sanitaria.',
-    'Fai una colazione leggera, senza latte e derivati.',
-    'Presentati riposato, dopo una notte di sonno.',
     'Nei giorni prima evita comportamenti a rischio.',
+    'Dormi bene la notte prima.',
+    'Fai una colazione leggera, senza latte e derivati.',
+    'Porta un documento d’identità valido e la tessera sanitaria.',
   ];
 }

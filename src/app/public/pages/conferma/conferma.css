@@ -23,7 +23,7 @@
   color: var(--c-red);
 }
 .conferma__icon--warn {
-  color: var(--c-gold);
+  color: var(--c-select);
 }
 
 .conferma__title {

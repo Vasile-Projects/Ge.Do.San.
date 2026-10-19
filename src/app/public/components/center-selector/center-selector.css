@@ -13,34 +13,30 @@
   padding: 0;
   text-align: left;
   background: var(--c-surface);
-  border: 1px solid var(--c-border);
+  border: 2px solid var(--c-border);
   border-radius: var(--radius-input);
   overflow: hidden;
   cursor: pointer;
   transition: border-color var(--dur) var(--ease);
 }
 .center-selector__opt--sel {
-  border-color: var(--c-gold);
+  border-color: var(--c-select);
 }
 
-.center-selector__bar {
-  align-self: stretch;
-  width: var(--card-bar-w);
-  background: var(--c-border);
-  transition: background var(--dur) var(--ease);
+.center-selector__opt:hover {
+  border-color: var(--c-ink-soft);
 }
-.center-selector__opt:hover .center-selector__bar,
-.center-selector__opt--sel .center-selector__bar {
-  background: var(--c-gold);
+.center-selector__bar {
+  display: none;
 }
 
 .center-selector__icon {
   flex: none;
   margin-left: var(--space-3);
-  color: var(--c-slate-soft);
+  color: var(--c-ink-soft);
 }
 .center-selector__opt--sel .center-selector__icon {
-  color: var(--c-gold);
+  color: var(--c-select);
 }
 
 .center-selector__text {

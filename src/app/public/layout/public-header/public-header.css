@@ -3,17 +3,8 @@
   top: 0;
   z-index: var(--z-header);
   display: block;
-  background: var(--c-surface);
+  background: var(--c-paper);
   border-bottom: 1px solid var(--c-border);
-  transition:
-    background-color var(--dur) var(--ease),
-    border-color var(--dur) var(--ease);
-}
-
-:host(.public-header--overlay) {
-  background: color-mix(in srgb, var(--c-slate) 55%, transparent);
-  border-bottom-color: transparent;
-  backdrop-filter: blur(6px);
 }
 
 .public-header__inner {
@@ -21,22 +12,25 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
+  min-height: 68px;
   padding-block: var(--space-3);
 }
 
 .public-header__brand {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-3);
   text-decoration: none;
-  color: var(--c-slate);
+  color: var(--c-ink);
 }
 .public-header__brand:hover {
+  color: var(--c-ink);
   text-decoration: none;
 }
 
 .public-header__logo {
   flex: none;
+  width: 40px;
   height: auto;
 }
 
@@ -48,9 +42,9 @@
 
 .public-header__wordmark {
   font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 1.5rem;
-  letter-spacing: -0.025em;
+  font-weight: 800;
+  font-stretch: 90%;
+  font-size: 1.3125rem;
 }
 
 .public-header__wordmark-accent {
@@ -58,11 +52,8 @@
 }
 
 .public-header__tagline {
-  margin-top: 2px;
-  font-family: var(--font-heading);
-  font-weight: 500;
+  margin-top: 3px;
   font-size: 0.75rem;
-  letter-spacing: 0.01em;
   color: var(--c-text-muted);
 }
 
@@ -70,15 +61,4 @@
   display: flex;
   align-items: center;
   gap: var(--space-4);
-}
-
-:host(.public-header--overlay) .public-header__brand,
-:host(.public-header--overlay) .public-header__wordmark {
-  color: #fff;
-}
-:host(.public-header--overlay) .public-header__wordmark-accent {
-  color: var(--c-red-on-dark);
-}
-:host(.public-header--overlay) .public-header__tagline {
-  color: rgb(255 255 255 / 0.72);
 }

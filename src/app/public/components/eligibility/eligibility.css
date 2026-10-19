@@ -1,70 +1,91 @@
 .eligibility {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-12);
+  gap: 40px;
   align-items: start;
 }
-@media (min-width: 1024px) {
+@media (min-width: 1000px) {
   .eligibility {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
-    gap: var(--space-24);
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    gap: var(--space-16);
   }
 }
 
+/* I requisiti come i campi di un'etichetta: riquadro pieno, celle separate da filetti. */
 .eligibility__requisiti {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   margin: 0;
-  border-bottom: 1px solid var(--c-border);
+  border: 2px solid var(--c-ink);
+  border-radius: var(--radius-card);
+  overflow: hidden;
 }
 
-.eligibility__riga {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  padding-block: var(--space-6);
-  border-top: 1px solid var(--c-border);
+.eligibility__campo {
+  display: grid;
+  align-content: start;
+  gap: var(--space-2);
+  min-width: 0;
+  padding: 22px;
 }
-@media (min-width: 640px) {
-  .eligibility__riga {
-    display: grid;
-    grid-template-columns: 15rem minmax(0, 1fr);
-    gap: var(--space-8);
-    align-items: baseline;
+.eligibility__campo:nth-child(odd) {
+  border-right: 1px solid var(--c-border);
+}
+.eligibility__campo:nth-child(-n + 2) {
+  border-bottom: 1px solid var(--c-border);
+}
+@media (max-width: 560px) {
+  .eligibility__requisiti {
+    grid-template-columns: 1fr;
+  }
+  .eligibility__campo:nth-child(odd) {
+    border-right: 0;
+  }
+  .eligibility__campo:not(:last-child) {
+    border-bottom: 1px solid var(--c-border);
   }
 }
 
 .eligibility__valore {
   font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: clamp(1.75rem, 3vw, 2.125rem);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-weight: 900;
+  font-stretch: var(--stretch-display);
+  font-size: var(--fs-stat);
+  line-height: 0.95;
 }
 
 .eligibility__descrizione {
   margin: 0;
+  font-size: 0.9375rem;
   color: var(--c-text-muted);
 }
 
-.eligibility__giorno {
-  padding: var(--space-6);
-  background: var(--c-bg);
-  border-radius: var(--radius-card-lg);
-}
-@media (min-width: 768px) {
-  .eligibility__giorno {
-    padding: var(--space-8);
-  }
-}
-
 .eligibility__giorno-titolo {
-  font-size: var(--fs-h3);
+  font-size: 1.5rem;
+  font-stretch: 78%;
 }
 
+/* In ordine di tempo: dai giorni prima al momento in cui arrivi al centro. */
 .eligibility__lista {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
   margin: var(--space-4) 0 0;
-  padding-left: var(--space-6);
-  line-height: 1.5;
+  padding: 0;
+  list-style: none;
+  counter-reset: passo;
+  border-top: 1px solid var(--c-border);
+}
+.eligibility__lista li {
+  display: grid;
+  grid-template-columns: 2.25rem 1fr;
+  padding-block: 14px;
+  border-bottom: 1px solid var(--c-border);
+  counter-increment: passo;
+}
+.eligibility__lista li::before {
+  content: counter(passo);
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-stretch: 70%;
+  font-size: 1.375rem;
+  line-height: 1.1;
+  color: var(--c-red);
 }

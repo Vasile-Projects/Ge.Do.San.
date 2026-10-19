@@ -11,7 +11,7 @@
 .confirm-dialog__backdrop {
   position: absolute;
   inset: 0;
-  background: rgb(35 49 58 / 0.55);
+  background: rgb(34 26 28 / 0.55);
 }
 
 .confirm-dialog__panel {

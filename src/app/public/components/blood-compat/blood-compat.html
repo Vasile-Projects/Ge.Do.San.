@@ -1,0 +1,49 @@
+<div class="blood-compat">
+  <div>
+    <h2 id="compat-titolo" class="t-h2">A chi può arrivare il tuo sangue</h2>
+    <p class="t-lead blood-compat__intro">
+      Scegli il tuo gruppo sanguigno e guarda a quali pazienti possono andare i tuoi globuli rossi.
+    </p>
+    <p class="blood-compat__nota">
+      Vale per le trasfusioni di globuli rossi. Non conosci il tuo gruppo? Lo scopri con le analisi
+      della prima donazione.
+    </p>
+  </div>
+
+  <div class="blood-compat__pannello">
+    <div class="blood-compat__passo">
+      <span id="compat-tuo-gruppo" class="blood-compat__etichetta">Il tuo gruppo</span>
+      <div class="blood-compat__gruppi" role="group" aria-labelledby="compat-tuo-gruppo">
+        @for (g of gruppi; track g) {
+          <button
+            type="button"
+            class="blood-compat__gruppo"
+            [attr.aria-pressed]="scelto() === g"
+            (click)="scegli(g)"
+          >
+            {{ g }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <div class="blood-compat__passo">
+      <span class="blood-compat__etichetta">Chi può ricevere</span>
+      <div class="blood-compat__gruppi blood-compat__gruppi--esito" aria-hidden="true">
+        @for (g of gruppi; track g) {
+          <span
+            class="blood-compat__gruppo"
+            [class.blood-compat__gruppo--si]="riceventi().includes(g)"
+          >
+            {{ g }}
+          </span>
+        }
+      </div>
+      @let e = esito();
+      <p class="blood-compat__esito" aria-live="polite">
+        Con il gruppo <b>{{ e.gruppo }}</b> puoi donare a <b>{{ e.quanti }}</b
+        >: {{ e.dettaglio }}
+      </p>
+    </div>
+  </div>
+</div>

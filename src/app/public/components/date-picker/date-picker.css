@@ -36,8 +36,7 @@
 }
 
 .date-picker__grid {
-  width: calc(100% + 8px);
-  margin: -4px;
+  width: 100%;
   border-collapse: separate;
   border-spacing: 4px;
   table-layout: fixed;
@@ -61,8 +60,8 @@
   display: inline-grid;
   place-items: center;
   width: 100%;
-  aspect-ratio: 1;
-  max-height: 56px;
+  min-width: 0;
+  height: clamp(40px, 11vw, 56px);
   padding: 0;
   border: 1px solid var(--c-border);
   border-radius: var(--radius-input);

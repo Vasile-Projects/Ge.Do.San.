@@ -86,6 +86,8 @@ export class Turnstile {
           this.api = api;
           this.idWidget = api.render(this.contenitore().nativeElement, {
             sitekey: this.siteKey,
+            // Il formato normale è largo 300px fissi: sotto quella misura usa quello compatto.
+            size: this.contenitore().nativeElement.clientWidth < 300 ? 'compact' : 'normal',
             language: 'it',
             theme: 'light',
             callback: (t: string) => {

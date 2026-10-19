@@ -7,14 +7,12 @@ import {
   output,
   viewChildren,
 } from '@angular/core';
-import { Icon } from '../../../shared/ui';
 import { indiceDaTasto } from '../../../shared/a11y';
 import { Trasfusionale } from '../../../shared/models';
 
 @Component({
   selector: 'app-center-selector',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Icon],
   templateUrl: './center-selector.html',
   styleUrl: './center-selector.css',
 })

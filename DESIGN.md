@@ -13,6 +13,7 @@ colors:
   border: '#e4d9d7'
   plasma: '#e3bd62'
   platelets: '#f1e6cf'
+  choice-tint: '#fdf2f3'
 typography:
   mega:
     fontFamily: 'Archivo, Arial Narrow, system-ui, sans-serif'
@@ -126,8 +127,11 @@ niente sfumature, niente decorazioni senza contenuto. Ogni elemento grafico port
 - **Rosso sangue** `--c-red` `#b0001c`: azioni primarie, link, fondo dell'hero, numeri in evidenza.
   Hover e pressione con `--c-red-dark`. Sui fondi scuri, per piccole icone, `--c-red-on-dark`.
 - **Inchiostro** `--c-ink` `#221a1c`: testo, bordi pieni delle etichette, fondo della chiusura e
-  del footer. È anche il colore della **selezione** (`--c-select`): giorno scelto, centro scelto,
-  gruppo scelto. Così il rosso resta riservato a ciò che si può fare.
+  del footer. È anche il colore della **selezione nei controlli di confronto** (`--c-select`), come
+  il gruppo scelto nella compatibilità, dove il rosso indica già l'esito.
+- **Scelte nei flussi di prenotazione** `--c-choice` (rosso) con `--c-choice-tint` `#fdf2f3`:
+  centro, giorno, orario e opzioni del form scelti. Le caselle piccole (giorno, orario, M/F) si
+  riempiono di rosso; i riquadri grandi (centro) prendono bordo rosso, fondo rosato e spunta.
 - **Inchiostro tenue** `--c-ink-soft`: testo secondario.
 - **Carta** `--c-paper`: fondo della pagina e delle etichette.
 - **Fondo tenue** `--c-bg` `#f5efed`: sezioni alternate e riquadri di appoggio.
@@ -136,8 +140,7 @@ niente sfumature, niente decorazioni senza contenuto. Ogni elemento grafico port
 - **Plasma e piastrine** (`#e3bd62`, `#f1e6cf`): solo nell'etichetta della sacca, perché sono i
   colori reali delle componenti. Non vanno usati come accento altrove.
 
-Non esistono altri colori d'accento. Il vecchio oro è stato eliminato: dove serviva per la
-selezione si usa l'inchiostro.
+Non esistono altri colori d'accento. Il vecchio oro è stato eliminato.
 
 Sulle superfici scure si mette la classe `.on-dark`: testo, titoli e anello di focus diventano
 bianchi. Il testo secondario su scuro usa `--c-on-dark-muted`, i filetti `--c-on-dark-line`.
@@ -204,9 +207,17 @@ Profondità e raggruppamento si ottengono con bordi pieni, filetti e cambi di fo
   `secondary` + `primary` in taglia `sm`.
 - **Requisiti** (`app-eligibility`): griglia di campi dentro un bordo pieno; elenco numerato solo
   perché è una sequenza nel tempo.
-- **Assistente Telegram** (`app-telegram-assistant`): pulsante tondo inchiostro, hover rosso. Si
+- **Assistente virtuale Telegram** (`app-telegram-assistant`): pulsante tondo inchiostro, hover rosso. Si
   ritira quando è visibile un elemento con l'attributo `data-nasconde-assistente` (banda Telegram,
   chiusura, footer), così non copre azioni equivalenti.
+- **Pagine operative** (prenotazione): fascia rossa bassa in testa con titolo condensato
+  (2–2.75rem, non `.t-mega`), eventuale avviso a tutta larghezza su blush attaccato sotto, poi il
+  contenuto su carta. Toni sobri: titoli dei passi a 1.25rem, numeri dei passi in cerchi rossi da
+  28px, bordi sottili `--c-border`, il colore solo sulle scelte. Riepilogo laterale con testata su
+  blush; su mobile diventa una barra fissa in basso con il passo corrente.
+- **Campi del form**: bordo 1px `--c-ink-soft`, altezza 46px, errore con bordo rosso da 2px e
+  messaggio rosso in grassetto sotto il campo. Data di nascita in tre campi (GG / Mese / AAAA),
+  cellulare con prefisso +39 fisso.
 - **Header**: bianco, fisso in alto, logo + un solo pulsante. **Footer**: inchiostro, colonne con
   titoli bianchi, icone telefono `--c-red-on-dark`.
 

@@ -12,6 +12,7 @@
     [centri]="trasfusionali.centri()"
     [contattiIndisponibili]="trasfusionali.elencoStato().status === 'error'"
   />
+  <app-telegram-assistant />
 }
 
 @if (errorBus.last(); as err) {

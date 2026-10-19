@@ -5,6 +5,17 @@
     contattare il centro trasfusionale scelto.
   </p>
 
+  <p class="prenota__telegram">
+    <app-icon name="chat" [size]="20" class="prenota__telegram-icon" />
+    <span>
+      <strong>Hai già donato con noi?</strong> Puoi prenotare più velocemente dall'assistente su
+      Telegram, senza reinserire i tuoi dati.
+      <a class="prenota__telegram-link" [href]="telegramUrl" target="_blank" rel="noopener"
+        >Apri Telegram<span class="visually-hidden"> (si apre in una nuova scheda)</span> →</a
+      >
+    </span>
+  </p>
+
   @if (richiestaInviata(); as r) {
     <app-richiesta-inviata
       class="prenota__confirmation"

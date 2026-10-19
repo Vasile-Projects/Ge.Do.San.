@@ -25,4 +25,7 @@ export type IconName =
   | 'info'
   | 'scale'
   | 'id-card'
-  | 'heart';
+  | 'heart'
+  | 'chat'
+  | 'send'
+  | 'telegram';

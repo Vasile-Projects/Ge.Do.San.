@@ -165,6 +165,60 @@
   font-size: var(--fs-body-lg);
 }
 
+.telegram-band {
+  background: var(--c-blush);
+}
+.telegram-band__inner {
+  display: grid;
+  gap: var(--space-8);
+  padding-block: var(--space-16);
+}
+@media (min-width: 768px) {
+  .telegram-band__inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-12);
+  }
+}
+.telegram-band__title {
+  font-size: var(--fs-h2);
+}
+.telegram-band__title::after {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 5px;
+  margin-top: var(--space-3);
+  background: var(--c-red);
+  border-radius: 999px;
+}
+.telegram-band__punti {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-6) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs-body-lg);
+}
+.telegram-band__punto {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.telegram-band__check {
+  flex: none;
+  color: var(--c-red);
+}
+.telegram-band__azioni {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+}
+.telegram-band__nota {
+  font-size: 0.9375rem;
+  color: var(--c-text-muted);
+}
+
 .cta-band {
   background: var(--c-red);
   color: #fff;

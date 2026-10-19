@@ -52,6 +52,37 @@
     }
   </section>
 
+  <section class="telegram-band" aria-labelledby="telegram-band-titolo">
+    <div class="container telegram-band__inner">
+      <div>
+        <h2 id="telegram-band-titolo" class="telegram-band__title">
+          Hai già donato con noi? Prenota da Telegram
+        </h2>
+        <ul class="telegram-band__punti">
+          @for (punto of puntiTelegram; track punto) {
+            <li class="telegram-band__punto">
+              <app-icon name="check" [size]="18" class="telegram-band__check" />
+              {{ punto }}
+            </li>
+          }
+        </ul>
+      </div>
+      <div class="telegram-band__azioni">
+        <app-button
+          label="Apri l'assistente su Telegram"
+          variant="primary"
+          icon="send"
+          iconPosition="start"
+          [href]="telegramUrl"
+          ariaLabel="Apri l'assistente su Telegram (si apre in una nuova scheda)"
+        />
+        <p class="telegram-band__nota">
+          È la tua prima donazione? Usa il <a routerLink="/prenota">modulo di prenotazione</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <section class="eligibility-section">
     <div class="container section">
       <h2 class="eligibility-section__title">Posso donare?</h2>

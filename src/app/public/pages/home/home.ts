@@ -1,7 +1,10 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+
+import { TELEGRAM_BOT_URL } from '../../../core/config/telegram.config';
 
 import { TrasfusionaliService } from '../../../shared/data/trasfusionali.service';
-import { Button, EmptyState, ErrorState, Loading } from '../../../shared/ui';
+import { Button, EmptyState, ErrorState, Icon, Loading } from '../../../shared/ui';
 import { CenterCard } from '../../components/center-card/center-card';
 import { Eligibility } from '../../components/eligibility/eligibility';
 
@@ -13,12 +16,20 @@ interface Vantaggio {
 @Component({
   selector: 'app-home',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Button, Loading, ErrorState, EmptyState, CenterCard, Eligibility],
+  imports: [RouterLink, Button, Icon, Loading, ErrorState, EmptyState, CenterCard, Eligibility],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home {
   private readonly trasfusionali = inject(TrasfusionaliService);
+  protected readonly telegramUrl = inject(TELEGRAM_BOT_URL);
+
+  // L'assistente prenota solo per chi è già registrato: i nuovi donatori passano dal modulo.
+  protected readonly puntiTelegram: readonly string[] = [
+    'Scopri quando puoi donare di nuovo',
+    'Vedi gli orari liberi del tuo centro',
+    'Prenota con un tocco, senza compilare il modulo',
+  ];
 
   protected readonly vantaggi: readonly Vantaggio[] = [
     {

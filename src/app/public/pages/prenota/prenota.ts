@@ -20,7 +20,8 @@ import {
   Slot,
   TIPO_DONAZIONE_DEFAULT,
 } from '../../../shared/models';
-import { Loading, ErrorState, EmptyState, ConfirmDialog } from '../../../shared/ui';
+import { TELEGRAM_BOT_URL } from '../../../core/config/telegram.config';
+import { Loading, ErrorState, EmptyState, ConfirmDialog, Icon } from '../../../shared/ui';
 import { RequestState, requestError, requestSuccess } from '../../../shared/state';
 import {
   aggiungiGiorni,
@@ -71,6 +72,7 @@ const CAMPI_FORM = new Set([
     BookingSummary,
     RichiestaInviata,
     ConfirmDialog,
+    Icon,
   ],
   templateUrl: './prenota.html',
   styleUrl: './prenota.css',
@@ -80,6 +82,7 @@ export class Prenota implements AvvisoUscita {
   private readonly prenotazioni = inject(PrenotazioniService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly host: ElementRef<HTMLElement> = inject(ElementRef);
+  protected readonly telegramUrl = inject(TELEGRAM_BOT_URL);
 
   protected readonly minIso = oggiIso();
   protected readonly maxIso = aggiungiGiorni(

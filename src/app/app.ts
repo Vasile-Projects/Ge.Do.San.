@@ -8,6 +8,7 @@ import { TrasfusionaliService } from './shared/data/trasfusionali.service';
 import { ErrorToast } from './shared/ui';
 import { PublicHeader } from './public/layout/public-header/public-header';
 import { PublicFooter } from './public/layout/public-footer/public-footer';
+import { TelegramAssistant } from './public/components/telegram-assistant/telegram-assistant';
 
 const SOGLIA_HEADER = 100;
 const CORSA_HERO = 550;
@@ -15,7 +16,7 @@ const CORSA_HERO = 550;
 @Component({
   selector: 'app-root',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterOutlet, PublicHeader, PublicFooter, ErrorToast],
+  imports: [RouterOutlet, PublicHeader, PublicFooter, ErrorToast, TelegramAssistant],
   templateUrl: './app.html',
   styleUrl: './app.css',
   host: {

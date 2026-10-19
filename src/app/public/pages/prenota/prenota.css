@@ -18,6 +18,28 @@
   font-size: var(--fs-body-lg);
 }
 
+.prenota__telegram {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+  padding: var(--space-3) var(--space-4);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-left: 4px solid var(--c-red);
+  border-radius: var(--radius-input);
+  font-size: 0.9375rem;
+}
+.prenota__telegram-icon {
+  flex: none;
+  margin-top: 1px;
+  color: var(--c-red);
+}
+.prenota__telegram-link {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 .prenota__banner {
   margin: var(--space-6) 0 0;
   padding: var(--space-3) var(--space-4);

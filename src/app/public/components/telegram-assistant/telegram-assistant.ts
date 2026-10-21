@@ -14,7 +14,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 
 import { TELEGRAM_BOT_URL } from '../../../core/config/telegram.config';
-import { Button, Icon } from '../../../shared/ui';
+import { Button, Icon, QrCode } from '../../../shared/ui';
 
 // Pulsante fisso in basso a destra su tutte le pagine pubbliche: apre un box con una spiegazione
 // breve e il link al bot. Si chiude con la X, con Esc o cliccando fuori. Si ritira quando sullo
@@ -22,7 +22,7 @@ import { Button, Icon } from '../../../shared/ui';
 @Component({
   selector: 'app-telegram-assistant',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Button, Icon],
+  imports: [Button, Icon, QrCode],
   templateUrl: './telegram-assistant.html',
   styleUrl: './telegram-assistant.css',
   host: {

@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { TELEGRAM_BOT_URL } from '../../../core/config/telegram.config';
 
 import { TrasfusionaliService } from '../../../shared/data/trasfusionali.service';
-import { Button, EmptyState, ErrorState, Icon, Loading } from '../../../shared/ui';
+import { Button, EmptyState, ErrorState, Icon, Loading, QrCode } from '../../../shared/ui';
 import { BagLabel } from '../../components/bag-label/bag-label';
 import { BloodCompat } from '../../components/blood-compat/blood-compat';
 import { CenterCard } from '../../components/center-card/center-card';
@@ -23,6 +23,7 @@ interface Vantaggio {
     Button,
     Icon,
     Loading,
+    QrCode,
     ErrorState,
     EmptyState,
     BagLabel,

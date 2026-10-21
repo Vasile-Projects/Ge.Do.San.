@@ -8,3 +8,4 @@ export * from './state/empty-state';
 export * from './confirm-dialog/confirm-dialog';
 export * from './error-toast/error-toast';
 export * from './turnstile/turnstile';
+export * from './qr-code/qr-code';

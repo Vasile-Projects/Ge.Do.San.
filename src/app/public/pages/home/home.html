@@ -110,6 +110,17 @@
           [href]="telegramUrl"
           ariaLabel="Apri l'assistente su Telegram (si apre in una nuova scheda)"
         />
+        <div class="telegram__qr-box">
+          <app-qr-code
+            class="telegram__qr"
+            [url]="telegramUrl"
+            label="QR code dell'assistente Gedosan su Telegram"
+          />
+          <p class="telegram__qr-testo">
+            <strong>Sei al computer?</strong> Inquadra il codice con la fotocamera del telefono: la
+            chat si apre direttamente lì.
+          </p>
+        </div>
         <p class="telegram__nota">
           È la tua prima donazione? Usa il <a routerLink="/prenota">modulo di prenotazione</a>.
         </p>

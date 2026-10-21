@@ -33,6 +33,16 @@
       [href]="telegramUrl"
       ariaLabel="Apri l'assistente su Telegram (si apre in una nuova scheda)"
     />
+    <div class="assistente__qr-box">
+      <app-qr-code
+        class="assistente__qr"
+        [url]="telegramUrl"
+        label="QR code dell'assistente Gedosan su Telegram"
+      />
+      <p class="assistente__qr-testo">
+        Oppure inquadra il codice con il telefono e la chat si apre lì.
+      </p>
+    </div>
   </div>
 }
 

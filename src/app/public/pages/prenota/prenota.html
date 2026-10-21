@@ -11,17 +11,27 @@
 
   @if (!richiestaInviata()) {
     <div class="prenota__telegram">
-      <p class="container prenota__telegram-testo">
-        <app-icon name="chat" [size]="18" class="prenota__telegram-icon" />
-        <span>
-          <strong>Hai già donato con noi?</strong> Con l'assistente virtuale su Telegram trovi le
-          informazioni sulle tue donazioni, come quando puoi donare di nuovo, e prenoti in pochi
-          passi senza compilare di nuovo il modulo.
-          <a class="prenota__telegram-link" [href]="telegramUrl" target="_blank" rel="noopener"
-            >Apri Telegram<span class="visually-hidden"> (si apre in una nuova scheda)</span></a
-          >
-        </span>
-      </p>
+      <div class="container prenota__telegram-riga">
+        <p class="prenota__telegram-testo">
+          <app-icon name="chat" [size]="18" class="prenota__telegram-icon" />
+          <span>
+            <strong>Hai già donato con noi?</strong> Con l'assistente virtuale su Telegram trovi le
+            informazioni sulle tue donazioni, come quando puoi donare di nuovo, e prenoti in pochi
+            passi senza compilare di nuovo il modulo.
+            <a class="prenota__telegram-link" [href]="telegramUrl" target="_blank" rel="noopener"
+              >Apri Telegram<span class="visually-hidden"> (si apre in una nuova scheda)</span></a
+            >
+          </span>
+        </p>
+        <div class="prenota__qr-box">
+          <app-qr-code
+            class="prenota__qr"
+            [url]="telegramUrl"
+            label="QR code dell'assistente Gedosan su Telegram"
+          />
+          <p class="prenota__qr-testo">Sei al computer? Inquadralo con il telefono.</p>
+        </div>
+      </div>
     </div>
   }
 

@@ -87,6 +87,28 @@
   color: var(--c-text-muted);
 }
 
+/* Il QR serve solo a chi è al computer: da telefono il pulsante basta. */
+.assistente__qr-box {
+  display: none;
+}
+@media (min-width: 900px) and (hover: hover) {
+  .assistente__qr-box {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--c-border);
+  }
+}
+.assistente__qr {
+  flex: none;
+  width: 96px;
+}
+.assistente__qr-testo {
+  font-size: 0.875rem;
+  color: var(--c-text-muted);
+}
+
 @keyframes assistente-entra {
   from {
     opacity: 0;

@@ -21,7 +21,7 @@ import {
   TIPO_DONAZIONE_DEFAULT,
 } from '../../../shared/models';
 import { TELEGRAM_BOT_URL } from '../../../core/config/telegram.config';
-import { Loading, ErrorState, EmptyState, ConfirmDialog, Icon } from '../../../shared/ui';
+import { Loading, ErrorState, EmptyState, ConfirmDialog, Icon, QrCode } from '../../../shared/ui';
 import { RequestState, requestError, requestSuccess } from '../../../shared/state';
 import {
   aggiungiGiorni,
@@ -65,6 +65,7 @@ const CAMPI_FORM = new Set([
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Loading,
+    QrCode,
     ErrorState,
     EmptyState,
     CenterSelector,

@@ -1,0 +1,13 @@
+/* La misura la decide chi lo usa, con una classe sull'host. */
+:host {
+  display: block;
+  width: 128px;
+  aspect-ratio: 1;
+  color: var(--c-ink);
+}
+
+svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

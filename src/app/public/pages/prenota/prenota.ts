@@ -146,9 +146,12 @@ export class Prenota implements AvvisoUscita {
   });
   protected readonly titoloPasso = computed(
     () =>
-      ['Scegli il centro', 'Scegli il giorno', 'Scegli l’orario', 'Inserisci i tuoi dati'][
-        this.passoCorrente() - 1
-      ],
+      [
+        'Scegli il centro trasfusionale',
+        'Scegli il giorno',
+        'Scegli l’orario',
+        'Inserisci i tuoi dati',
+      ][this.passoCorrente() - 1],
   );
   protected readonly scelteFatte = computed(() => {
     const data = this.dataIso();

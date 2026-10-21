@@ -41,7 +41,7 @@ export class Home {
   // L'assistente prenota solo per chi è già registrato: i nuovi donatori passano dal modulo.
   protected readonly puntiTelegram: readonly string[] = [
     'Scopri quando puoi donare di nuovo',
-    'Vedi gli orari liberi del tuo centro',
+    'Vedi gli orari liberi del tuo centro trasfusionale',
     'Prenota con un tocco, senza compilare il modulo',
   ];
 
@@ -62,7 +62,8 @@ export class Home {
     },
     {
       titolo: 'Colazione offerta',
-      testo: 'Dopo il prelievo il centro ti offre la colazione, per rimetterti in forze.',
+      testo:
+        'Dopo il prelievo il centro trasfusionale ti offre la colazione, per rimetterti in forze.',
     },
   ];
 

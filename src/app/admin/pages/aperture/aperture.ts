@@ -180,14 +180,14 @@ export class Aperture implements ConLavoroInCorso {
     return a.kind === 'apri'
       ? {
           titolo: 'Apertura straordinaria',
-          messaggio: `Il ${quando} il centro risulterà aperto in via straordinaria.`,
+          messaggio: `Il ${quando} il centro trasfusionale risulterà aperto in via straordinaria.`,
           dettaglio: null,
           etichetta: 'Apri il giorno',
           distruttiva: false,
         }
       : {
           titolo: 'Chiusura straordinaria',
-          messaggio: `Il ${quando} il centro risulterà chiuso.`,
+          messaggio: `Il ${quando} il centro trasfusionale risulterà chiuso.`,
           dettaglio:
             nota ??
             'Le prenotazioni già presenti quel giorno non vengono toccate: vanno gestite a mano.',

@@ -7,10 +7,10 @@
 
   <div class="pren__contesto">
     <div class="pren__campo">
-      <h2 class="pren__label">Centro</h2>
+      <h2 class="pren__label">Centro trasfusionale</h2>
       @switch (centriStatus()) {
         @case ('loading') {
-          <app-loading label="Caricamento dei centri…" />
+          <app-loading label="Caricamento dei centri trasfusionali…" />
         }
         @case ('error') {
           <app-error-state [message]="centriError()?.message ?? ''" (retry)="ricaricaCentri()" />

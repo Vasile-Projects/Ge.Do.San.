@@ -6,8 +6,8 @@
     </div>
     <p class="public-footer__tagline">
       Portale di prenotazione per la donazione di sangue. L'idoneità alla donazione è valutata dal
-      medico del centro prima di ogni donazione. Il servizio non sostituisce il rapporto con il
-      proprio medico.
+      medico del centro trasfusionale prima di ogni donazione. Il servizio non sostituisce il
+      rapporto con il proprio medico.
     </p>
   </div>
 
@@ -26,7 +26,9 @@
       </div>
     } @empty {
       @if (contattiIndisponibili()) {
-        <span class="public-footer__nota">Recapiti dei centri non disponibili al momento.</span>
+        <span class="public-footer__nota"
+          >Recapiti dei centri trasfusionali non disponibili al momento.</span
+        >
       }
     }
   </nav>

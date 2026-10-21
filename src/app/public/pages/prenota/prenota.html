@@ -3,8 +3,8 @@
     <div class="container">
       <h1 class="prenota__title">Prenota la tua donazione</h1>
       <p class="prenota__lead">
-        Quattro passi: centro, giorno, orario e i tuoi dati. Per dubbi puoi chiamare il centro che
-        scegli.
+        Quattro passi: centro trasfusionale, giorno, orario e i tuoi dati. Per dubbi puoi chiamare
+        il centro che scegli.
       </p>
     </div>
   </div>
@@ -52,11 +52,11 @@
         <div class="prenota__steps">
           <section class="step" aria-labelledby="step-centro">
             <h2 id="step-centro" class="step__title">
-              <span class="step__num">1</span> Scegli il centro
+              <span class="step__num">1</span> Scegli il centro trasfusionale
             </h2>
             @switch (centriStatus()) {
               @case ('loading') {
-                <app-loading label="Caricamento dei centri…" />
+                <app-loading label="Caricamento dei centri trasfusionali…" />
               }
               @case ('error') {
                 <app-error-state

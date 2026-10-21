@@ -10,10 +10,10 @@
   }
 
   <div class="aperture__centro">
-    <h2 class="aperture__label">Centro</h2>
+    <h2 class="aperture__label">Centro trasfusionale</h2>
     @switch (centriStatus()) {
       @case ('loading') {
-        <app-loading label="Caricamento dei centri…" />
+        <app-loading label="Caricamento dei centri trasfusionali…" />
       }
       @case ('error') {
         <app-error-state [message]="centriError()?.message ?? ''" (retry)="ricaricaCentri()" />
@@ -134,7 +134,9 @@
       <div class="aperture__elenco">
         <h2 class="aperture__label">Eccezioni impostate</h2>
         @if (variazioni().length === 0) {
-          <app-empty-state message="Nessuna apertura o chiusura straordinaria per questo centro." />
+          <app-empty-state
+            message="Nessuna apertura o chiusura straordinaria per questo centro trasfusionale."
+          />
         } @else {
           <div class="aperture__table-wrap">
             <table class="aperture__table">
